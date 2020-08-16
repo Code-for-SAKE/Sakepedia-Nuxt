@@ -1,0 +1,196 @@
+const Brewery = require('../models/Brewery');
+const validator = require('express-validator');
+const paginate = require('express-paginate');
+const japanese = require('../../utils/japanese');
+
+// Get all
+module.exports.all = function (req, res, next) {
+  var keyword = req.query.keyword
+  var search = {}
+  if(keyword) {
+    search = {
+      $or: [
+          {name: new RegExp(keyword, 'i')},
+          {kana: new RegExp(japanese.hiraToKana(keyword), 'i')}
+      ]
+    }
+  }
+  Brewery.paginate(search, {page: req.query.page, limit: req.query.limit}, function(err, result) {
+    if(err) {
+      return res.status(500).json({
+          message: 'Error getting records.'
+      });
+    }
+    return res.json({
+      breweries: result.docs,
+      currentPage: result.page,
+      pageCount: result.pages,
+      pages: paginate.getArrayPages(req)(3, result.pages, req.query.page)
+    });
+  });
+}
+
+
+// Get one
+module.exports.show = function(req, res) {
+  var id = req.params.id;
+  Brewery.findOne({_id: id}).exec(function(err, brewery){
+      if(err) {
+          return res.status(500).json({
+              message: 'Error getting record.' + err
+          });
+      }
+      if(!brewery) {
+          return res.status(404).json({
+              message: 'No such record'
+          });
+      }
+      return res.json(brewery);
+  });
+}
+
+//names
+module.exports.list = function (req, res, next) {
+  var keyword = req.query.keyword
+  var search = {}
+  if(keyword) {
+    search = {
+      $or: [
+          {name: new RegExp(keyword, 'i')},
+          {kana: new RegExp(japanese.hiraToKana(keyword), 'i')}
+      ]
+    }
+  }
+  Brewery.find(search).select('name').limit(10).exec(function(err, breweries){
+    if(err) {
+        return res.status(500).json({
+            message: 'Error getting records. : ' + err
+        });
+    }
+    return res.json(breweries);
+  });
+}
+
+// Create
+module.exports.create = [
+  // validations rules
+  validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
+  validator.body('name').custom(value => {
+    return Brewery.findOne({title:value}).then(brewery => {
+      if (brewery !== null) {
+        return Promise.reject('Title already in use');
+      }
+    })
+  }),
+
+  function(req, res) {
+    // throw validation errors
+    const errors = validator.validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.mapped() });
+    }
+
+    // initialize record
+    var brewery = new Brewery({
+        name : req.body.name,
+        kana : req.body.kana,
+        prefecture : req.body.prefecture,
+        address : req.body.address,
+        email : req.body.email,
+        tel : req.body.tel,
+        url : req.body.url,
+        author : req.user.name,
+    })
+
+    // save record
+    brewery.save(function(err, brewery){
+        if(err) {
+            return res.status(500).json({
+                message: 'Error saving record',
+                error: err
+            });
+        }
+        return res.json({
+            message: 'saved',
+            _id: brewery._id
+        });
+    })
+  }
+]
+
+// Update
+module.exports.update = [
+  // validation rules
+  validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
+  validator.body('name').custom( (value, {req}) => {
+    return Brewery.findOne({ name:value, _id:{ $ne: req.params.id } })
+      .then( brewery => {
+      if (brewery !== null) {
+        return Promise.reject('name already in use');
+      }
+    })
+  }),
+
+  function(req, res) {
+    // throw validation errors
+    const errors = validator.validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.mapped() });
+    }
+
+    var id = req.params.id;
+    Brewery.findOne({_id: id}, function(err, brewery){
+        if(err) {
+            return res.status(500).json({
+                message: 'Error saving record',
+                error: err
+            });
+        }
+        if(!brewery) {
+            return res.status(404).json({
+                message: 'No such record'
+            });
+        }
+        
+        // initialize record
+        brewery.name =  req.body.name ? req.body.name : brewery.name;
+        brewery.kana =  req.body.kana ? req.body.kana : brewery.kana;
+        brewery.prefecture =  req.body.prefecture ? req.body.prefecture : brewery.prefecture;
+        brewery.address =  req.body.address ? req.body.address : brewery.address;
+        brewery.email =  req.body.email ? req.body.email : brewery.email;
+        brewery.tel =  req.body.tel ? req.body.tel : brewery.tel;
+        brewery.url =  req.body.url ? req.body.url : brewery.url;
+        brewery.author =  req.user.name;
+
+        // save record
+        brewery.save(function(err, brewery){
+            if(err) {
+                return res.status(500).json({
+                    message: 'Error getting record.'
+                });
+            }
+            if(!brewery) {
+                return res.status(404).json({
+                    message: 'No such record'
+                });
+            }
+            return res.json(brewery);
+        });
+    });
+  }
+
+]
+
+
+// Delete
+module.exports.delete = function(req, res) {
+  var id = req.params.id;
+  Brewery.findByIdAndRemove(id, function(err, brewery){
+      if(err) {
+          return res.status(500).json({
+              message: 'Error getting record.'
+          });
+      }
+      return res.json(brewery);
+  });
+}
