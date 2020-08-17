@@ -107,7 +107,6 @@ export default {
       email:null,
       tel:null,
       url:null,
-      author: null,
       prefectures : Prefectures.prefectures
     }
   },
@@ -125,7 +124,6 @@ export default {
           email: this.email,
           tel: this.tel,
           url: this.url,
-          author: this.$auth.user.id,
         })
         .then((response) => {
           console.log(response)
