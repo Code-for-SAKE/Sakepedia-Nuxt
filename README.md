@@ -1,5 +1,15 @@
 # Sakepedia Nuxt
 
+Sakepediaは日本酒のオープンデータを作るためのプラットフォームです。
+
+大枠で以下の技術要素を使って開発しています。(詳細はpackege.json参照)
+
+- Nuxt.js
+- Axios/Express
+- MongoDB/Mongoose
+- Bootstrap-Vue(一部Semantic UI)
+- GitHub OAuth App
+
 ## Need
 
 ### Install
