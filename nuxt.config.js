@@ -55,6 +55,7 @@ module.exports = {
   */
   axios: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3030',
+    browserBaseURL: process.env.BASE_URL || 'http://localhost:3030',
   },
   /*
   ** Build configuration
