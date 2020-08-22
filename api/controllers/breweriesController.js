@@ -75,10 +75,12 @@ module.exports.list = function (req, res, next) {
 module.exports.create = [
   // validations rules
   validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
-  validator.body('name').custom(value => {
-    return Brewery.findOne({title:value}).then(brewery => {
+  validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
+  validator.body('breweryId').custom( (value, {req}) => {
+    return Brewery.findOne({ breweryId:value, _id:{ $ne: req.params.id } })
+      .then( brewery => {
       if (brewery !== null) {
-        return Promise.reject('Title already in use');
+        return Promise.reject('すでに登録済みです');
       }
     })
   }),
@@ -92,14 +94,19 @@ module.exports.create = [
 
     // initialize record
     var brewery = new Brewery({
-        name : req.body.name,
-        kana : req.body.kana,
-        prefecture : req.body.prefecture,
-        address : req.body.address,
-        email : req.body.email,
-        tel : req.body.tel,
-        url : req.body.url,
-        author : req.user.name,
+      breweryId : req.body.breweryId,
+      name : req.body.name,
+      kana : req.body.kana,
+      prefecture : req.body.prefecture,
+      address : req.body.address,
+      latitude : req.body.latitude,
+      longitude : req.body.longitude,
+      email : req.body.email,
+      tel : req.body.tel,
+      url : req.body.url,
+      startYear : req.body.startYear,
+      endYear : req.body.endYear,
+      author : req.user.name,
     })
 
     // save record
@@ -122,11 +129,12 @@ module.exports.create = [
 module.exports.update = [
   // validation rules
   validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
-  validator.body('name').custom( (value, {req}) => {
-    return Brewery.findOne({ name:value, _id:{ $ne: req.params.id } })
+  validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
+  validator.body('breweryId').custom( (value, {req}) => {
+    return Brewery.findOne({ breweryId:value, _id:{ $ne: req.params.id } })
       .then( brewery => {
       if (brewery !== null) {
-        return Promise.reject('name already in use');
+        return Promise.reject('すでに登録済みです');
       }
     })
   }),
@@ -153,13 +161,18 @@ module.exports.update = [
         }
         
         // initialize record
+        brewery.breweryId =  req.body.breweryId ? req.body.breweryId : brewery.breweryId;
         brewery.name =  req.body.name ? req.body.name : brewery.name;
         brewery.kana =  req.body.kana ? req.body.kana : brewery.kana;
         brewery.prefecture =  req.body.prefecture ? req.body.prefecture : brewery.prefecture;
         brewery.address =  req.body.address ? req.body.address : brewery.address;
+        brewery.latitude =  req.body.latitude ? req.body.latitude : brewery.latitude;
+        brewery.longitude =  req.body.longitude ? req.body.longitude : brewery.longitude;
         brewery.email =  req.body.email ? req.body.email : brewery.email;
         brewery.tel =  req.body.tel ? req.body.tel : brewery.tel;
         brewery.url =  req.body.url ? req.body.url : brewery.url;
+        brewery.startYear =  req.body.startYear ? req.body.startYear : brewery.startYear;
+        brewery.endYear =  req.body.endYear ? req.body.endYear : brewery.endYear;
         brewery.author =  req.user.name;
 
         // save record

@@ -4,6 +4,7 @@
 
     <hr>
 
+    <small v-if="brewery">{{ brewery.breweryId }}</small>
     <h2 v-if="brewery">{{ brewery.name }}</h2>
     <h6 v-if="brewery">{{ brewery.kana }}</h6>
 
@@ -11,9 +12,13 @@
 
     <p v-if="brewery">{{ prefectures[brewery.prefecture] }}</p>
     <p v-if="brewery">{{ brewery.address }}</p>
+    <p v-if="brewery">{{ brewery.latitude }}</p>
+    <p v-if="brewery">{{ brewery.longitude }}</p>
     <p v-if="brewery">{{ brewery.email }}</p>
     <p v-if="brewery">{{ brewery.tel }}</p>
     <p v-if="brewery">{{ brewery.url }}</p>
+    <p v-if="brewery">{{ brewery.startYear }}</p>
+    <p v-if="brewery">{{ brewery.endYear }}</p>
 
     <hr>
     <div class="d-flex justify-content-between">

@@ -10,8 +10,18 @@
           @submit.prevent="submitForm()">
 
           <div class="form-group">
+            <label for="">法人番号 etc</label>
+            <input type="number" class="form-control" required
+              :class="{ 'is-invalid': errors && errors.breweryId }"
+              v-model="breweryId">
+            <div class="invalid-feedback" v-if="errors && errors.breweryId">
+              {{ errors.breweryId.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">名前</label>
-            <input type="text" class="form-control"
+            <input type="text" class="form-control" required
               :class="{ 'is-invalid': errors && errors.name }"
               v-model="name">
             <div class="invalid-feedback" v-if="errors && errors.name">
@@ -54,6 +64,26 @@
           </div>
 
           <div class="form-group">
+            <label for="">緯度</label>
+            <input type="text" class="form-control"
+              :class="{ 'is-invalid': errors && errors.latitude }"
+              v-model="latitude">
+            <div class="invalid-feedback" v-if="errors && errors.latitude">
+              {{ errors.latitude.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">経度</label>
+            <input type="text" class="form-control"
+              :class="{ 'is-invalid': errors && errors.longitude }"
+              v-model="longitude">
+            <div class="invalid-feedback" v-if="errors && errors.longitude">
+              {{ errors.longitude.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">Eメール</label>
             <input type="email" class="form-control"
               :class="{ 'is-invalid': errors && errors.email }"
@@ -83,6 +113,26 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label for="">創業年</label>
+            <input type="number" class="form-control"
+              :class="{ 'is-invalid': errors && errors.startYear }"
+              v-model="startYear">
+            <div class="invalid-feedback" v-if="errors && errors.startYear">
+              {{ errors.startYear.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">廃業年</label>
+            <input type="number" class="form-control"
+              :class="{ 'is-invalid': errors && errors.endYear }"
+              v-model="endYear">
+            <div class="invalid-feedback" v-if="errors && errors.endYear">
+              {{ errors.endYear.msg }}
+            </div>
+          </div>
+
           <b-button variant="primary" type="submit" value="追加" class="mr-3">追加</b-button>
           <b-button to="/breweries" class="mr-3">キャンセル</b-button>
 
@@ -100,13 +150,18 @@ export default {
   data(){
     return{
       errors:null,
+      breweryId:null,
       name:null,
       kana:null,
       prefecture:null,
       address:null,
+      latitude:null,
+      longitude:null,
       email:null,
       tel:null,
       url:null,
+      startYear:null,
+      endYear:null,
       prefectures : Prefectures.prefectures
     }
   },
@@ -117,13 +172,18 @@ export default {
   methods:{
     submitForm(){
       this.$axios.post( '/api/breweries', {
+          breweryId: this.breweryId,
           name: this.name,
           kana: this.kana,
           prefecture: this.prefecture,
+          latitude: this.latitude,
+          longitude: this.longitude,
           address: this.address,
           email: this.email,
           tel: this.tel,
           url: this.url,
+          startYear: this.startYear,
+          endYear: this.endYear,
         })
         .then((response) => {
           console.log(response)

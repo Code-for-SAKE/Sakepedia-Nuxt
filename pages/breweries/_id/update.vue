@@ -10,6 +10,16 @@
           @submit.prevent="submitForm()">
 
           <div class="form-group">
+            <label for="">法人番号 etc</label>
+            <input type="number" class="form-control"
+              :class="{ 'is-invalid': errors && errors.breweryId }"
+              v-model="breweryId">
+            <div class="invalid-feedback" v-if="errors && errors.breweryId">
+              {{ errors.breweryId.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">名前</label>
             <input type="text" class="form-control"
               :class="{ 'is-invalid': errors && errors.name }"
@@ -20,7 +30,7 @@
           </div>
 
           <div class="form-group">
-            <label for="">ふりがな</label>
+            <label for="">フリガナ</label>
             <input type="text" class="form-control"
               :class="{ 'is-invalid': errors && errors.kana }"
               v-model="kana">
@@ -54,6 +64,26 @@
           </div>
 
           <div class="form-group">
+            <label for="">緯度</label>
+            <input type="text" class="form-control"
+              :class="{ 'is-invalid': errors && errors.latitude }"
+              v-model="latitude">
+            <div class="invalid-feedback" v-if="errors && errors.latitude">
+              {{ errors.latitude.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">経度</label>
+            <input type="text" class="form-control"
+              :class="{ 'is-invalid': errors && errors.longitude }"
+              v-model="longitude">
+            <div class="invalid-feedback" v-if="errors && errors.longitude">
+              {{ errors.longitude.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">Eメール</label>
             <input type="email" class="form-control"
               :class="{ 'is-invalid': errors && errors.email }"
@@ -83,6 +113,26 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label for="">創業年</label>
+            <input type="number" class="form-control"
+              :class="{ 'is-invalid': errors && errors.startYear }"
+              v-model="startYear">
+            <div class="invalid-feedback" v-if="errors && errors.startYear">
+              {{ errors.startYear.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">廃業年</label>
+            <input type="number" class="form-control"
+              :class="{ 'is-invalid': errors && errors.endYear }"
+              v-model="endYear">
+            <div class="invalid-feedback" v-if="errors && errors.endYear">
+              {{ errors.endYear.msg }}
+            </div>
+          </div>
+
           <b-button variant="primary" type="submit" class="mr-3">更新</b-button>
           <b-button :to="'/breweries/' + $route.params.id" class="mr-3">キャンセル</b-button>
 
@@ -107,13 +157,18 @@ export default {
   data(){
     return{
       errors:null,
+      breweryId:null,
       name:null,
       kana:null,
       prefecture:null,
       address:null,
+      latitude:null,
+      longitude:null,
       email:null,
       tel:null,
       url:null,
+      startYear:null,
+      endYear:null,
       author: null,
       prefectures : Prefectures.prefectures
     }
@@ -125,24 +180,34 @@ export default {
 
   methods:{
     fillFormData(){
+      this.breweryId = this.brewery.breweryId
       this.name = this.brewery.name
       this.kana = this.brewery.kana
       this.prefecture = this.brewery.prefecture
       this.address = this.brewery.address
+      this.latitude = this.brewery.latitude
+      this.longitude = this.brewery.longitude
       this.email = this.brewery.email
       this.tel = this.brewery.tel
       this.url = this.brewery.url
+      this.startYear = this.brewery.startYear
+      this.endYear = this.brewery.endYear
     },
 
     submitForm(){
       this.$axios.put( '/api/breweries/' + this.$route.params.id , {
+          breweryId: this.breweryId,
           name: this.name,
           kana: this.kana,
           prefecture: this.prefecture,
           address: this.address,
+          latitude: this.latitude,
+          longitude: this.longitude,
           email: this.email,
           tel: this.tel,
           url: this.url,
+          startYear: this.startYear,
+          endYear: this.endYear,
         })
         .then((response) => {
           console.log(response)
