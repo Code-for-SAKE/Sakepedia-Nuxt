@@ -25,29 +25,47 @@
     <p v-if="brewery">{{ brewery.startYear }}</p>
     <p v-if="brewery">{{ brewery.endYear }}</p>
 
-    <hr>
     <div class="d-flex justify-content-between">
       <div>
         <b-button variant="primary" :to="'/breweries/' + brewery._id + '/update'" class="mr-3">編集</b-button>
         <b-button variant="danger" @click="deleteRecord()">削除</b-button>
       </div>
-      <b-button variant="secondary" to="/breweries" class="mr-3">一覧に戻る</b-button>
+      <b-button variant="secondary" to="/breweries">一覧に戻る</b-button>
+    </div>
+    <hr>
+    <div class="my-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3>銘柄</h3>
+        <b-button variant="success" to="/brands/add">銘柄追加</b-button>
+      </div>
+      <brand-list :search="search" class="m-3" />
     </div>
   </div>
 </template>
 
 <script>
-const Prefectures = require('../../../utils/prefectures')
+const Prefectures = require('@/utils/prefectures')
+import BrandList from '@/components/BrandList.vue'
+
 export default {
-  async asyncData(context){
+  components: {
+    BrandList,
+  },
+  data() {
+    return {
+      prefectures : Prefectures.prefectures,
+      search: {
+        brewery: this.$route.params.id
+      }
+    }
+  },
+  async asyncData(context) {
     const {data} = await context.$axios.get('/api/breweries/' + context.route.params.id)
     return {
       brewery : data,
-      prefectures : Prefectures.prefectures
     }
   },
-
-  methods:{
+  methods: {
     deleteRecord(){
       if(confirm("Are you sure?") === true){
         this.$axios.delete('/api/breweries/' + this.$route.params.id)

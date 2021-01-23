@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="d-flex justify-content-between align-items-center">
-      <h1>酒蔵一覧</h1>
-      <b-button variant="success" to="/breweries/add">追加</b-button>
+      <h1>日本酒醸造データ一覧</h1>
+      <b-button variant="success" to="/bydatas/add">追加</b-button>
     </div>
     <hr>
     <div class="col-md-8">
@@ -27,36 +27,32 @@
       align="center" />
     <hr>
     <div class="list-group"
-      v-if="breweries.length">
+      v-if="bydatas.length">
       <nuxt-link
         class="list-group-item list-group-item-action"
-        :to="'/breweries/' + brewery._id"
-        v-for="brewery in breweries"
-        :key="brewery._id">
-        <span>{{ brewery.name }}</span>
-        <span>{{prefectures[brewery.prefecture]}}</span>
+        :to="'/bydatas/' + bydata._id"
+        v-for="bydata in bydatas"
+        :key="bydata._id">
+        {{ bydata.sake ? bydata.sake.name : '' }}
+        {{ bydata.makedBY }}
       </nuxt-link>
     </div>
+
     <div class="alert alert-warning"
       v-else>
       データがありません
     </div>
-
   </div>
 </template>
 
 <script>
-const Prefectures = require('../../utils/prefectures')
-import BrewerySelect from '@/components/BrewerySelect.vue'
 export default {
   components: {
-    BrewerySelect,
   },
   data() {
     return {
-      prefectures : Prefectures.prefectures,
 
-      breweries: [],
+      bydatas: [],
       searchValue: null,
       searchText: "",
 
@@ -67,9 +63,9 @@ export default {
     };
   },
   async asyncData(context){
-    const {data} = await context.$axios.get('/api/breweries')
+    const {data} = await context.$axios.get('/api/bydatas')
     return {
-      breweries : data.breweries,
+      bydatas : data.bydatas,
       page : data.currentPage,
       count : data.pageCount
     }
@@ -96,9 +92,10 @@ export default {
         this.page,
         this.limit
       );
-      this.$axios.get('/api/breweries', params)
+
+      this.$axios.get('/api/bydatas', params)
       .then((response) => {
-        this.breweries = response.data.breweries
+        this.bydatas = response.data.bydatas
         this.page = response.data.currentPage
         this.count = response.data.pageCount
       })

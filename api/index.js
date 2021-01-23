@@ -24,16 +24,22 @@ app.use(session({
 
 // Require & Import API routes
 const auth = require('./routes/auth')
+const awards = require('./routes/awards')
 const breweries = require('./routes/breweries')
+const brands = require('./routes/brands')
 const sakes = require('./routes/sakes')
+const bydatas = require('./routes/bydatas')
 
 //Authenticate
 app.use(auth)
 
 // Use API Routes
 //app.use(users)
+app.use(awards)
 app.use(breweries)
+app.use(brands)
 app.use(sakes)
+app.use(bydatas)
 
 // Export the server middleware
 module.exports = {

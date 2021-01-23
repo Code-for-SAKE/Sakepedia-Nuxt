@@ -12,7 +12,7 @@ import Vue from 'vue'
 export default Vue.extend({
   props: {
     values: {
-      type: Array,
+      type: Array | null,
       required: true
     }
   }

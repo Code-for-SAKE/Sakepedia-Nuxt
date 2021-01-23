@@ -26,4 +26,7 @@ router.put('/sakes/:id', config.isAuthenticated, sakesController.update)
 // Delete
 router.delete('/sakes/:id', config.isAuthenticated, sakesController.delete)
 
+//change
+router.get('/change/sakes', sakesController.change)
+
 module.exports = router

@@ -1,16 +1,16 @@
 <template>
     <div class="w-75">
         <model-list-select
-            ref="brewery_search"
+            ref="brand_search"
             :id="this.id"
             :name="innerName"
-            :list="searchedBreweries"
+            :list="searchedBrands"
             v-model="innerValue"
             @input="onInput"
             :option-value="this.optionValue"
             :option-text="this.optionText"
             :placeholder="this.placeholder"
-            @searchchange="searchBreweries"
+            @searchchange="searchBrands"
         >
         </model-list-select>
     </div>
@@ -42,7 +42,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: '酒蔵'
+            default: '銘柄'
         },
         value: {
 
@@ -50,7 +50,7 @@ export default {
     },
     data(){
         return{
-            searchedBreweries : [],
+            searchedBrands : [],
             innerValue : this.value,
             innerName : this.name,
         }
@@ -58,38 +58,34 @@ export default {
     mounted(){
         //初期値の設定
         if(this.value){
-            this.$axios.get('/api/breweries/'+this.value[this.optionValue])
+            this.$axios.get('/api/brands/'+this.value[this.optionValue])
             .then(response => {
-                this.searchedBreweries = [response.data]
+                this.searchedBrands = [response.data]
                 this.innerName = response.data.[this.optionText]
             });
         }else{
-            this.$axios.get('/api/breweries/')
+            this.$axios.get('/api/brands/')
             .then(response => {
-                this.searchedBreweries = response.data.breweries
+                this.searchedBrands = response.data.brands
             });
         }
     },
     methods:{
         onInput(item) {
             if(item) {
-                console.log("onInput item", item)
                 this.$emit('input', item)
             }else{
-                console.log("onInput value", this.value)
                 this.$emit('input', this.value)
             }
         },
-        searchBreweries (searchText) {
+        searchBrands (searchText) {
             if(searchText){
-                console.log("searchBreweries searchText", searchText)
                 this.$emit('input', {name: searchText})
-                this.$axios.get('/api/list/breweries',{params: {keyword: searchText}})
+                this.$axios.get('/api/list/brands',{params: {keyword: searchText}})
                 .then(response => {
-                    this.searchedBreweries = response.data
+                    this.searchedBrands = response.data
                 });
             }else{
-                console.log("searchBreweries value", this.value)
                 this.$emit('input', this.value)
             }
         }
