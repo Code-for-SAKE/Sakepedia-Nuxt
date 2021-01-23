@@ -17,8 +17,6 @@ const Brewery = new Schema ({
   endYear: { type: Number },
   author: { type: String },
 });
-Brewery.virtual('brewery').get(function() {
-  return this.name;
-});
+
 Brewery.plugin(mongoosePaginate);
 module.exports = mongoose.model('Brewery', Brewery)

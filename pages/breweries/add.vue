@@ -186,7 +186,6 @@ export default {
           endYear: this.endYear,
         })
         .then((response) => {
-          console.log(response)
 
           if(response.data._id){
 

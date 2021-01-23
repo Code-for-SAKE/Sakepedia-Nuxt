@@ -3,7 +3,7 @@
         <model-list-select
             ref="sake_search"
             :id="this.id"
-            :name="this.name"
+            :name="innerName"
             :list="searchedSakes"
             v-model="innerValue"
             @input="onInput"
@@ -31,7 +31,7 @@ export default {
         },
         optionValue: {
             type: String,
-            default: 'name'
+            default: '_id'
         },
         optionText: {
             type: String,
@@ -52,12 +52,17 @@ export default {
         return{
             searchedSakes : [],
             innerValue : this.value,
+            innerName : this.name,
         }
     },
     mounted(){
         //初期値の設定
         if(this.value){
-            this.searchSakes(this.value.name)
+            this.$axios.get('/api/sakes/'+this.value[this.optionValue])
+            .then(response => {
+                this.searchedSakes = [response.data]
+                this.innerName = response.data.[this.optionText]
+            });
         }else{
             this.$axios.get('/api/sakes/')
             .then(response => {
@@ -68,19 +73,23 @@ export default {
     methods:{
         onInput(item) {
             if(item) {
+                console.log("onInput item", item)
                 this.$emit('input', item)
             }else{
+                console.log("onInput value", this.value)
                 this.$emit('input', this.value)
             }
         },
         searchSakes (searchText) {
             if(searchText){
+                console.log("searchSakees searchText", searchText)
                 this.$emit('input', {name: searchText})
                 this.$axios.get('/api/list/sakes',{params: {keyword: searchText}})
                 .then(response => {
                     this.searchedSakes = response.data
                 });
             }else{
+                console.log("searchSakees value", this.value)
                 this.$emit('input', this.value)
             }
         }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>日本酒 更新</h1>
+    <h1>銘柄 更新</h1>
     <hr>
 
     <div class="row">
@@ -13,7 +13,7 @@
             <label for="">名前</label>
             <input type="text" class="form-control"
               :class="{ 'is-invalid': errors && errors.name }"
-              v-model="sake.name">
+              v-model="brand.name">
             <div class="invalid-feedback" v-if="errors && errors.name">
               {{ errors.name.msg }}
             </div>
@@ -24,7 +24,7 @@
             <brewery-select
               ref="brewery_search"
               :class="{ 'is-invalid': errors && errors.brewery }"
-              v-model="sake.brewery"
+              v-model="brand.brewery"
             />
             <div class="invalid-feedback" v-if="errors && errors.brewery">
               {{ errors.brewery.msg }}
@@ -32,57 +32,27 @@
           </div>
 
           <div class="form-group">
-            <label for="">銘柄名</label>
-            <brand-select
-              ref="brand_search"
-              :class="{ 'is-invalid': errors && errors.brand }"
-              v-model="sake.brand"
-            />
-            <div class="invalid-feedback" v-if="errors && errors.brand">
-              {{ errors.brand.msg }}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="">副題</label>
+            <label for="">ロゴURL</label>
             <input type="text" class="form-control"
-              :class="{ 'is-invalid': errors && errors.subname }"
-              v-model="sake.subname">
-            <div class="invalid-feedback" v-if="errors && errors.subname">
-              {{ errors.subname.msg }}
+              :class="{ 'is-invalid': errors && errors.logo }"
+              v-model="brand.logo">
+            <div class="invalid-feedback" v-if="errors && errors.logo">
+              {{ errors.logo.msg }}
             </div>
           </div>
 
           <div class="form-group">
-            <label for="">分類</label>
-            <tag-select v-model="sake.type" />
-            <div class="invalid-feedback" v-if="errors && errors.type">
-              {{ errors.type.msg }}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="">説明</label>
+            <label for="">こだわり</label>
             <textarea type="text" class="form-control"
               :class="{ 'is-invalid': errors && errors.description }"
-              v-model="sake.escription"></textarea>
+              v-model="brand.description"></textarea>
             <div class="invalid-feedback" v-if="errors && errors.description">
               {{ errors.description.msg }}
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="">URL</label>
-            <input type="text" class="form-control"
-              :class="{ 'is-invalid': errors && errors.url }"
-              v-model="sake.url">
-            <div class="invalid-feedback" v-if="errors && errors.url">
-              {{ errors.url.msg }}
-            </div>
-          </div>
-
           <b-button variant="primary" type="submit" class="mr-3">更新</b-button>
-          <b-button :to="'/sakes/' + $route.params.id" class="mr-3">キャンセル</b-button>
+          <b-button :to="'/brands/' + $route.params.id" class="mr-3">キャンセル</b-button>
 
         </form>
       </div>
@@ -91,21 +61,17 @@
 </template>
 
 <script>
-import BrandSelect from '@/components/BrandSelect.vue'
 import BrewerySelect from '@/components/BrewerySelect.vue'
-import TagSelect from '@/components/TagSelect.vue'
 export default {
   components: {
-    BrandSelect,
-    BrewerySelect,
-    TagSelect
+    BrewerySelect
   },
   middleware: ['authenticated'],
 
   async asyncData(context){
-    const {data} = await context.$axios.get('/api/sakes/' + context.route.params.id)
+    const {data} = await context.$axios.get('/api/brands/' + context.route.params.id)
     return {
-      sake : data
+      brand : data,
     }
   },
 
@@ -118,11 +84,11 @@ export default {
 
   methods:{
     submitForm(){
-      this.$axios.put( '/api/sakes/' + this.$route.params.id , this.sake)
+      this.$axios.put( '/api/brands/' + this.$route.params.id , this.brand)
         .then((response) => {
           if(response.data._id){
             this.$store.dispatch('flash/show', {text: '更新しました', mode: 'alert-success'})
-            this.$router.push({ name:'sakes-id', params:{ updated:'yes', id: this.$route.params.id } })
+            this.$router.push({ name:'brands-id', params:{ updated:'yes', id: this.$route.params.id } })
           }
         })
         .catch( (error) => {

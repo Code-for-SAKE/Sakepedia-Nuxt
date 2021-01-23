@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="d-flex justify-content-between align-items-center">
-      <h1>酒蔵一覧</h1>
-      <b-button variant="success" to="/breweries/add">追加</b-button>
+      <h1>銘柄一覧</h1>
+      <b-button variant="success" to="/brands/add">追加</b-button>
     </div>
     <hr>
     <div class="col-md-8">
@@ -27,36 +27,33 @@
       align="center" />
     <hr>
     <div class="list-group"
-      v-if="breweries.length">
+      v-if="brands.length">
       <nuxt-link
         class="list-group-item list-group-item-action"
-        :to="'/breweries/' + brewery._id"
-        v-for="brewery in breweries"
-        :key="brewery._id">
-        <span>{{ brewery.name }}</span>
-        <span>{{prefectures[brewery.prefecture]}}</span>
+        :to="'/brands/' + brand._id"
+        v-for="brand in brands"
+        :key="brand._id">
+        {{ brand.name }}
       </nuxt-link>
     </div>
+
     <div class="alert alert-warning"
       v-else>
       データがありません
     </div>
-
   </div>
 </template>
 
 <script>
-const Prefectures = require('../../utils/prefectures')
-import BrewerySelect from '@/components/BrewerySelect.vue'
+import SakeSelect from '@/components/SakeSelect.vue'
 export default {
   components: {
-    BrewerySelect,
+    SakeSelect,
   },
   data() {
     return {
-      prefectures : Prefectures.prefectures,
 
-      breweries: [],
+      brands: [],
       searchValue: null,
       searchText: "",
 
@@ -67,9 +64,9 @@ export default {
     };
   },
   async asyncData(context){
-    const {data} = await context.$axios.get('/api/breweries')
+    const {data} = await context.$axios.get('/api/brands')
     return {
-      breweries : data.breweries,
+      brands : data.brands,
       page : data.currentPage,
       count : data.pageCount
     }
@@ -96,9 +93,10 @@ export default {
         this.page,
         this.limit
       );
-      this.$axios.get('/api/breweries', params)
+
+      this.$axios.get('/api/brands', params)
       .then((response) => {
-        this.breweries = response.data.breweries
+        this.brands = response.data.brands
         this.page = response.data.currentPage
         this.count = response.data.pageCount
       })
