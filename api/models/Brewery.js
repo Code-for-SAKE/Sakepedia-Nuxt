@@ -3,7 +3,7 @@ const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const Brewery = new Schema ({
-  breweryId: { type: Number, required: true, index: { unique: true } },
+  breweryId: { type: Number, index: { unique: true } },
   name: { type: String, required: true },
   kana: { type: String },
   prefecture: { type: Number },
