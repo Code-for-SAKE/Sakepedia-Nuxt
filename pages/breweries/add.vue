@@ -114,6 +114,56 @@
           </div>
 
           <div class="form-group">
+            <label for="">購入URL</label>
+            <input type="url" class="form-control"
+              :class="{ 'is-invalid': errors && errors.ecurl }"
+              v-model="ecurl">
+            <div class="invalid-feedback" v-if="errors && errors.ecurl">
+              {{ errors.ecurl.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">Facebook</label>
+            <input type="text" class="form-control"
+              :class="{ 'is-invalid': errors && errors.facebook }"
+              v-model="facebook">
+            <div class="invalid-feedback" v-if="errors && errors.facebook">
+              {{ errors.facebook.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">Twitter</label>
+            <input type="text" class="form-control"
+              :class="{ 'is-invalid': errors && errors.twitter }"
+              v-model="twitter">
+            <div class="invalid-feedback" v-if="errors && errors.twitter">
+              {{ errors.twitter.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">Instagram</label>
+            <input type="text" class="form-control"
+              :class="{ 'is-invalid': errors && errors.instagram }"
+              v-model="instagram">
+            <div class="invalid-feedback" v-if="errors && errors.instagram">
+              {{ errors.instagram.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">その他SNS</label>
+            <input type="text" class="form-control"
+              :class="{ 'is-invalid': errors && errors.othersns }"
+              v-model="othersns">
+            <div class="invalid-feedback" v-if="errors && errors.othersns">
+              {{ errors.othersns.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">創業年</label>
             <input type="number" class="form-control"
               :class="{ 'is-invalid': errors && errors.startYear }"
@@ -160,6 +210,11 @@ export default {
       email:null,
       tel:null,
       url:null,
+      ecurl:null,
+      facebook:null,
+      twitter:null,
+      instagram:null,
+      othersns:null,
       startYear:null,
       endYear:null,
       prefectures : Prefectures.prefectures
@@ -182,6 +237,11 @@ export default {
           email: this.email,
           tel: this.tel,
           url: this.url,
+          ecurl: this.ecurl,
+          facebook: this.facebook,
+          twitter: this.twitter,
+          instagram: this.instagram,
+          othersns: this.othersns,
           startYear: this.startYear,
           endYear: this.endYear,
         })

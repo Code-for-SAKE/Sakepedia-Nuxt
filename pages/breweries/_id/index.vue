@@ -17,6 +17,11 @@
     <p v-if="brewery">{{ brewery.email }}</p>
     <p v-if="brewery">{{ brewery.tel }}</p>
     <p v-if="brewery">{{ brewery.url }}</p>
+    <p v-if="brewery">{{ brewery.ecurl }}</p>
+    <p v-if="brewery">{{ brewery.facebook }}</p>
+    <p v-if="brewery">{{ brewery.twitter }}</p>
+    <p v-if="brewery">{{ brewery.instagram }}</p>
+    <p v-if="brewery">{{ brewery.othersns }}</p>
     <p v-if="brewery">{{ brewery.startYear }}</p>
     <p v-if="brewery">{{ brewery.endYear }}</p>
 

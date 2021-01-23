@@ -104,6 +104,11 @@ module.exports.create = [
       email : req.body.email,
       tel : req.body.tel,
       url : req.body.url,
+      ecurl : req.body.ecurl,
+      facebook : req.body.facebook,
+      twitter : req.body.twitter,
+      instagram : req.body.instagram,
+      othersns : req.body.othersns,
       startYear : req.body.startYear,
       endYear : req.body.endYear,
       author : req.user.name,
@@ -159,7 +164,7 @@ module.exports.update = [
                 message: 'No such record'
             });
         }
-        
+
         // initialize record
         brewery.breweryId =  req.body.breweryId ? req.body.breweryId : brewery.breweryId;
         brewery.name =  req.body.name ? req.body.name : brewery.name;
@@ -171,6 +176,11 @@ module.exports.update = [
         brewery.email =  req.body.email ? req.body.email : brewery.email;
         brewery.tel =  req.body.tel ? req.body.tel : brewery.tel;
         brewery.url =  req.body.url ? req.body.url : brewery.url;
+        brewery.ecurl =  req.body.ecurl ? req.body.ecurl : brewery.ecurl;
+        brewery.facebook =  req.body.facebook ? req.body.facebook : brewery.facebook;
+        brewery.twitter =  req.body.twitter ? req.body.twitter : brewery.twitter;
+        brewery.instagram =  req.body.instagram ? req.body.instagram : brewery.instagram;
+        brewery.othersns =  req.body.othersns ? req.body.othersns : brewery.othersns;
         brewery.startYear =  req.body.startYear ? req.body.startYear : brewery.startYear;
         brewery.endYear =  req.body.endYear ? req.body.endYear : brewery.endYear;
         brewery.author =  req.user.name;
@@ -191,7 +201,6 @@ module.exports.update = [
         });
     });
   }
-
 ]
 
 
