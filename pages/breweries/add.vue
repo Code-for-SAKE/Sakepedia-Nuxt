@@ -11,7 +11,7 @@
 
           <div class="form-group">
             <label for="">法人番号 etc</label>
-            <input type="number" class="form-control" required
+            <input type="number" class="form-control"
               :class="{ 'is-invalid': errors && errors.breweryId }"
               v-model="breweryId">
             <div class="invalid-feedback" v-if="errors && errors.breweryId">

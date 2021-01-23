@@ -75,8 +75,10 @@ module.exports.list = function (req, res, next) {
 module.exports.create = [
   // validations rules
   validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
-  validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
+  //validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
   validator.body('breweryId').custom( (value, {req}) => {
+    if(!value) return true;
+    if(value == '') return true;
     return Brewery.findOne({ breweryId:value, _id:{ $ne: req.params.id } })
       .then( brewery => {
       if (brewery !== null) {
@@ -134,8 +136,10 @@ module.exports.create = [
 module.exports.update = [
   // validation rules
   validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
-  validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
+  //validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
   validator.body('breweryId').custom( (value, {req}) => {
+    if(!value) return true;
+    if(value == '') return true;
     return Brewery.findOne({ breweryId:value, _id:{ $ne: req.params.id } })
       .then( brewery => {
       if (brewery !== null) {
