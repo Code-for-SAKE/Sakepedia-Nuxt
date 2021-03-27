@@ -64,7 +64,7 @@ export default {
             if (limit) {
                 this.search_["limit"] = limit;
             }
-            return {params: search_};
+            return {params: this.search_};
         },
         retrieves() {
             const params = this.getRequestParams(
