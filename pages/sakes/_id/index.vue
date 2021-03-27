@@ -9,9 +9,19 @@
     <h6>By {{ sake.author }} </h6>
     <dl>
       <dt>酒蔵</dt>
-      <dd>{{ sake.brewery ? sake.brewery.name : '' }}</dd>
+      <dd>
+        <nuxt-link
+          :to="'/breweries/' + sake.brewery._id">
+          {{ sake.brewery.name }}
+        </nuxt-link>
+      </dd>
       <dt>銘柄</dt>
-      <dd>{{ sake.brand ? sake.brand.name : '' }}</dd>
+      <dd>
+        <nuxt-link
+          :to="'/brands/' + sake.brand._id">
+          {{ sake.brand.name }}
+        </nuxt-link>
+      </dd>
       <dt>分類</dt>
       <dd>
         <h3>

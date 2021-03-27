@@ -9,7 +9,12 @@
 
     <dl>
       <dt>酒蔵</dt>
-      <dd>{{ brand.brewery ? brand.brewery.name : '' }}</dd>
+      <dd>
+        <nuxt-link
+          :to="'/breweries/' + brand.brewery._id">
+          {{ brand.brewery.name }}
+        </nuxt-link>
+      </dd>
       <dt>ロゴ</dt>
       <dd>{{ brand.logo }}</dd>
       <dt>こだわり</dt>
