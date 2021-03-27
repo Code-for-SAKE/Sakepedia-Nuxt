@@ -59,10 +59,10 @@ export default {
     methods: {
         getRequestParams(page, limit) {
             if (page) {
-                search_["page"] = page;
+                this.search_["page"] = page;
             }
             if (limit) {
-                search_["limit"] = limit;
+                this.search_["limit"] = limit;
             }
             return {params: search_};
         },
