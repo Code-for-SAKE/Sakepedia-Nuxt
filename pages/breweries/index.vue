@@ -19,7 +19,7 @@
     </div>
     <b-pagination
       v-model="page"
-      :total-rows="count"
+      :total-rows="count*limit"
       :per-page="limit"
       prev-text="Prev"
       next-text="Next"
@@ -70,8 +70,9 @@ export default {
     const {data} = await context.$axios.get('/api/breweries')
     return {
       breweries : data.breweries,
+      count : data.pageCount,
       page : data.currentPage,
-      count : data.pageCount
+      pages : data.pages
     }
   },
   methods: {
