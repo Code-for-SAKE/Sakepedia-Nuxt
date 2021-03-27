@@ -3,7 +3,7 @@
         <b-pagination
             v-if="bydatas.length >= 1"
             v-model="page"
-            :total-rows="count"
+            :total-rows="count*limit"
             :per-page="limit"
             prev-text="Prev"
             next-text="Next"
