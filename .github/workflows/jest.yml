@@ -1,0 +1,24 @@
+name: jest
+
+on:
+  - pull_request
+
+jobs:
+  build:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      
+      # Check out the repository
+      - uses: actions/checkout@v1
+
+      # Install Node.js
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.16.0
+
+      # Install your dependencies
+      - run: yarn install
+
+      # Run ESLint
+      - run: yarn run test:jest
