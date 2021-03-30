@@ -51,3 +51,5 @@ $ pm2 start npm -- start
 # generate static project
 $ yarn generate
 ```
+## run test in local
+`yarn run test:jest`
