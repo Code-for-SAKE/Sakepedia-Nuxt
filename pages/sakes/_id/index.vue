@@ -11,6 +11,7 @@
       <dt>酒蔵</dt>
       <dd>
         <nuxt-link
+          v-if="sake.brewery"
           :to="'/breweries/' + sake.brewery._id">
           {{ sake.brewery.name }}
         </nuxt-link>
@@ -18,6 +19,7 @@
       <dt>銘柄</dt>
       <dd>
         <nuxt-link
+          v-if="sake.brand"
           :to="'/brands/' + sake.brand._id">
           {{ sake.brand.name }}
         </nuxt-link>
