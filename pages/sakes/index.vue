@@ -92,7 +92,7 @@ export default {
       if (limit) {
         params["limit"] = limit;
       }
-      if (searchTypesQuery.length > 0) {
+      if (searchTypesQuery[0] !== '') {
         params["typeQuery"] = searchTypesQuery;
       }
       return {params: params};
