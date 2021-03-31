@@ -11,6 +11,7 @@
       <dt>酒蔵</dt>
       <dd>
         <nuxt-link
+          v-if="brand.brewery"
           :to="'/breweries/' + brand.brewery._id">
           {{ brand.brewery.name }}
         </nuxt-link>
