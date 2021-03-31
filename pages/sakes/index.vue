@@ -12,8 +12,16 @@
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; retrieves();"
+            @click="page = 1; searchByName();"
           >検索</b-button>
+        </div>
+        <input type="text" class="form-controll" v-model="types" />
+        <div class="input-group-append">
+          <b-button
+            variant="secondary"
+            type="button"
+            @click="page = 1; searchByTypes();"
+          >タグで検索</b-button>
         </div>
       </div>
     </div>
@@ -56,7 +64,8 @@ export default {
       sakes: [],
       searchValue: null,
       searchText: "",
-
+      types: '',
+      typeQuery: [],
       page: 1,
       count: 0,
       limit: 10,
@@ -72,7 +81,7 @@ export default {
     }
   },
   methods: {
-    getRequestParams(searchText, page, limit) {
+    getRequestParams(searchText, page, limit, typeQuery) {
       let params = {};
       if (searchText) {
         params["keyword"] = searchText;
@@ -83,15 +92,20 @@ export default {
       if (limit) {
         params["limit"] = limit;
       }
+      if (typeQuery) {
+        params["typeQuery"] = typeQuery;
+      }
       return {params: params};
     },
 
-    retrieves() {
-      let search = this.searchText
+    retrieves(name='', types=[]) {
+      let search = name
+      const typeQuery = types
       const params = this.getRequestParams(
         search,
         this.page,
-        this.limit
+        this.limit,
+        typeQuery
       );
 
       this.$axios.get('/api/sakes', params)
@@ -108,6 +122,14 @@ export default {
       this.page = value;
       this.retrieves();
     },
+    searchByName () {
+      const name = this.searchText;
+      this.retrieves(name,[])
+    },
+    searchByTypes () {
+      const typeQuery = this.types.split(/[\s|　]+/);
+      this.retrieves('',typeQuery);
+    }
   }
 }
 </script>
