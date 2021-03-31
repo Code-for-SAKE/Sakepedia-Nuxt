@@ -12,7 +12,7 @@
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; retrieves();"
+            @click="page = 1; searchByName();"
           >検索</b-button>
         </div>
         <input type="text" class="form-controll" v-model="types" />
@@ -98,9 +98,9 @@ export default {
       return {params: params};
     },
 
-    retrieves() {
-      let search = this.searchText
-      const typeQuery = this.typeQuery
+    retrieves(name='', types=[]) {
+      let search = name
+      const typeQuery = types
       const params = this.getRequestParams(
         search,
         this.page,
@@ -122,9 +122,13 @@ export default {
       this.page = value;
       this.retrieves();
     },
+    searchByName () {
+      const name = this.searchText;
+      this.retrieves(name,[])
+    },
     searchByTypes () {
-      this.typeQuery = this.types.split(/[\s|　]+/);
-      this.retrieves()
+      const typeQuery = this.types.split(/[\s|　]+/);
+      this.retrieves('',typeQuery);
     }
   }
 }
