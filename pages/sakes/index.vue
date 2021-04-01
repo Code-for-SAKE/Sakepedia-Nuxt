@@ -7,12 +7,12 @@
     <hr>
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" v-model="searchText" />
+        <input type="text" class="form-control" v-model="searchName" />
         <div class="input-group-append">
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; searchByName();"
+            @click="page = 1; search();"
           >検索</b-button>
         </div>
         <input type="text" class="form-control" v-model="types" />
@@ -20,7 +20,7 @@
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; searchByTypes();"
+            @click="page = 1; search();"
           >タグで検索</b-button>
         </div>
       </div>
@@ -63,13 +63,13 @@ export default {
 
       sakes: [],
       searchValue: null,
-      searchText: "",
+      searchName: "",
       types: '',
-      typeQuery: [],
       page: 1,
       count: 0,
       limit: 10,
-
+      searchTypes: '',
+      searchTypesQuery: []
     };
   },
   async asyncData(context){
@@ -81,10 +81,10 @@ export default {
     }
   },
   methods: {
-    getRequestParams(searchText, page, limit, typeQuery) {
+    getRequestParams(searchName, page, limit, searchTypesQuery) {
       let params = {};
-      if (searchText) {
-        params["keyword"] = searchText;
+      if (searchName) {
+        params["keyword"] = searchName;
       }
       if (page) {
         params["page"] = page;
@@ -92,20 +92,18 @@ export default {
       if (limit) {
         params["limit"] = limit;
       }
-      if (typeQuery) {
-        params["typeQuery"] = typeQuery;
+      if (searchTypesQuery[0] !== '') {
+        params["typeQuery"] = searchTypesQuery;
       }
       return {params: params};
     },
 
-    retrieves(name='', types=[]) {
-      let search = name
-      const typeQuery = types
+    retrieves () {
       const params = this.getRequestParams(
-        search,
+        this.searchName,
         this.page,
         this.limit,
-        typeQuery
+        this.searchTypesQuery
       );
 
       this.$axios.get('/api/sakes', params)
@@ -122,14 +120,10 @@ export default {
       this.page = value;
       this.retrieves();
     },
-    searchByName () {
-      const name = this.searchText;
-      this.retrieves(name,[])
+    search () {
+      this.searchTypesQuery = this.searchTypes.split(/[\s|　]+/);
+      this.retrieves()
     },
-    searchByTypes () {
-      const typeQuery = this.types.split(/[\s|　]+/);
-      this.retrieves('',typeQuery);
-    }
   }
 }
 </script>
