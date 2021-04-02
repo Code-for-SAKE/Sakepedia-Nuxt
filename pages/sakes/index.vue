@@ -15,7 +15,7 @@
             @click="page = 1; search();"
           >検索</b-button>
         </div>
-        <input type="text" class="form-control" v-model="types" />
+        <input type="text" class="form-control" v-model="searchTypes" />
         <div class="input-group-append">
           <b-button
             variant="secondary"
@@ -68,8 +68,8 @@ export default {
       page: 1,
       count: 0,
       limit: 10,
-      searchTypesQuery: [],
-      searchTypes: ''
+      searchTypes: '',
+      searchTypesQuery: []
     };
   },
   async asyncData(context){
