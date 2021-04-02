@@ -15,7 +15,7 @@
             @click="page = 1; search();"
           >検索</b-button>
         </div>
-        <input type="text" class="form-controll" v-model="searchTypes" />
+        <input type="text" class="form-control" v-model="types" />
         <div class="input-group-append">
           <b-button
             variant="secondary"
@@ -68,6 +68,7 @@ export default {
       page: 1,
       count: 0,
       limit: 10,
+      searchTypes: '',
       searchTypesQuery: []
     };
   },
@@ -80,10 +81,10 @@ export default {
     }
   },
   methods: {
-    getRequestParams(searchText, page, limit, typeQuery) {
+    getRequestParams(searchName, page, limit, searchTypesQuery) {
       let params = {};
-      if (searchText) {
-        params["keyword"] = searchText;
+      if (searchName) {
+        params["keyword"] = searchName;
       }
       if (page) {
         params["page"] = page;
@@ -91,8 +92,8 @@ export default {
       if (limit) {
         params["limit"] = limit;
       }
-      if (typeQuery) {
-        params["typeQuery"] = typeQuery;
+      if (searchTypesQuery[0] !== '') {
+        params["typeQuery"] = searchTypesQuery;
       }
       return {params: params};
     },
