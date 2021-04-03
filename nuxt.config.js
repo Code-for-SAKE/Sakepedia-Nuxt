@@ -32,12 +32,14 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    "@/plugins/vueselect.js"
+    "@/plugins/vueselect.js",
+    "@/plugins/moment-filter.js",
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/moment'
   ],
   /*
   ** Nuxt.js modules
@@ -57,6 +59,13 @@ module.exports = {
   axios: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3030',
     browserBaseURL: process.env.BASE_URL || 'http://localhost:3030',
+  },
+  /*
+  ** monent.js Configurtion
+  */
+  moment: {
+    timezone: true,
+    locales: ['ja'],
   },
   /*
   ** Build configuration
