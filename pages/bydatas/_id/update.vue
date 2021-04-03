@@ -129,6 +129,16 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label for="">製造年月日</label>
+            <input type="text" class="form-control"
+              :class="{ 'is-invalid': errors && errors.bottledDate }"
+              v-model="bydata.bottledDate">
+            <div class="invalid-feedback" v-if="errors && errors.bottledDate">
+              {{ errors.bottledDate.msg }}
+            </div>
+          </div>
+
           <b-button variant="primary" type="submit" class="mr-3">更新</b-button>
           <b-button :to="'/bydatas/' + $route.params.id" class="mr-3">キャンセル</b-button>
 
