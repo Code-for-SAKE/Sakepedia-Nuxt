@@ -34,64 +34,67 @@ describe('components/BrandList.vue', () => {
   it('is a Vue instance', () => {
     expect(wrapper.vm).toBeTruthy();
   });
-  describe('will be rendered correctly', () => {
-    it('with data', () => {
-      expect(wrapper.html()).toMatchSnapshot();
-    });
-    it('without data', () => {
-      wrapper = mount(BrandList, {
-        mocks: {
-          $axios: {
-            get: jest.fn(() => Promise.resolve({
-              data: {
-                brands: [],
-                currentPage: 1,
-                pageCount: 0
-              }
-            }))
-          }
-        },
-        props: {
-          search: {}
-        }
+  describe('template', () => {
+    describe('will be rendered correctly', () => {
+      it('with data', () => {
+        expect(wrapper.html()).toMatchSnapshot();
       });
-      expect(wrapper.html()).toMatchSnapshot();
-    })
-  });
-  
-  describe('methods', () => {
-    describe('getRequestParams', () => {
-      it('return correct value', () => {
-        const page = 1;
-        const limit = 10;
-        wrapper.vm.search_ = {}
-        expect(wrapper.vm.getRequestParams(page,limit)).toEqual({
-          params: {
-            page: page,
-            limit: limit
+      it('without data', () => {
+        wrapper = mount(BrandList, {
+          mocks: {
+            $axios: {
+              get: jest.fn(() => Promise.resolve({
+                data: {
+                  brands: [],
+                  currentPage: 1,
+                  pageCount: 0
+                }
+              }))
+            }
+          },
+          props: {
+            search: {}
           }
         });
+        expect(wrapper.html()).toMatchSnapshot();
       });
     });
   });
-  describe('retrieves', () => {
-    const page = 1
-    const limit = 10
-    it('getRequestParams has been called', () => {
-      const spyGetRequestParams = jest.spyOn(wrapper.vm, 'getRequestParams');
-      wrapper.vm.retrieves();
-      expect(spyGetRequestParams).toHaveBeenCalledWith(page,limit);
-    });
-    it('$axios.get has been called', () => {
-      const spyAxiosGet = jest.spyOn(wrapper.vm.$axios, 'get')
-      expect(spyAxiosGet).toHaveBeenCalledWith('/api/brands', { params: { page: page, limit: limit } });
-    });
-  });
-  describe('handlePageChange', () => {
-    it('retrieves() has been called', () => {
-      const spyRetrieves = jest.spyOn(wrapper.vm, 'retrieves');
-      wrapper.vm.handlePageChange();
-      expect(spyRetrieves).toHaveBeenCalled();
+  describe('script', () => {
+    describe('methods', () => {
+      describe('getRequestParams', () => {
+        it('return correct value', () => {
+          const page = 1;
+          const limit = 10;
+          wrapper.vm.search_ = {}
+          expect(wrapper.vm.getRequestParams(page,limit)).toEqual({
+            params: {
+              page: page,
+              limit: limit
+            }
+          });
+        });
+      });
+      describe('retrieves', () => {
+        const page = 1
+        const limit = 10
+        it('getRequestParams has been called', () => {
+          const spyGetRequestParams = jest.spyOn(wrapper.vm, 'getRequestParams');
+          wrapper.vm.retrieves();
+          expect(spyGetRequestParams).toHaveBeenCalledWith(page,limit);
+        });
+        it('$axios.get has been called', () => {
+          const spyAxiosGet = jest.spyOn(wrapper.vm.$axios, 'get')
+          expect(spyAxiosGet).toHaveBeenCalledWith('/api/brands', { params: { page: page, limit: limit } });
+        });
+      });
+      describe('handlePageChange', () => {
+        it('retrieves() has been called', () => {
+          const spyRetrieves = jest.spyOn(wrapper.vm, 'retrieves');
+          wrapper.vm.handlePageChange();
+          expect(spyRetrieves).toHaveBeenCalled();
+        });
+      });
     });
   });
 });
