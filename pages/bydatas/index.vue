@@ -19,7 +19,7 @@
     </div>
     <b-pagination
       v-model="page"
-      :total-rows="count"
+      :total-rows="count*limit"
       :per-page="limit"
       prev-text="Prev"
       next-text="Next"

@@ -8,7 +8,7 @@ const router = Router()
 const breweryYearDatasController = require('../controllers/breweryYearDatasController')
 
 // Get All
-router.get('/bydatas', paginate.middleware(3, 50), breweryYearDatasController.all)
+router.get('/bydatas', paginate.middleware(10, 50), breweryYearDatasController.all)
 
 // Get One
 router.get('/bydatas/:id', breweryYearDatasController.show)
