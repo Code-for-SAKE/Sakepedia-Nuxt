@@ -18,6 +18,7 @@ describe('components/BrandList.vue', () => {
       },
       stubs: {
         'nuxt-link': RouterLinkStub,
+        'b-pagination': true
       }
     });
   })
