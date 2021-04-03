@@ -6,7 +6,7 @@
       aria-label="Pagination"
       class="pagination b-pagination justify-content-center">
       <li role="presentation" aria-hidden="true" class="page-item disabled">
-        <span role="menuitem" aria-label="Go to first page" aria-disabled="true" class="page-link"></span>
+        <span role="menuitem" aria-label="Go to first page" aria-disabled="true" class="page-link">«</span>
       </li>
       <li role="presentation" aria-hidden="true" class="page-item disabled">
         <span role="menuitem" aria-label="Go to previous page" aria-disabled="true" class="page-link">Prev</span>

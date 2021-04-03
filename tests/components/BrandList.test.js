@@ -1,71 +1,85 @@
 import { mount, RouterLinkStub } from '@vue/test-utils'
 import BrandList from '@/components/BrandList.vue'
 
-let wrapper;
-const responseMock = {
-  data: {
-    brands: [
-      {_id: 'test', name: 'test'},
-      {_id: 'test2', name: 'test2'},
-      {_id: 'test3', name: 'test3'}
-    ],
-    currentPage: 1,
-    pageCount: 0
-  }
-}
-beforeAll(() => {
-  wrapper = mount(BrandList, {
-    mocks: {
-      $axios: {
-        get: jest.fn(() => Promise.resolve(responseMock))
-      }
-    },
-    props: {
-      search: {}
-    },
-    stubs: {
-      'nuxt-link': RouterLinkStub,
-    }
-  });
-});
+
 
 describe('components/BrandList.vue', () => {
+  let wrapper;
+  let responseMock
+  beforeEach(() => {
+    wrapper = mount(BrandList, {
+      mocks: {
+        $axios: {
+          get: jest.fn(() => Promise.resolve(responseMock))
+        }
+      },
+      propsData: {
+        search: {}
+      },
+      stubs: {
+        'nuxt-link': RouterLinkStub,
+      }
+    });
+  })
   it('is a Vue instance', () => {
     expect(wrapper.vm).toBeTruthy();
   });
   describe('template', () => {
-    describe('will be rendered correctly', () => {
-      it('with data', () => {
-        expect(wrapper.html()).toMatchSnapshot();
-      });
-      it('without data', () => {
-        wrapper = mount(BrandList, {
-          mocks: {
-            $axios: {
-              get: jest.fn(() => Promise.resolve({
-                data: {
-                  brands: [],
-                  currentPage: 1,
-                  pageCount: 0
-                }
-              }))
+    describe('renderd correctly', () => {
+      describe('with data', () => {
+        beforeAll(() => {
+          responseMock = {
+            data: {
+              brands: [
+                {_id: 'test', name: 'test'},
+                {_id: 'test2', name: 'test2'},
+                {_id: 'test3', name: 'test3'}
+              ],
+              currentPage: 1,
+              pageCount: 0
             }
-          },
-          props: {
-            search: {}
           }
         });
-        expect(wrapper.html()).toMatchSnapshot();
+        it('will be renderd correctly', () => {
+          expect(wrapper.html()).toMatchSnapshot();
+        });
+      });
+      
+      describe('without data', () => {
+        beforeAll(() => {
+          responseMock = {
+            data: {
+              brands: [],
+              currentPage: 1,
+              pageCount: 0
+            }
+          }
+        });
+        it('will be renderd correctly', () => {
+          expect(wrapper.html()).toMatchSnapshot();
+        });
       });
     });
   });
   describe('script', () => {
+    beforeAll(() => {
+      responseMock = {
+        data: {
+          brands: [
+            {_id: 'test', name: 'test'},
+            {_id: 'test2', name: 'test2'},
+            {_id: 'test3', name: 'test3'}
+          ],
+          currentPage: 1,
+          pageCount: 0
+        }
+      }
+    });
     describe('methods', () => {
       describe('getRequestParams', () => {
         it('return correct value', () => {
           const page = 1;
           const limit = 10;
-          wrapper.vm.search_ = {}
           expect(wrapper.vm.getRequestParams(page,limit)).toEqual({
             params: {
               page: page,
@@ -84,6 +98,7 @@ describe('components/BrandList.vue', () => {
         });
         it('$axios.get has been called', () => {
           const spyAxiosGet = jest.spyOn(wrapper.vm.$axios, 'get')
+          wrapper.vm.retrieves();
           expect(spyAxiosGet).toHaveBeenCalledWith('/api/brands', { params: { page: page, limit: limit } });
         });
       });
