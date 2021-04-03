@@ -15,7 +15,7 @@
             @click="page = 1; search();"
           >検索</b-button>
         </div>
-        <input type="text" class="form-control" v-model="types" />
+        <input type="text" class="form-control" v-model="searchTypes" />
         <div class="input-group-append">
           <b-button
             variant="secondary"
