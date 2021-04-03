@@ -25,7 +25,6 @@ beforeAll(() => {
     },
     stubs: {
       'nuxt-link': RouterLinkStub,
-      'b-pagination': true
     }
   });
 });
