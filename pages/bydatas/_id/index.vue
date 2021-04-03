@@ -19,13 +19,13 @@
       <dt>精米歩合</dt>
       <dd><range-value v-bind:values="bydata.ricePolishingRate" /></dd>
       <dt>酵母</dt>
-      <dd><range-value v-bind:values="bydata.sakeYeast" /></dd>
+      <dd>{{bydata.sakeYeast}}</dd>
       <dt>麹米</dt>
-      <dd><range-value v-bind:values="bydata.riceForMakingKoji" /></dd>
+      <dd>{{bydata.riceForMakingKoji}}</dd>
       <dt>掛米</dt>
-      <dd><range-value v-bind:values="bydata.sakeRiceExceptForKojiMaking" /></dd>
+      <dd>{{bydata.sakeRiceExceptForKojiMaking}}</dd>
       <dt>製造年月(日)</dt>
-      <dd><range-value v-bind:values="bydata.bottledDate" /></dd>
+      <dd>{{bydata.bottledDate}}</dd>
       <dt>更新日</dt>
       <dd>{{bydata.modifiedAt}}</dd>
     </dl>
