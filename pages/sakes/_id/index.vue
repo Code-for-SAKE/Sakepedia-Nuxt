@@ -33,7 +33,7 @@
       <dt>説明</dt>
       <dd>{{ sake.description }}</dd>
       <dt>URL</dt>
-      <dd><nuxt-link v-if="sake.url" :to="sake.url">{{sake.url}}</nuxt-link></dd>
+      <dd><a v-if="sake.url" :href="sake.url">{{sake.url}}</a></dd>
     </dl>
 
     <hr>
