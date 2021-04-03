@@ -2,7 +2,7 @@
     <div class="bydata">
         <div v-if="bydata" >
             <h4>{{ bydata.makedBY }}年</h4>
-            <h6>By {{ bydata.author }} {{ bydata.modifiedAt }} </h6>
+            <h6>By {{ bydata.author }} {{ bydata.modifiedAt | datetime }} </h6>
             <dl>
                 <dt>アミノ酸度</dt>
                 <dd><range-value v-bind:values="bydata.aminoAcidContent" /></dd>
@@ -21,12 +21,12 @@
                 <dt>掛米</dt>
                 <dd>{{ bydata.sakeRiceExceptForKojiMaking }}</dd>
                 <dt>製造年月(日)</dt>
-                <dd>{{ bydata.bottledDate }}</dd>
+                <dd>{{ bydata.bottledDate | date }}</dd>
             </dl>
             <hr>
             <div class="d-flex justify-content-between">
                 <div>
-                    <b-button variant="primary" :to="'/sakes/' + sake._id + '/update'" class="mr-3">編集</b-button>
+                    <b-button variant="primary" :to="'/bydatas/' + bydata._id + '/update'" class="mr-3">編集</b-button>
                     <b-button variant="danger" @click="deleteRecord()">削除</b-button>
                 </div>
             </div>
@@ -64,6 +64,21 @@ export default {
                 this.bydata = response.data.bydatas[0]
             });
         }
+    },
+    methods:{
+      deleteRecord(){
+        if(confirm("Are you sure?") === true){
+          this.$axios.delete('/api/bydatas/' + bydata._id)
+            .then((response) => {
+              if(response.data._id){
+                this.$router.push({ name:'bydatas', params:{ deleted:'yes' } })
+              }
+            })
+            .catch( (error) => {
+              console.log(error);
+            });
+        }
+      }
     }
 }
 </script>
