@@ -81,7 +81,7 @@ export default {
     }
   },
   mounted() {
-    this.searchTypes = this.$route.query.type;
+    this.searchTypes = this.$route.query.type ?? '';
     this.search()
   },
   methods: {
