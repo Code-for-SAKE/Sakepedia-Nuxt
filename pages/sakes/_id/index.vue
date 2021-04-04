@@ -27,7 +27,7 @@
       <dt>分類</dt>
       <dd>
         <h3>
-          <span v-for="type in sake.type" class="badge badge-pill badge-primary p-2 m-1">{{ type }}</span>
+          <nuxt-link v-for="type in sake.type" :to="'/sakes/?type=' + type" class="badge badge-pill badge-primary p-2 m-1">{{ type }}</nuxt-link>
         </h3>
       </dd>
       <dt>説明</dt>

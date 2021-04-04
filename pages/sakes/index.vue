@@ -80,6 +80,10 @@ export default {
       count : data.pageCount
     }
   },
+  mounted() {
+    this.searchTypes = this.$route.query.type;
+    this.search()
+  },
   methods: {
     getRequestParams(searchName, page, limit, searchTypesQuery) {
       let params = {};
