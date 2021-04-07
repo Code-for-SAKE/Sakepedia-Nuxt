@@ -14,7 +14,6 @@
   "dependencies": {
     "@nuxtjs/auth": "^4.8.5",
     "@nuxtjs/axios": "^5.9.3",
-    "@nuxtjs/composition-api": "^0.22.4",
     "@nuxtjs/style-resources": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.1.3",
