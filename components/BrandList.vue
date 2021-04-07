@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { getList } from '../lib/ApiClient/getList'
 export default {
     props: {
         search: {
@@ -49,43 +50,26 @@ export default {
         };
     },
     created(){
-        this.$axios.get('/api/brands', {params: this.search})
-        .then(response => (
-            this.brands = response.data.brands,
-            this.page = response.data.currentPage,
-            this.count = response.data.pageCount
-        ))
-    },
+      getList('brands', {brewery: this.search.brewery}).then((res) => {
+        this.brands = res.list
+        this.page = res.currentPage
+        this.count = res.count
+      })
+  },
     methods: {
-        getRequestParams(page, limit) {
-            if (page) {
-                this.search_["page"] = page;
-            }
-            if (limit) {
-                this.search_["limit"] = limit;
-            }
-            return {params: this.search_};
-        },
-        retrieves() {
-            const params = this.getRequestParams(
-                this.page,
-                this.limit
-            );
-
-            this.$axios.get('/api/brands', params)
-            .then((response) => {
-                this.brands = response.data.brands
-                this.page = response.data.currentPage
-                this.count = response.data.pageCount
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-        },
-        handlePageChange(value) {
-            this.page = value;
-            this.retrieves();
-        },
+      async retrieves() {
+        const { list, currentPage, count } = await getList('brands', {
+          page: this.page,
+          limit: this.limit,
+        })
+        this.brands = list
+        this.page = currentPage
+        this.count = count
+      },
+      handlePageChange(value) {
+          this.page = value;
+          this.retrieves();
+      },
     }
 }
 </script>
