@@ -39,6 +39,7 @@ module.exports = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/composition-api',
     '@nuxtjs/moment'
   ],
   /*
