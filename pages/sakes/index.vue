@@ -7,7 +7,7 @@
     <hr>
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" v-model="searchName" @keypress.enter='keyPressed'/>
+        <input type="text" class="form-control" v-model="searchName" @keypress.enter='retrieves'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
@@ -15,7 +15,7 @@
             @click="page = 1; search();"
           >検索</b-button>
         </div>
-        <input type="text" class="form-control" v-model="searchTypes" @keypress.enter='keyPressed'/>
+        <input type="text" class="form-control" v-model="searchTypes" @keypress.enter='retrieves'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
@@ -104,9 +104,6 @@ export default {
     search () {
       this.typeQuery = this.searchTypes.split(/[\s|　]+/);
       this.retrieves()
-    },
-    keyPressed () {
-      this.search()
     }
   }
 }
