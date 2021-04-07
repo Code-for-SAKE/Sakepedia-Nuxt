@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/brands/index.vue template renderd correctly with data will be renderd correctly 1`] = `
+"<div search=\\"[object Object]\\">
+  <div class=\\"d-flex justify-content-between align-items-center\\">
+    <h1>銘柄一覧</h1>
+    <b-button-stub variant=\\"success\\" to=\\"/brands/add\\">追加</b-button-stub>
+  </div>
+  <hr>
+  <div class=\\"col-md-8\\">
+    <div class=\\"input-group mb-3\\"><input type=\\"text\\" class=\\"form-control\\">
+      <div class=\\"input-group-append\\">
+        <b-button-stub variant=\\"secondary\\" type=\\"button\\">検索</b-button-stub>
+      </div>
+    </div>
+  </div>
+  <b-pagination-stub total-rows=\\"0\\" per-page=\\"10\\" prev-text=\\"Prev\\" next-text=\\"Next\\" align=\\"center\\" value=\\"1\\"></b-pagination-stub>
+  <hr>
+  <div class=\\"list-group\\"><a class=\\"list-group-item list-group-item-action\\">
+      test
+    </a><a class=\\"list-group-item list-group-item-action\\">
+      test2
+    </a><a class=\\"list-group-item list-group-item-action\\">
+      test3
+    </a></div>
+</div>"
+`;
+
+exports[`pages/brands/index.vue template renderd correctly without data will be renderd correctly 1`] = `
+"<div search=\\"[object Object]\\">
+  <div class=\\"d-flex justify-content-between align-items-center\\">
+    <h1>銘柄一覧</h1>
+    <b-button-stub variant=\\"success\\" to=\\"/brands/add\\">追加</b-button-stub>
+  </div>
+  <hr>
+  <div class=\\"col-md-8\\">
+    <div class=\\"input-group mb-3\\"><input type=\\"text\\" class=\\"form-control\\">
+      <div class=\\"input-group-append\\">
+        <b-button-stub variant=\\"secondary\\" type=\\"button\\">検索</b-button-stub>
+      </div>
+    </div>
+  </div>
+  <b-pagination-stub total-rows=\\"0\\" per-page=\\"10\\" prev-text=\\"Prev\\" next-text=\\"Next\\" align=\\"center\\" value=\\"1\\"></b-pagination-stub>
+  <hr>
+  <div class=\\"alert alert-warning\\">
+    データがありません
+  </div>
+</div>"
+`;

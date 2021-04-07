@@ -1,19 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/BrandList.vue template renderd correctly with data will be renderd correctly 1`] = `
+exports[`components/BreweryYearDataList.vue template renderd correctly with data will be renderd correctly 1`] = `
 "<div>
-  <b-pagination-stub total-rows=\\"0\\" per-page=\\"10\\" prev-text=\\"Prev\\" next-text=\\"Next\\" align=\\"center\\" value=\\"1\\"></b-pagination-stub>
+  <b-pagination-stub total-rows=\\"0\\" per-page=\\"3\\" prev-text=\\"Prev\\" next-text=\\"Next\\" align=\\"center\\" value=\\"1\\"></b-pagination-stub>
   <div class=\\"list-group\\"><a class=\\"list-group-item list-group-item-action\\">
-      test
+      test1
+
     </a><a class=\\"list-group-item list-group-item-action\\">
       test2
+
     </a><a class=\\"list-group-item list-group-item-action\\">
       test3
+
     </a></div>
 </div>"
 `;
 
-exports[`components/BrandList.vue template renderd correctly without data will be renderd correctly 1`] = `
+exports[`components/BreweryYearDataList.vue template renderd correctly without data will be renderd correctly 1`] = `
 "<div>
   <!---->
   <div class=\\"alert alert-warning\\">

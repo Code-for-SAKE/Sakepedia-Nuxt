@@ -1,26 +1,26 @@
 import { mount, RouterLinkStub } from '@vue/test-utils'
-import BrandList from '@/components/BrandList.vue'
+import BreweryYearDataList from '@/components/BreweryYearDataList.vue'
 import { getList } from '../../lib/ApiClient/getList'
 
 jest.mock('../../lib/ApiClient/getList', () => ({
   __esModule: true,
   getList: jest.fn(() => Promise.resolve({
     list: [
-      {_id: 'test', name: 'test'},
-      {_id: 'test2', name: 'test2'},
-      {_id: 'test3', name: 'test3'}
+      {_id: 'test', name: 'test', sake: {name: 'test1'}},
+      {_id: 'test2', name: 'test2', sake: {name: 'test2'}},
+      {_id: 'test3', name: 'test3', sake: {name: 'test3'}}
     ],
     currentPage: 1,
     count: 0
   }))
 }))
 
-describe('components/BrandList.vue', () => {
+describe('components/BreweryYearDataList.vue', () => {
   let wrapper;
   let responseMock;
 
   beforeEach(() => {
-    wrapper = mount(BrandList, {
+    wrapper = mount(BreweryYearDataList, {
       propsData: {
         search: {}
       },
@@ -39,9 +39,9 @@ describe('components/BrandList.vue', () => {
         beforeAll(() => {
           responseMock = {
             list: [
-              {_id: 'test', name: 'test'},
-              {_id: 'test2', name: 'test2'},
-              {_id: 'test3', name: 'test3'}
+              {_id: 'test', name: 'test', sake: {name: 'test1'}},
+              {_id: 'test2', name: 'test2', sake: {name: 'test2'}},
+              {_id: 'test3', name: 'test3', sake: {name: 'test3'}}
             ],
             currentPage: 1,
             count: 0
