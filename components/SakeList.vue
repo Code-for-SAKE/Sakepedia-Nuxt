@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { getList } from '../lib/ApiClient/getList'
 export default {
     props: {
         search: {
@@ -49,38 +50,21 @@ export default {
         };
     },
     created(){
-        this.$axios.get('/api/sakes', {params: this.search})
-        .then(response => (
-            this.sakes = response.data.sakes,
-            this.page = response.data.currentPage,
-            this.count = response.data.pageCount
-        ))
+      getList('sakes', {brand: this.search.brand}).then((res) => {
+        this.sakes = res.list
+        this.page = res.currentPage
+        this.count = res.count
+      })
     },
     methods: {
-        getRequestParams(page, limit) {
-            if (page) {
-                this.search_["page"] = page;
-            }
-            if (limit) {
-                this.search_["limit"] = limit;
-            }
-            return {params: this.search_};
-        },
-        retrieves() {
-            const params = this.getRequestParams(
-                this.page,
-                this.limit
-            );
-
-            this.$axios.get('/api/sakes', params)
-            .then((response) => {
-                this.sakes = response.data.sakes
-                this.page = response.data.currentPage
-                this.count = response.data.pageCount
-            })
-            .catch((e) => {
-                console.log(e);
-            });
+        async retrieves() {
+          const { list, currentPage, count } = await getList('sakes', {
+            page: this.page,
+            limit: this.limit,
+          })
+          this.sakes = list
+          this.page = currentPage
+          this.count = count
         },
         handlePageChange(value) {
             this.page = value;

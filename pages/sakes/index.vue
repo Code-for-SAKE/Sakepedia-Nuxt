@@ -54,6 +54,7 @@
 
 <script>
 import SakeSelect from '@/components/SakeSelect.vue'
+import { getList } from '../../lib/ApiClient/getList'
 export default {
   components: {
     SakeSelect,
@@ -69,15 +70,15 @@ export default {
       count: 0,
       limit: 10,
       searchTypes: '',
-      searchTypesQuery: []
+      typeQuery: []
     };
   },
   async asyncData(context){
-    const {data} = await context.$axios.get('/api/sakes')
+    const { list, currentPage, count } = await getList('sakes', {}, context)
     return {
-      sakes : data.sakes,
-      page : data.currentPage,
-      count : data.pageCount
+      sakes : list,
+      page : currentPage,
+      count : count
     }
   },
   mounted() {
@@ -85,47 +86,23 @@ export default {
     this.search()
   },
   methods: {
-    getRequestParams(searchName, page, limit, searchTypesQuery) {
-      let params = {};
-      if (searchName) {
-        params["keyword"] = searchName;
-      }
-      if (page) {
-        params["page"] = page;
-      }
-      if (limit) {
-        params["limit"] = limit;
-      }
-      if (searchTypesQuery[0] !== '') {
-        params["typeQuery"] = searchTypesQuery;
-      }
-      return {params: params};
-    },
-
-    retrieves () {
-      const params = this.getRequestParams(
-        this.searchName,
-        this.page,
-        this.limit,
-        this.searchTypesQuery
-      );
-
-      this.$axios.get('/api/sakes', params)
-      .then((response) => {
-        this.sakes = response.data.sakes
-        this.page = response.data.currentPage
-        this.count = response.data.pageCount
+    async retrieves () {
+      const { list, currentPage, count } = await getList('sakes', {
+        searchName: this.searchName,
+        page: this.page,
+        limit: this.limit,
+        ...(this.typeQuery[0] === '' ? {} : {typeQuery: this.typeQuery})
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      this.sakes = list
+      this.page = currentPage
+      this.count = count
     },
     handlePageChange(value) {
       this.page = value;
       this.retrieves();
     },
     search () {
-      this.searchTypesQuery = this.searchTypes.split(/[\s|　]+/);
+      this.typeQuery = this.searchTypes.split(/[\s|　]+/);
       this.retrieves()
     },
     keyPressed () {
