@@ -12,7 +12,7 @@
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; search();"
+            @click="page = 1; retrieves();"
           >検索</b-button>
         </div>
         <input type="text" class="form-control" v-model="searchTypes" @keypress.enter='retrieves'/>
@@ -20,7 +20,7 @@
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; search();"
+            @click="page = 1; retrieves();"
           >タグで検索</b-button>
         </div>
       </div>
@@ -83,10 +83,11 @@ export default {
   },
   mounted() {
     this.searchTypes = this.$route.query.type ?? '';
-    this.search()
+    this.retrieves()
   },
   methods: {
     async retrieves () {
+      this.typeQuery = this.searchTypes.split(/[\s|　]+/);
       const { list, currentPage, count } = await getList('sakes', {
         searchName: this.searchName,
         page: this.page,
@@ -100,10 +101,6 @@ export default {
     handlePageChange(value) {
       this.page = value;
       this.retrieves();
-    },
-    search () {
-      this.typeQuery = this.searchTypes.split(/[\s|　]+/);
-      this.retrieves()
     }
   }
 }
