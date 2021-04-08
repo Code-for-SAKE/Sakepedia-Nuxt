@@ -7,7 +7,7 @@
     <hr>
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" v-model="searchText" @keypress.enter='retrieves'/>
+        <input type="text" class="form-control" v-model="searchText" @keypress.enter='page=1; retrieves();'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
