@@ -1,5 +1,5 @@
 import { mount, RouterLinkStub } from '@vue/test-utils'
-import BrandList from '@/components/BrandList.vue'
+import SakeList from '@/components/SakeList.vue'
 import { getList } from '../../lib/ApiClient/getList'
 
 jest.mock('../../lib/ApiClient/getList', () => ({
@@ -15,12 +15,12 @@ jest.mock('../../lib/ApiClient/getList', () => ({
   }))
 }))
 
-describe('components/BrandList.vue', () => {
+describe('components/SakeList.vue', () => {
   let wrapper;
   let responseMock;
 
   beforeEach(() => {
-    wrapper = mount(BrandList, {
+    wrapper = mount(SakeList, {
       propsData: {
         search: {}
       },

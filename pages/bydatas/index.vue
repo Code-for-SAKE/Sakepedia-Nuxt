@@ -7,7 +7,7 @@
     <hr>
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" v-model="searchText" @keypress.enter='keyPressed'/>
+        <input type="text" class="form-control" v-model="searchText" @keypress.enter='retrieves'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { getList } from '../../lib/ApiClient/getList'
 export default {
   components: {
   },
@@ -63,52 +64,28 @@ export default {
     };
   },
   async asyncData(context){
-    const {data} = await context.$axios.get('/api/bydatas')
+    const { list, currentPage, count } = await getList('bydatas', {}, context)
     return {
-      bydatas : data.bydatas,
-      page : data.currentPage,
-      count : data.pageCount
+      bydatas : list,
+      page : currentPage,
+      count : count
     }
   },
   methods: {
-    getRequestParams(searchText, page, limit) {
-      let params = {};
-      if (searchText) {
-        params["keyword"] = searchText;
-      }
-      if (page) {
-        params["page"] = page;
-      }
-      if (limit) {
-        params["limit"] = limit;
-      }
-      return {params: params};
-    },
 
-    retrieves() {
-      let search = this.searchText
-      const params = this.getRequestParams(
-        search,
-        this.page,
-        this.limit
-      );
-
-      this.$axios.get('/api/bydatas', params)
-      .then((response) => {
-        this.bydatas = response.data.bydatas
-        this.page = response.data.currentPage
-        this.count = response.data.pageCount
+    async retrieves () {
+      const { list, currentPage, count } = await getList('bydatas', {
+        searchName: this.searchText,
+        page: this.page,
+        limit: this.limit,
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      this.bydatas = list
+      this.page = currentPage
+      this.count = count
     },
     handlePageChange(value) {
       this.page = value;
       this.retrieves();
-    },
-    keyPressed () {
-      this.retrieves()
     }
   }
 }

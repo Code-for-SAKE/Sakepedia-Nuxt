@@ -7,7 +7,7 @@
     <hr>
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" v-model="searchText" @keypress.enter='keyPressed'/>
+        <input type="text" class="form-control" v-model="searchText" @keypress.enter='retrieves'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
@@ -48,6 +48,7 @@
 <script>
 const Prefectures = require('../../utils/prefectures')
 import BrewerySelect from '@/components/BrewerySelect.vue'
+import { getList } from '../../lib/ApiClient/getList'
 export default {
   components: {
     BrewerySelect,
@@ -67,52 +68,27 @@ export default {
     };
   },
   async asyncData(context){
-    const {data} = await context.$axios.get('/api/breweries')
+    const { list, currentPage, count } = await getList('breweries', {}, context)
     return {
-      breweries : data.breweries,
-      count : data.pageCount,
-      page : data.currentPage,
-      pages : data.pages
+      breweries : list,
+      page : currentPage,
+      count : count
     }
   },
   methods: {
-    getRequestParams(searchText, page, limit) {
-      let params = {};
-      if (searchText) {
-        params["keyword"] = searchText;
-      }
-      if (page) {
-        params["page"] = page;
-      }
-      if (limit) {
-        params["limit"] = limit;
-      }
-      return {params: params};
-    },
-
-    retrieves() {
-      let search = this.searchText
-      const params = this.getRequestParams(
-        search,
-        this.page,
-        this.limit
-      );
-      this.$axios.get('/api/breweries', params)
-      .then((response) => {
-        this.breweries = response.data.breweries
-        this.page = response.data.currentPage
-        this.count = response.data.pageCount
+    async retrieves () {
+      const { list, currentPage, count } = await getList('breweries', {
+        searchName: this.searchText,
+        page: this.page,
+        limit: this.limit,
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      this.breweries = list
+      this.page = currentPage
+      this.count = count
     },
     handlePageChange(value) {
       this.page = value;
       this.retrieves();
-    },
-    keyPressed () {
-      this.retrieves()
     }
   }
 }

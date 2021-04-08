@@ -7,20 +7,20 @@
     <hr>
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" v-model="searchName" @keypress.enter='keyPressed'/>
+        <input type="text" class="form-control" v-model="searchName" @keypress.enter='retrieves'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; search();"
+            @click="page = 1; retrieves();"
           >検索</b-button>
         </div>
-        <input type="text" class="form-control" v-model="searchTypes" @keypress.enter='keyPressed'/>
+        <input type="text" class="form-control" v-model="searchTypes" @keypress.enter='retrieves'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; search();"
+            @click="page = 1; retrieves();"
           >タグで検索</b-button>
         </div>
       </div>
@@ -54,6 +54,7 @@
 
 <script>
 import SakeSelect from '@/components/SakeSelect.vue'
+import { getList } from '../../lib/ApiClient/getList'
 export default {
   components: {
     SakeSelect,
@@ -69,67 +70,37 @@ export default {
       count: 0,
       limit: 10,
       searchTypes: '',
-      searchTypesQuery: []
+      typeQuery: []
     };
   },
   async asyncData(context){
-    const {data} = await context.$axios.get('/api/sakes')
+    const { list, currentPage, count } = await getList('sakes', {}, context)
     return {
-      sakes : data.sakes,
-      page : data.currentPage,
-      count : data.pageCount
+      sakes : list,
+      page : currentPage,
+      count : count
     }
   },
   mounted() {
     this.searchTypes = this.$route.query.type ?? '';
-    this.search()
+    this.retrieves()
   },
   methods: {
-    getRequestParams(searchName, page, limit, searchTypesQuery) {
-      let params = {};
-      if (searchName) {
-        params["keyword"] = searchName;
-      }
-      if (page) {
-        params["page"] = page;
-      }
-      if (limit) {
-        params["limit"] = limit;
-      }
-      if (searchTypesQuery[0] !== '') {
-        params["typeQuery"] = searchTypesQuery;
-      }
-      return {params: params};
-    },
-
-    retrieves () {
-      const params = this.getRequestParams(
-        this.searchName,
-        this.page,
-        this.limit,
-        this.searchTypesQuery
-      );
-
-      this.$axios.get('/api/sakes', params)
-      .then((response) => {
-        this.sakes = response.data.sakes
-        this.page = response.data.currentPage
-        this.count = response.data.pageCount
+    async retrieves () {
+      this.typeQuery = this.searchTypes.split(/[\s|　]+/);
+      const { list, currentPage, count } = await getList('sakes', {
+        searchName: this.searchName,
+        page: this.page,
+        limit: this.limit,
+        ...(this.typeQuery[0] === '' ? {} : {typeQuery: this.typeQuery})
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      this.sakes = list
+      this.page = currentPage
+      this.count = count
     },
     handlePageChange(value) {
       this.page = value;
       this.retrieves();
-    },
-    search () {
-      this.searchTypesQuery = this.searchTypes.split(/[\s|　]+/);
-      this.retrieves()
-    },
-    keyPressed () {
-      this.search()
     }
   }
 }

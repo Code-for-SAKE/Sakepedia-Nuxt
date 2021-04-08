@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/BrandList.vue template renderd correctly with data will be renderd correctly 1`] = `
+exports[`components/SakeList.vue template renderd correctly with data will be renderd correctly 1`] = `
 "<div>
   <b-pagination-stub total-rows=\\"0\\" per-page=\\"10\\" prev-text=\\"Prev\\" next-text=\\"Next\\" align=\\"center\\" value=\\"1\\"></b-pagination-stub>
   <div class=\\"list-group\\"><a class=\\"list-group-item list-group-item-action\\">
@@ -13,7 +13,7 @@ exports[`components/BrandList.vue template renderd correctly with data will be r
 </div>"
 `;
 
-exports[`components/BrandList.vue template renderd correctly without data will be renderd correctly 1`] = `
+exports[`components/SakeList.vue template renderd correctly without data will be renderd correctly 1`] = `
 "<div>
   <!---->
   <div class=\\"alert alert-warning\\">

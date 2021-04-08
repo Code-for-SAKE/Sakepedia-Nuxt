@@ -1,8 +1,8 @@
 import { mount, RouterLinkStub } from '@vue/test-utils'
-import BrandList from '@/components/BrandList.vue'
-import { getList } from '../../lib/ApiClient/getList'
+import index from '@/pages/breweries/index.vue'
+import { getList } from '../../../lib/ApiClient/getList'
 
-jest.mock('../../lib/ApiClient/getList', () => ({
+jest.mock('../../../lib/ApiClient/getList', () => ({
   __esModule: true,
   getList: jest.fn(() => Promise.resolve({
     list: [
@@ -15,20 +15,23 @@ jest.mock('../../lib/ApiClient/getList', () => ({
   }))
 }))
 
-describe('components/BrandList.vue', () => {
+describe('pages/breweries/index.vue', () => {
   let wrapper;
   let responseMock;
 
-  beforeEach(() => {
-    wrapper = mount(BrandList, {
+  beforeEach(async() => {
+    wrapper = mount(index, {
       propsData: {
         search: {}
       },
       stubs: {
         'nuxt-link': RouterLinkStub,
-        'b-pagination': true
+        'b-pagination': true,
+        'b-button': true
       }
     });
+    const data = await wrapper.vm.$options.asyncData();
+    wrapper.setData(data);
   });
   it('is a Vue instance', () => {
     expect(wrapper.vm).toBeTruthy();

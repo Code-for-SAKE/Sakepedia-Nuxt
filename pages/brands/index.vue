@@ -7,7 +7,7 @@
     <hr>
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" v-model="searchText" @keypress.enter='keyPressed'/>
+        <input type="text" class="form-control" v-model="searchText" @keypress.enter='retrieves'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
@@ -46,6 +46,7 @@
 
 <script>
 import SakeSelect from '@/components/SakeSelect.vue'
+import { getList } from '../../lib/ApiClient/getList'
 export default {
   components: {
     SakeSelect,
@@ -64,52 +65,27 @@ export default {
     };
   },
   async asyncData(context){
-    const {data} = await context.$axios.get('/api/brands')
+    const { list, currentPage, count } = await getList('brands', {}, context)
     return {
-      brands : data.brands,
-      page : data.currentPage,
-      count : data.pageCount
+      brands : list,
+      page : currentPage,
+      count : count
     }
   },
   methods: {
-    getRequestParams(searchText, page, limit) {
-      let params = {};
-      if (searchText) {
-        params["keyword"] = searchText;
-      }
-      if (page) {
-        params["page"] = page;
-      }
-      if (limit) {
-        params["limit"] = limit;
-      }
-      return {params: params};
-    },
-
-    retrieves() {
-      let search = this.searchText
-      const params = this.getRequestParams(
-        search,
-        this.page,
-        this.limit
-      );
-
-      this.$axios.get('/api/brands', params)
-      .then((response) => {
-        this.brands = response.data.brands
-        this.page = response.data.currentPage
-        this.count = response.data.pageCount
+    async retrieves() {
+      const { list, currentPage, count } = await getList('brands', {
+        searchName: this.searchText,
+        page: this.page,
+        limit: this.limit,
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      this.brands = list
+      this.page = currentPage
+      this.count = count
     },
     handlePageChange(value) {
       this.page = value;
       this.retrieves();
-    },
-    keyPressed () {
-      this.retrieves()
     }
   }
 }

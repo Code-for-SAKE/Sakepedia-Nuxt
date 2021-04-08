@@ -53,3 +53,4 @@ $ yarn generate
 ```
 ## run test in local
 `yarn run test:jest`
+update jest snapshots by running `yarn run test:jest -u`

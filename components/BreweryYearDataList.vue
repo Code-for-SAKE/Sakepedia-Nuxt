@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { getList } from '../lib/ApiClient/getList'
 export default {
     props: {
         search: {
@@ -50,39 +51,21 @@ export default {
         };
     },
     mounted(){
-        this.$axios.get('/api/bydatas', {params: this.search})
-        .then(response => (
-            console.log(response.data.pageCount),
-            this.bydatas = response.data.bydatas,
-            this.page = response.data.currentPage,
-            this.count = response.data.pageCount
-        ))
+      getList('bydatas', {sake: this.search.sake}).then((res) => {
+        this.bydatas = res.list
+        this.page = res.currentPage
+        this.count = res.count
+      })
     },
     methods: {
-        getRequestParams(page, limit) {
-            if (page) {
-                this.search_["page"] = page;
-            }
-            if (limit) {
-                this.search_["limit"] = limit;
-            }
-            return {params: this.search_};
-        },
-        retrieves() {
-            const params = this.getRequestParams(
-                this.page,
-                this.limit
-            );
-
-            this.$axios.get('/api/bydatas', params)
-            .then((response) => {
-                this.bydatas = response.data.bydatas
-                this.page = response.data.currentPage
-                this.count = response.data.pageCount
-            })
-            .catch((e) => {
-                console.log(e);
-            });
+        async retrieves() {
+          const { list, currentPage, count } = await getList('bydatas', {
+            page: this.page,
+            limit: this.limit,
+          })
+          this.bydatas = list
+          this.page = currentPage
+          this.count = count
         },
         handlePageChange(value) {
             this.page = value;
