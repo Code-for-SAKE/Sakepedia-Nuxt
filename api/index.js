@@ -7,8 +7,8 @@ const db =require('./db')
 const app = express()
 
 // Init body-parser options (inbuilt with express)
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit:'50mb', extended: true }));
 
 
 // sessionの設定
@@ -29,6 +29,7 @@ const breweries = require('./routes/breweries')
 const brands = require('./routes/brands')
 const sakes = require('./routes/sakes')
 const bydatas = require('./routes/bydatas')
+const comments = require('./routes/comments')
 
 //Authenticate
 app.use(auth)
@@ -40,6 +41,7 @@ app.use(breweries)
 app.use(brands)
 app.use(sakes)
 app.use(bydatas)
+app.use(comments)
 
 // Export the server middleware
 module.exports = {

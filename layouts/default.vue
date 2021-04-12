@@ -11,6 +11,7 @@
               <b-nav-item to="/sakes" exact-active-class="active">日本酒</b-nav-item>
               <b-nav-item to="/brands" exact-active-class="active">銘柄</b-nav-item>
               <b-nav-item to="/breweries" exact-active-class="active">酒蔵</b-nav-item>
+              <b-nav-item to="/comments" exact-active-class="active">投稿</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->

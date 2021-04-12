@@ -34,6 +34,7 @@ module.exports = {
   plugins: [
     "@/plugins/vueselect.js",
     "@/plugins/moment-filter.js",
+    "@/plugins/string-filter.js",
   ],
   /*
   ** Nuxt.js dev-modules
