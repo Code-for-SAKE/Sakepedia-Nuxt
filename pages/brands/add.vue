@@ -75,10 +75,14 @@ export default {
       description:null,
     }
   },
-
-  mounted(){
+  async asyncData(context){
+    if(context.route.query.brewery) {
+      const {data} = await context.$axios.get('/api/breweries/' + context.route.query.brewery)
+      return {
+        brewery : data,
+      }
+    }
   },
-
   methods:{
     submitForm(){
       this.$axios.post( '/api/brands', {

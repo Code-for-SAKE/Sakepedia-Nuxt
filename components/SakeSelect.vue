@@ -42,7 +42,7 @@ export default {
         },
         placeholder: {
             type: String,
-            default: '酒蔵'
+            default: '日本酒'
         },
         value: {
 

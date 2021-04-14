@@ -36,7 +36,7 @@
     <div class="my-4">
       <div class="d-flex justify-content-between align-items-center">
         <h3>銘柄</h3>
-        <b-button variant="success" to="/brands/add">銘柄追加</b-button>
+        <b-button variant="success" :to="'/brands/add?brewery='+brewery._id">銘柄追加</b-button>
       </div>
       <brand-list :search="search" class="m-3" />
     </div>
