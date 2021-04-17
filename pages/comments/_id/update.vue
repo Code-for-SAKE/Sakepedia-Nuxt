@@ -25,7 +25,7 @@
               :params="{ limit: 100, unit: 'mb', allow: 'jpg,png' }"
               v-model="comment.image"
             />
-            <b-img class="show_image" :src="comment.image" v-show="comment.image"/>
+            <b-img class="show_image mt-3" :src="comment.image" v-show="comment.image"/>
             <div class="invalid-feedback" v-if="errors && errors.image">
               {{ errors.image.msg }}
             </div>
@@ -126,7 +126,6 @@ export default {
 </script>
 <style scoped>
 .show_image {
-/*  display: none;*/
   max-height: 300px;
   max-width: 100%;
 }
