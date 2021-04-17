@@ -191,7 +191,6 @@ export default {
     }
   },
   async asyncData(context){
-    console.log(context.route.query.sake)
     if(context.route.query.sake) {
       const {data} = await context.$axios.get('/api/sakes/' + context.route.query.sake)
       return {

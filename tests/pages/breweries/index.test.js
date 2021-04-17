@@ -30,7 +30,8 @@ describe('pages/breweries/index.vue', () => {
         'b-button': true
       }
     });
-    const data = await wrapper.vm.$options.asyncData();
+    const context = {query: {name: '', page: '', limit: ''}};
+    const data = await wrapper.vm.$options.asyncData(context);
     wrapper.setData(data);
   });
   it('is a Vue instance', () => {

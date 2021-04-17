@@ -114,7 +114,6 @@ export default {
       url:null,
     }
   },
-
   async asyncData(context){
     if(context.route.query.brand) {
       const {data} = await context.$axios.get('/api/brands/' + context.route.query.brand)
@@ -130,7 +129,6 @@ export default {
       }
     }
   },
-
   methods:{
     submitForm(){
       this.$axios.post( '/api/sakes', {

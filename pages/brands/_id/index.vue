@@ -33,7 +33,7 @@
     <div class="my-4">
       <div class="d-flex justify-content-between align-items-center">
         <h3>日本酒</h3>
-        <b-button variant="success" :to="'/sakes/add?brand=' + brand._id">日本酒追加</b-button>
+        <b-button variant="success" :to="'/sakes/add?brand='+brand._id">日本酒追加</b-button>
       </div>
       <sake-list :search="search" class="m-3" />
     </div>

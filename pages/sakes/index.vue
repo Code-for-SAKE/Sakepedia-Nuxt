@@ -7,20 +7,20 @@
     <hr>
     <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" v-model="searchName" @keypress.enter='page=1; retrieves();'/>
+        <input type="text" class="form-control" v-model="searchName" @keypress.enter='page=1; setHistories(); retrieves();'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; retrieves();"
+            @click="page = 1; setHistories(); retrieves();"
           >検索</b-button>
         </div>
-        <input type="text" class="form-control" v-model="searchTypes" @keypress.enter='page=1; retrieves();'/>
+        <input type="text" class="form-control" v-model="searchTypes" @keypress.enter='page=1; setHistories(); retrieves();'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
             type="button"
-            @click="page = 1; retrieves();"
+            @click="page = 1; setHistories(); retrieves();"
           >タグで検索</b-button>
         </div>
       </div>
@@ -74,16 +74,33 @@ export default {
     };
   },
   async asyncData(context){
-    const { list, currentPage, count } = await getList('sakes', {}, context)
+    const searchName = context.query.name ?? ''
+    const limit = context.query.limit ?? 10
+    const page = context.query.page ?? 1
+    const searchTypes = context.query.type ?? ''
+    const typeQuery = searchTypes.split(/[\s|　]+/);
+    const { list, currentPage, count } = await getList('sakes', {
+      searchName: searchName,
+      page: page,
+      limit: limit,
+      ...(typeQuery[0] === '' ? {} : {typeQuery: typeQuery})
+    }, context)
     return {
+      searchName: searchName,
+      searchTypes: searchTypes,
       sakes : list,
       page : currentPage,
       count : count
     }
   },
   mounted() {
-    this.searchTypes = this.$route.query.type ?? '';
-    this.retrieves()
+    window.addEventListener('popstate', () => {
+      this.searchName = this.$route.query.name ?? ''
+      this.limit = this.$route.query.limit ?? 10
+      this.page = this.$route.query.page ?? 1
+      this.searchTypes = this.$route.query.type ?? ''
+      this.retrieves()
+    });
   },
   methods: {
     async retrieves () {
@@ -100,7 +117,13 @@ export default {
     },
     handlePageChange(value) {
       this.page = value;
+      this.setHistories()
       this.retrieves();
+    },
+    setHistories () {
+      const url = window.location.href.replace(/\?.*$/,"");
+      const queries = `?name=${this.searchName}&type=${this.searchTypes}&page=${this.page}&limit=${this.limit}`;
+      window.history.pushState(null, null, `${url}${queries}`);
     }
   }
 }
