@@ -1,14 +1,13 @@
 <template>
   <div>
     <p class="error" v-show="error">{{ error }}</p>
-    <div class="m-6">
-      <input
-        type="file"
-        class="input_image"
-        accept="image/jpeg, image/png"
-        @change="onImageChange"
-      />
-    </div>
+    <b-form-file
+      v-model="file"
+      accept="image/jpeg, image/png"
+      placeholder="ファイルを選択するかドロップする"
+      drop-placeholder="ここにドロップ..."
+      @change="onImageChange"
+    ></b-form-file>
   </div>
 </template>
 
@@ -30,6 +29,7 @@ export default {
   },
   data () {
     return {
+      file: null,
       message: '',
       error: ''
     }
@@ -38,11 +38,46 @@ export default {
     setError (error, text) {
       this.error = (error.response && error.response.data && error.response.data.error) || text
     },
+    makeImage(image, resizeWidth, resizeHeight) {
+      //高さと幅どちらもオーバーしていなければそのままにする
+      if (image.width < resizeWidth && image.height < resizeHeight) {
+        return image.src
+      }
+      //オーバーしている場合はリサイズ
+
+      // canvas要素を作成
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+
+      // 縦横比を算出
+      const ratio = image.height / image.width
+
+      // 生成する画像の横幅
+      const width = (ratio < 1) ? resizeWidth : resizeHeight / ratio
+      // 生成する画像の高さ
+      const height = (ratio > 1) ? resizeHeight : resizeWidth * ratio
+      canvas.width = width
+      canvas.height = height
+
+      // canvas描画作成
+      ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, width, height)
+
+      // data_url形式に変換したものを返す
+      return canvas.toDataURL('image/jpeg')
+    },
     getBase64 (file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader()
+        const image = new Image()
+        const vm = this
+
         reader.readAsDataURL(file)
-        reader.onload = () => resolve(reader.result)
+        reader.onload = (e) => {
+          image.src = e.target.result
+          image.onload = () => {
+            resolve(vm.makeImage(image, 1280, 1280))
+          }
+        }
         reader.onerror = error => reject(error)
       })
     },
@@ -77,8 +112,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.input_image {
-/*  display: none;*/
+<style>
+.custom-file-input ~ .custom-file-label[data-browse]::after {
+    content: "...";
 }
 </style>

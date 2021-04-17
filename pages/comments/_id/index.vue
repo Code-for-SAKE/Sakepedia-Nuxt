@@ -6,7 +6,7 @@
     <b-img-lazy :src="comment.image" v-show="comment.image"
       class="show_image"
     />
-    <h2>{{ comment.comment }}</h2>
+    <p class="comment">{{ comment.comment }}</p>
     <h6>By {{ comment.author }} </h6>
     <dl>
       <dt>酒蔵</dt>
@@ -86,8 +86,11 @@ export default {
 </script>
 <style scoped>
 .show_image {
-/*  display: none;*/
-  max-height: 100%;
+  max-height: 600px;
   max-width: 100%;
+}
+.comment {
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 </style>
