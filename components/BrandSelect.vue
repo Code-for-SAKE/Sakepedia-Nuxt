@@ -1,5 +1,5 @@
 <template>
-    <div class="w-75">
+    <div class="">
         <model-list-select
             ref="brand_search"
             :id="this.id"
@@ -86,7 +86,8 @@ export default {
                     this.searchedBrands = response.data
                 });
             }else{
-                this.$emit('input', this.value)
+                this.innerValue = "";
+                this.$emit('input', this.innerValue)
             }
         }
     }

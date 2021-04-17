@@ -194,7 +194,9 @@ export default {
     if(context.route.query.sake) {
       const {data} = await context.$axios.get('/api/sakes/' + context.route.query.sake)
       return {
-        sake : data
+        brand : data.brand,
+        brewery : data.brewery,
+        sake : data,
       }
     }
   },

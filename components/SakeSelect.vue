@@ -1,5 +1,5 @@
 <template>
-    <div class="w-75">
+    <div class="">
         <model-list-select
             ref="sake_search"
             :id="this.id"
@@ -82,15 +82,16 @@ export default {
         },
         searchSakes (searchText) {
             if(searchText){
-                console.log("searchSakees searchText", searchText)
+                console.log("searchSakes searchText", searchText)
                 this.$emit('input', {name: searchText})
                 this.$axios.get('/api/list/sakes',{params: {keyword: searchText}})
                 .then(response => {
                     this.searchedSakes = response.data
                 });
             }else{
-                console.log("searchSakees value", this.value)
-                this.$emit('input', this.value)
+                this.innerValue = "";
+                console.log("searchSakes value", this.innerValue)
+                this.$emit('input', this.innerValue)
             }
         }
     }

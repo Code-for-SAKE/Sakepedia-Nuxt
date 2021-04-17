@@ -37,16 +37,29 @@
       </div>
       <sake-list :search="search" class="m-3" />
     </div>
+    <div class="my-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3>投稿一覧</h3>
+        <div class="d-flex justify-content-between">
+          <div>
+          </div>
+          <b-button variant="success" :to="'/comments/add?brand=' + brand._id">投稿追加</b-button>
+        </div>
+      </div>
+      <comment-list :brand="brand._id" />
+    </div>
   </div>
 </template>
 
 <script>
 import SakeList from '@/components/SakeList.vue'
+import CommentList from '@/components/CommentList.vue'
 
 
 export default {
   components: {
-    SakeList
+    SakeList,
+    CommentList
   },
   data() {
     return {
