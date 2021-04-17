@@ -28,7 +28,6 @@
     <div class="d-flex justify-content-between">
       <div>
         <b-button variant="primary" :to="'/breweries/' + brewery._id + '/update'" class="mr-3">編集</b-button>
-        <b-button variant="success" :to="'/comments/add?brewery=' + brewery._id" class="mr-3">投稿</b-button>
         <b-button variant="danger" @click="deleteRecord()">削除</b-button>
       </div>
       <b-button variant="secondary" to="/breweries">一覧に戻る</b-button>
