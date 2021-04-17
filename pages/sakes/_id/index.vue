@@ -61,6 +61,17 @@
       </div>
      <brewery-year-data-list :search="search" class="m-3" />
     </div>
+    <div class="my-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3>投稿一覧</h3>
+        <div class="d-flex justify-content-between">
+          <div>
+          </div>
+          <b-button variant="success" :to="'/comments/add?sake=' + sake._id">投稿追加</b-button>
+        </div>
+      </div>
+      <comment-list :sake="sake._id" />
+    </div>
   </div>
 </template>
 
@@ -68,11 +79,13 @@
 const Prefectures = require('@/utils/prefectures')
 import BreweryYearDataList from '@/components/BreweryYearDataList.vue'
 import LastBreweryYearData from '@/components/LastBreweryYearData.vue'
+import CommentList from '@/components/CommentList.vue'
 
 export default {
   components: {
     BreweryYearDataList,
-    LastBreweryYearData
+    LastBreweryYearData,
+    CommentList
   },
   data() {
     return {

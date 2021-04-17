@@ -11,9 +11,9 @@
 
           <div class="form-group">
             <label for="">コメント</label>
-            <input type="text" class="form-control"
+            <flex-textarea inner-class="form-control"
               :class="{ 'is-invalid': errors && errors.comment }"
-              v-model="comment.comment">
+              v-model="comment.comment" />
             <div class="invalid-feedback" v-if="errors && errors.comment">
               {{ errors.comment.msg }}
             </div>
@@ -57,9 +57,11 @@
 
           <div class="form-group">
             <label for="">日本酒</label>
-            <input type="text" class="form-control"
+            <sake-select
+              ref="sake_search"
               :class="{ 'is-invalid': errors && errors.sake }"
-              v-model="comment.sake">
+              v-model="comment.sake"
+            />
             <div class="invalid-feedback" v-if="errors && errors.sake">
               {{ errors.sake.msg }}
             </div>
@@ -79,12 +81,14 @@ import BrandSelect from '@/components/BrandSelect.vue'
 import BrewerySelect from '@/components/BrewerySelect.vue'
 import SakeSelect from '@/components/SakeSelect.vue'
 import ImageUploader from '@/components/ImageUploader.vue'
+import FlexTextarea from '@/components/FlexTextarea.vue'
 export default {
   components: {
     BrandSelect,
     BrewerySelect,
     SakeSelect,
-    ImageUploader
+    ImageUploader,
+    FlexTextarea
   },
   middleware: ['authenticated'],
 

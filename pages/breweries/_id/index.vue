@@ -28,6 +28,7 @@
     <div class="d-flex justify-content-between">
       <div>
         <b-button variant="primary" :to="'/breweries/' + brewery._id + '/update'" class="mr-3">編集</b-button>
+        <b-button variant="success" :to="'/comments/add?brewery=' + brewery._id" class="mr-3">投稿</b-button>
         <b-button variant="danger" @click="deleteRecord()">削除</b-button>
       </div>
       <b-button variant="secondary" to="/breweries">一覧に戻る</b-button>
@@ -36,9 +37,20 @@
     <div class="my-4">
       <div class="d-flex justify-content-between align-items-center">
         <h3>銘柄</h3>
-        <b-button variant="success" to="/brands/add">銘柄追加</b-button>
+        <b-button variant="success" :to="'/brands/add?brewery=' + brewery._id">銘柄追加</b-button>
       </div>
       <brand-list :search="search" class="m-3" />
+    </div>
+    <div class="my-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <h3>投稿一覧</h3>
+        <div class="d-flex justify-content-between">
+          <div>
+          </div>
+          <b-button variant="success" :to="'/comments/add?brewery=' + brewery._id">投稿追加</b-button>
+        </div>
+      </div>
+      <comment-list :brewery="brewery._id" />
     </div>
   </div>
 </template>
@@ -46,10 +58,12 @@
 <script>
 const Prefectures = require('@/utils/prefectures')
 import BrandList from '@/components/BrandList.vue'
+import CommentList from '@/components/CommentList.vue'
 
 export default {
   components: {
     BrandList,
+    CommentList
   },
   data() {
     return {

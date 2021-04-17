@@ -11,9 +11,9 @@
 
           <div class="form-group">
             <label for="">コメント</label>
-            <input type="text" class="form-control"
+            <flex-textarea inner-class="form-control"
               :class="{ 'is-invalid': errors && errors.comment }"
-              v-model="comment">
+              v-model="comment" />
             <div class="invalid-feedback" v-if="errors && errors.comment">
               {{ errors.comment.msg }}
             </div>
@@ -68,7 +68,7 @@
           </div>
 
           <b-button variant="primary" type="submit" class="mr-3">追加</b-button>
-          <b-button to="/sakes" class="mr-3">キャンセル</b-button>
+          <b-button to="/comments" class="mr-3">キャンセル</b-button>
 
         </form>
       </div>
@@ -80,15 +80,15 @@
 import BrewerySelect from '@/components/BrewerySelect.vue'
 import BrandSelect from '@/components/BrandSelect.vue'
 import SakeSelect from '@/components/SakeSelect.vue'
-import TagSelect from '@/components/TagSelect.vue'
 import ImageUploader from '@/components/ImageUploader.vue'
+import FlexTextarea from '@/components/FlexTextarea.vue'
 export default {
   components: {
     BrewerySelect,
     BrandSelect,
     SakeSelect,
-    TagSelect,
-    ImageUploader
+    ImageUploader,
+    FlexTextarea
   },
   middleware: ['authenticated'],
 
@@ -103,6 +103,14 @@ export default {
     }
   },
   async asyncData(context){
+    if(context.route.query.sake) {
+      const {data} = await context.$axios.get('/api/sakes/' + context.route.query.sake)
+      return {
+        brand : data.brand,
+        brewery : data.brewery,
+        sake : data,
+      }
+    }
     if(context.route.query.brand) {
       const {data} = await context.$axios.get('/api/brands/' + context.route.query.brand)
       return {
@@ -114,12 +122,6 @@ export default {
       const {data} = await context.$axios.get('/api/breweries/' + context.route.query.brewery)
       return {
         brewery : data,
-      }
-    }
-    if(context.route.query.sake) {
-      const {data} = await context.$axios.get('/api/sakes/' + context.route.query.sake)
-      return {
-        sake : data,
       }
     }
   },

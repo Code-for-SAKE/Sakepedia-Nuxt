@@ -13,7 +13,6 @@ module.exports.all = function (req, res, next) {
   var brand = req.query.brand
   var sake = req.query.sake
   var author = req.query.author
-  const typeQuery = req.query.typeQuery;
   var search = {}
 
   if(brewery) {
@@ -30,17 +29,10 @@ module.exports.all = function (req, res, next) {
   }
   if(keyword) {
     search.$or = [
-          {name: new RegExp(keyword, 'i')},
-          {kana: new RegExp(japanese.hiraToKana(keyword), 'i')}
+          {comment: new RegExp(keyword, 'i')},
+          {comment: new RegExp(japanese.hiraToKana(keyword), 'i')},
+          {comment: new RegExp(japanese.kanaToHira(keyword), 'i')}
       ]
-  }
-  if (typeQuery) {
-    // '吟醸  'みたいな検索をされてしまうとたぶんバグるので一度filterにかける
-    search.$and = typeQuery.filter((eachType) => {
-      return eachType;
-    }).map((eachType) => {
-      return { type: eachType };
-    })
   }
   Comment.paginate(search, {page: req.query.page, limit: req.query.limit}, function(err, result) {
     if(err) {

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-75">
+    <div class="">
         <model-list-select
             ref="brewery_search"
             :id="this.id"
@@ -89,8 +89,9 @@ export default {
                     this.searchedBreweries = response.data
                 });
             }else{
-                console.log("searchBreweries value", this.value)
-                this.$emit('input', this.value)
+                this.innerValue = "";
+                console.log("searchBreweries value", this.innerValue)
+                this.$emit('input', this.innerValue)
             }
         }
     }

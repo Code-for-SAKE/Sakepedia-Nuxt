@@ -5,9 +5,27 @@
       <b-button variant="success" to="/comments/add">追加</b-button>
     </div>
     <hr>
-    <div class="col-md-8">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" v-model="searchName" @keypress.enter='page=1; retrieves();'/>
+    <div class="row">
+      <div class="form-group col-md-4">
+        <brewery-select
+          ref="brewery_search"
+          v-model="brewery"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <brand-select
+          ref="brand_search"
+          v-model="brand"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <sake-select
+          ref="sake_search"
+          v-model="sake"
+        />
+      </div>
+      <div class="input-group col-12 mb-3">
+        <input type="text" class="form-control" v-model="keyword" @keypress.enter='page=1; retrieves();'/>
         <div class="input-group-append">
           <b-button
             variant="secondary"
@@ -32,22 +50,27 @@
 
 <script>
 import { getList } from '../../lib/ApiClient/getList'
+import BrewerySelect from '@/components/BrewerySelect.vue'
+import BrandSelect from '@/components/BrandSelect.vue'
+import SakeSelect from '@/components/SakeSelect.vue'
 import ImageList from '@/components/ImageList'
 export default {
   components: {
+    BrewerySelect,
+    BrandSelect,
+    SakeSelect,
     ImageList
   },
   data() {
     return {
       comments: [],
-      searchValue: null,
-      searchName: "",
-      types: '',
+      keyword: "",
+      sake: null,
+      brand: null,
+      brewery: null,
       page: 1,
       count: 0,
       limit: 10,
-      searchTypes: '',
-      typeQuery: []
     };
   },
   async asyncData(context){
@@ -59,17 +82,17 @@ export default {
     }
   },
   mounted() {
-    this.searchTypes = this.$route.query.type ?? '';
     this.retrieves()
   },
   methods: {
     async retrieves () {
-      this.typeQuery = this.searchTypes.split(/[\s|　]+/);
       const { list, currentPage, count } = await getList('comments', {
-        searchName: this.searchName,
+        keyword: this.keyword,
+        sake: this.sake,
+        brand: this.brand,
+        brewery: this.brewery,
         page: this.page,
-        limit: this.limit,
-        ...(this.typeQuery[0] === '' ? {} : {typeQuery: this.typeQuery})
+        limit: this.limit
       })
       this.comments = list
       this.page = currentPage
