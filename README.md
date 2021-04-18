@@ -13,9 +13,10 @@ Sakepediaは日本酒のオープンデータを作るためのプラットフ�
 ## Need
 
 ### Install
-- yarn
-- mongodb
-- pm2
+- node v14.16.1
+- yarn v1.22.5
+- mongodb v4.2.8
+- pm2 v4.5.6
 
 ### GitHub OAuth App(ローカル開発用)
 
