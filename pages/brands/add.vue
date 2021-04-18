@@ -1,20 +1,20 @@
 <template>
   <div>
     <h1>銘柄 追加</h1>
-    <hr>
+    <hr />
 
     <div class="row">
       <div class="col-md-6">
-        <form action=""
-          method="post"
-          @submit.prevent="submitForm()">
-
+        <form action="" method="post" @submit.prevent="submitForm()">
           <div class="form-group">
             <label for="">名前</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="name"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.name }"
-              v-model="name">
-            <div class="invalid-feedback" v-if="errors && errors.name">
+            />
+            <div v-if="errors && errors.name" class="invalid-feedback">
               {{ errors.name.msg }}
             </div>
           </div>
@@ -22,36 +22,42 @@
           <div class="form-group">
             <label for="">酒蔵</label>
             <brewery-select
+              v-model="brewery"
               :class="{ 'is-invalid': errors && errors.brewery }"
-              v-model="brewery" />
-            <div class="invalid-feedback" v-if="errors && errors.brewery">
+            />
+            <div v-if="errors && errors.brewery" class="invalid-feedback">
               {{ errors.brewery.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">ロゴURL</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="logo"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.logo }"
-              v-model="logo">
-            <div class="invalid-feedback" v-if="errors && errors.logo">
+            />
+            <div v-if="errors && errors.logo" class="invalid-feedback">
               {{ errors.logo.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">こだわり</label>
-            <textarea type="text" class="form-control"
+            <textarea
+              v-model="description"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.description }"
-              v-model="description"></textarea>
-            <div class="invalid-feedback" v-if="errors && errors.description">
+            ></textarea>
+            <div v-if="errors && errors.description" class="invalid-feedback">
               {{ errors.description.msg }}
             </div>
           </div>
 
           <b-button variant="primary" type="submit" class="mr-3">追加</b-button>
           <b-button to="/brands" class="mr-3">キャンセル</b-button>
-
         </form>
       </div>
     </div>
@@ -59,50 +65,53 @@
 </template>
 
 <script>
-import BrewerySelect from '@/components/BrewerySelect.vue'
+import BrewerySelect from '@/components/BrewerySelect.vue';
 export default {
   components: {
-    BrewerySelect
+    BrewerySelect,
   },
   middleware: ['authenticated'],
-
-  data(){
-    return{
-      errors:null,
-      name:null,
-      brewery:null,
-      logo:null,
-      description:null,
-    }
-  },
-  async asyncData(context){
-    if(context.route.query.brewery) {
-      const {data} = await context.$axios.get('/api/breweries/' + context.route.query.brewery)
+  async asyncData(context) {
+    if (context.route.query.brewery) {
+      const { data } = await context.$axios.get(
+        '/api/breweries/' + context.route.query.brewery
+      );
       return {
-        brewery : data,
-      }
+        brewery: data,
+      };
     }
   },
-  methods:{
-    submitForm(){
-      this.$axios.post( '/api/brands', {
+
+  data() {
+    return {
+      errors: null,
+      name: null,
+      brewery: null,
+      logo: null,
+      description: null,
+    };
+  },
+  methods: {
+    submitForm() {
+      this.$axios
+        .post('/api/brands', {
           name: this.name,
           brewery: this.brewery,
           logo: this.logo,
           description: this.description,
         })
         .then((response) => {
-          if(response.data._id){
-            this.$router.push({ name:'brands', params:{ created:'yes' } })
+          if (response.data._id) {
+            this.$router.push({ name: 'brands', params: { created: 'yes' } });
           }
         })
-        .catch( (error) => {
-          console.log(error)
-          if(error.response.data.errors){
-            this.errors = error.response.data.errors
+        .catch((error) => {
+          console.log(error);
+          if (error.response.data.errors) {
+            this.errors = error.response.data.errors;
           }
         });
-    }
-  }
-}
+    },
+  },
+};
 </script>

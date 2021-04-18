@@ -2,72 +2,76 @@
   <div>
     <b-pagination
       v-model="page"
-      :total-rows="count*limit"
+      :total-rows="count * limit"
       :per-page="limit"
       prev-text="Prev"
       next-text="Next"
+      align="center"
       @change="handlePageChange"
-      align="center" />
-    <hr>
+    />
+    <hr />
     <image-list :list="comments" url-prefix="/comments/" />
   </div>
 </template>
 <script>
-import { getList } from '@/lib/ApiClient/getList'
-import ImageList from '@/components/ImageList'
+import { getList } from '@/lib/ApiClient/getList';
+import ImageList from '@/components/ImageList';
 export default {
   components: {
-    ImageList
+    ImageList,
   },
   props: {
     sake: {
-        type: String,
+      type: String,
+      default: '',
     },
     brand: {
-        type: String,
+      type: String,
+      default: '',
     },
     brewery: {
-        type: String,
-    }
+      type: String,
+      default: '',
+    },
+  },
+  async asyncData(context) {
+    const { list, currentPage, count } = await getList('comments', {}, context);
+    return {
+      comments: list,
+      page: currentPage,
+      count: count,
+    };
   },
   data() {
     return {
       comments: [],
-      keyword: "",
+      keyword: '',
       page: 1,
       count: 0,
       limit: 10,
     };
   },
-  async asyncData(context){
-    const { list, currentPage, count } = await getList('comments', {}, context)
-    return {
-      comments : list,
-      page : currentPage,
-      count : count
-    }
-  },
   mounted() {
-    this.retrieves()
+    this.retrieves();
   },
   methods: {
-    async retrieves () {
+    async retrieves() {
       const { list, currentPage, count } = await getList('comments', {
         keyword: this.keyword,
         sake: this.sake,
         brand: this.brand,
         brewery: this.brewery,
         page: this.page,
-        limit: this.limit
-      })
-      this.comments = list
-      this.page = currentPage
-      this.count = count
+        limit: this.limit,
+      });
+      this.comments = list;
+      this.page = currentPage;
+      this.count = count;
     },
     handlePageChange(value) {
       this.page = value;
       this.retrieves();
-    }
-  }
-}
+    },
+  },
+};
 </script>

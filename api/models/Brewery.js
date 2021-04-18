@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
-const Brewery = new Schema ({
+const Brewery = new Schema({
   breweryId: { type: Number, index: { unique: true } },
   name: { type: String, required: true },
   kana: { type: String },
   prefecture: { type: Number },
   address: { type: String },
   latitude: { type: Number },
-  longitude: {type: Number },
+  longitude: { type: Number },
   email: { type: String },
   tel: { type: String },
   url: { type: String },
@@ -24,4 +24,4 @@ const Brewery = new Schema ({
 });
 
 Brewery.plugin(mongoosePaginate);
-module.exports = mongoose.model('Brewery', Brewery)
+module.exports = mongoose.model('Brewery', Brewery);

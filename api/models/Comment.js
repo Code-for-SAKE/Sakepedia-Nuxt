@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
-const Comment = new Schema ({
+const Comment = new Schema({
   comment: { type: String },
   image: { type: String },
   brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
@@ -12,8 +12,8 @@ const Comment = new Schema ({
   modifiedAt: { type: Date },
   author: { type: String },
 });
-Comment.virtual('commentId').get(function() {
+Comment.virtual('commentId').get(function () {
   return this._id;
 });
 Comment.plugin(mongoosePaginate);
-module.exports = mongoose.model('Comment', Comment)
+module.exports = mongoose.model('Comment', Comment);

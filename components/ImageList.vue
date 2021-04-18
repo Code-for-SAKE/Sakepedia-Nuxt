@@ -1,47 +1,53 @@
 <template>
   <div class="col-12">
-    <div class="d-flex flex-wrap justify-content-around "
-      v-if="list.length">
+    <div v-if="list.length" class="d-flex flex-wrap justify-content-around">
       <nuxt-link
         v-for="item in list"
-        :to="urlPrefix + item._id"
         :key="item._id"
-        class="d-block show-comment text-center align-middle card m-1">
-        <b-img-lazy :src="item.image" rounded :alt="item.comment"
+        :to="urlPrefix + item._id"
+        class="d-block show-comment text-center align-middle card m-1"
+      >
+        <b-img-lazy
           v-show="item.image"
+          :src="item.image"
+          rounded
+          :alt="item.comment"
           class="item-image"
         />
-        <div v-show="item.comment"
-          class="item-comment lead p-2"
-        >
+        <div v-show="item.comment" class="item-comment lead p-2">
           <span>
-            {{item.comment | omitted}}
+            {{ item.comment | omitted }}
           </span>
         </div>
       </nuxt-link>
     </div>
-    <div class="alert alert-warning"
-      v-else>
-      データがありません
-    </div>
+    <div v-else class="alert alert-warning">データがありません</div>
   </div>
 </template>
 
 <script>
-
 const ImageListItem = {
-  _id : Number,
-  image : String,
-  comment : String
-}
+  _id: Number,
+  image: String,
+  comment: String,
+};
 
 export default {
   props: {
-    id: Number,
-    list: ImageListItem,
-    urlPrefix: String,
+    id: {
+      type: String,
+      default: '',
+    },
+    list: {
+      type: Array,
+      default: () => [],
+    },
+    urlPrefix: {
+      type: String,
+      default: '',
+    },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -68,7 +74,6 @@ export default {
   min-width: 17vw;
   position: relative;
 }
-
 
 @media screen and (max-width: 992px) {
   .show-comment {

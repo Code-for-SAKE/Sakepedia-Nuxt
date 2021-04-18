@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Sakepedia Nuxt版</h1>
-    <hr>
+    <hr />
 
     <h3>日本酒オープンデータを作る</h3>
     <ul>
