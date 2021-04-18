@@ -19,8 +19,6 @@ exports[`components/BreweryYearDataList.vue template renderd correctly with data
 exports[`components/BreweryYearDataList.vue template renderd correctly without data will be renderd correctly 1`] = `
 "<div>
   <!---->
-  <div class=\\"alert alert-warning\\">
-    データがありません
-  </div>
+  <div class=\\"alert alert-warning\\">データがありません</div>
 </div>"
 `;

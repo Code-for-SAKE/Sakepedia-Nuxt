@@ -42,8 +42,6 @@ exports[`pages/brands/index.vue template renderd correctly without data will be 
   </div>
   <b-pagination-stub total-rows=\\"0\\" per-page=\\"10\\" prev-text=\\"Prev\\" next-text=\\"Next\\" align=\\"center\\" value=\\"1\\"></b-pagination-stub>
   <hr>
-  <div class=\\"alert alert-warning\\">
-    データがありません
-  </div>
+  <div class=\\"alert alert-warning\\">データがありません</div>
 </div>"
 `;

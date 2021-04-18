@@ -16,8 +16,6 @@ exports[`components/BrandList.vue template renderd correctly with data will be r
 exports[`components/BrandList.vue template renderd correctly without data will be renderd correctly 1`] = `
 "<div>
   <!---->
-  <div class=\\"alert alert-warning\\">
-    データがありません
-  </div>
+  <div class=\\"alert alert-warning\\">データがありません</div>
 </div>"
 `;
