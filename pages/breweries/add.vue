@@ -1,191 +1,244 @@
 <template>
   <div>
     <h1>酒蔵 追加</h1>
-    <hr>
+    <hr />
 
     <div class="row">
       <div class="col-md-6">
-        <form action=""
-          method="post"
-          @submit.prevent="submitForm()">
-
+        <form action="" method="post" @submit.prevent="submitForm()">
           <div class="form-group">
             <label for="">法人番号 etc</label>
-            <input type="number" class="form-control"
+            <input
+              v-model="breweryId"
+              type="number"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.breweryId }"
-              v-model="breweryId">
-            <div class="invalid-feedback" v-if="errors && errors.breweryId">
+            />
+            <div v-if="errors && errors.breweryId" class="invalid-feedback">
               {{ errors.breweryId.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">名前</label>
-            <input type="text" class="form-control" required
+            <input
+              v-model="name"
+              type="text"
+              class="form-control"
+              required
               :class="{ 'is-invalid': errors && errors.name }"
-              v-model="name">
-            <div class="invalid-feedback" v-if="errors && errors.name">
+            />
+            <div v-if="errors && errors.name" class="invalid-feedback">
               {{ errors.name.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">ふりがな</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="kana"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.kana }"
-              v-model="kana">
-            <div class="invalid-feedback" v-if="errors && errors.kana">
+            />
+            <div v-if="errors && errors.kana" class="invalid-feedback">
               {{ errors.kana.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">都道府県</label>
-            <select class="custom-select"
+            <select
+              v-model="prefecture"
+              class="custom-select"
               :class="{ 'is-invalid': errors && errors.prefecture }"
-              v-model="prefecture">
-              <option v-for="(item, index) in prefectures" :key=index  v-bind:value="index">
-                  {{ item }}
+            >
+              <option
+                v-for="(item, index) in prefectures"
+                :key="index"
+                :value="index"
+              >
+                {{ item }}
               </option>
             </select>
-            <div class="invalid-feedback" v-if="errors && errors.prefecture">
+            <div v-if="errors && errors.prefecture" class="invalid-feedback">
               {{ errors.prefecture.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">住所</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="address"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.address }"
-              v-model="address">
-            <div class="invalid-feedback" v-if="errors && errors.address">
+            />
+            <div v-if="errors && errors.address" class="invalid-feedback">
               {{ errors.address.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">緯度</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="latitude"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.latitude }"
-              v-model="latitude">
-            <div class="invalid-feedback" v-if="errors && errors.latitude">
+            />
+            <div v-if="errors && errors.latitude" class="invalid-feedback">
               {{ errors.latitude.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">経度</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="longitude"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.longitude }"
-              v-model="longitude">
-            <div class="invalid-feedback" v-if="errors && errors.longitude">
+            />
+            <div v-if="errors && errors.longitude" class="invalid-feedback">
               {{ errors.longitude.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">Eメール</label>
-            <input type="email" class="form-control"
+            <input
+              v-model="email"
+              type="email"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.email }"
-              v-model="email">
-            <div class="invalid-feedback" v-if="errors && errors.email">
+            />
+            <div v-if="errors && errors.email" class="invalid-feedback">
               {{ errors.email.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">電話番号</label>
-            <input type="tel" class="form-control"
+            <input
+              v-model="tel"
+              type="tel"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.tel }"
-              v-model="tel">
-            <div class="invalid-feedback" v-if="errors && errors.tel">
+            />
+            <div v-if="errors && errors.tel" class="invalid-feedback">
               {{ errors.tel.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">URL</label>
-            <input type="url" class="form-control"
+            <input
+              v-model="url"
+              type="url"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.url }"
-              v-model="url">
-            <div class="invalid-feedback" v-if="errors && errors.url">
+            />
+            <div v-if="errors && errors.url" class="invalid-feedback">
               {{ errors.url.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">購入URL</label>
-            <input type="url" class="form-control"
+            <input
+              v-model="ecurl"
+              type="url"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.ecurl }"
-              v-model="ecurl">
-            <div class="invalid-feedback" v-if="errors && errors.ecurl">
+            />
+            <div v-if="errors && errors.ecurl" class="invalid-feedback">
               {{ errors.ecurl.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">Facebook</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="facebook"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.facebook }"
-              v-model="facebook">
-            <div class="invalid-feedback" v-if="errors && errors.facebook">
+            />
+            <div v-if="errors && errors.facebook" class="invalid-feedback">
               {{ errors.facebook.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">Twitter</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="twitter"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.twitter }"
-              v-model="twitter">
-            <div class="invalid-feedback" v-if="errors && errors.twitter">
+            />
+            <div v-if="errors && errors.twitter" class="invalid-feedback">
               {{ errors.twitter.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">Instagram</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="instagram"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.instagram }"
-              v-model="instagram">
-            <div class="invalid-feedback" v-if="errors && errors.instagram">
+            />
+            <div v-if="errors && errors.instagram" class="invalid-feedback">
               {{ errors.instagram.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">その他SNS</label>
-            <input type="text" class="form-control"
+            <input
+              v-model="othersns"
+              type="text"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.othersns }"
-              v-model="othersns">
-            <div class="invalid-feedback" v-if="errors && errors.othersns">
+            />
+            <div v-if="errors && errors.othersns" class="invalid-feedback">
               {{ errors.othersns.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">創業年</label>
-            <input type="number" class="form-control"
+            <input
+              v-model="startYear"
+              type="number"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.startYear }"
-              v-model="startYear">
-            <div class="invalid-feedback" v-if="errors && errors.startYear">
+            />
+            <div v-if="errors && errors.startYear" class="invalid-feedback">
               {{ errors.startYear.msg }}
             </div>
           </div>
 
           <div class="form-group">
             <label for="">廃業年</label>
-            <input type="number" class="form-control"
+            <input
+              v-model="endYear"
+              type="number"
+              class="form-control"
               :class="{ 'is-invalid': errors && errors.endYear }"
-              v-model="endYear">
-            <div class="invalid-feedback" v-if="errors && errors.endYear">
+            />
+            <div v-if="errors && errors.endYear" class="invalid-feedback">
               {{ errors.endYear.msg }}
             </div>
           </div>
 
-          <b-button variant="primary" type="submit" value="追加" class="mr-3">追加</b-button>
+          <b-button variant="primary" type="submit" value="追加" class="mr-3"
+            >追加</b-button
+          >
           <b-button to="/breweries" class="mr-3">キャンセル</b-button>
-
         </form>
       </div>
     </div>
@@ -193,40 +246,40 @@
 </template>
 
 <script>
-const Prefectures = require('../../utils/prefectures')
+const Prefectures = require("../../utils/prefectures");
 export default {
-  middleware: ['authenticated'],
+  middleware: ["authenticated"],
 
-  data(){
-    return{
-      errors:null,
-      breweryId:null,
-      name:null,
-      kana:null,
-      prefecture:null,
-      address:null,
-      latitude:null,
-      longitude:null,
-      email:null,
-      tel:null,
-      url:null,
-      ecurl:null,
-      facebook:null,
-      twitter:null,
-      instagram:null,
-      othersns:null,
-      startYear:null,
-      endYear:null,
-      prefectures : Prefectures.prefectures
-    }
+  data() {
+    return {
+      errors: null,
+      breweryId: null,
+      name: null,
+      kana: null,
+      prefecture: null,
+      address: null,
+      latitude: null,
+      longitude: null,
+      email: null,
+      tel: null,
+      url: null,
+      ecurl: null,
+      facebook: null,
+      twitter: null,
+      instagram: null,
+      othersns: null,
+      startYear: null,
+      endYear: null,
+      prefectures: Prefectures.prefectures,
+    };
   },
 
-  mounted(){
-  },
+  mounted() {},
 
-  methods:{
-    submitForm(){
-      this.$axios.post( '/api/breweries', {
+  methods: {
+    submitForm() {
+      this.$axios
+        .post("/api/breweries", {
           breweryId: this.breweryId,
           name: this.name,
           kana: this.kana,
@@ -246,19 +299,17 @@ export default {
           endYear: this.endYear,
         })
         .then((response) => {
-
-          if(response.data._id){
-
-            this.$router.push({ name:'breweries' })
+          if (response.data._id) {
+            this.$router.push({ name: "breweries" });
           }
         })
-        .catch( (error) => {
-          console.log(error)
-          if(error.response.data.errors){
-            this.errors = error.response.data.errors
+        .catch((error) => {
+          console.log(error);
+          if (error.response.data.errors) {
+            this.errors = error.response.data.errors;
           }
         });
-    }
-  }
-}
+    },
+  },
+};
 </script>

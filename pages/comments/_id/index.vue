@@ -2,43 +2,47 @@
   <div>
     <h1>投稿 詳細</h1>
 
-    <hr>
-    <b-img-lazy :src="comment.image" v-show="comment.image"
+    <hr />
+    <b-img-lazy
+      v-show="comment.image"
+      :src="comment.image"
       class="show_image"
     />
     <p class="comment">{{ comment.comment }}</p>
-    <h6>By {{ comment.author }} </h6>
+    <h6>By {{ comment.author }}</h6>
     <dl>
       <dt>酒蔵</dt>
       <dd>
         <nuxt-link
           v-if="comment.brewery"
-          :to="'/breweries/' + comment.brewery._id">
+          :to="'/breweries/' + comment.brewery._id"
+        >
           {{ comment.brewery.name }}
         </nuxt-link>
       </dd>
       <dt>銘柄</dt>
       <dd>
-        <nuxt-link
-          v-if="comment.brand"
-          :to="'/brands/' + comment.brand._id">
+        <nuxt-link v-if="comment.brand" :to="'/brands/' + comment.brand._id">
           {{ comment.brand.name }}
         </nuxt-link>
       </dd>
       <dt>日本酒</dt>
       <dd>
-        <nuxt-link
-          v-if="comment.sake"
-          :to="'/sakes/' + comment.sake._id">
+        <nuxt-link v-if="comment.sake" :to="'/sakes/' + comment.sake._id">
           {{ comment.sake.name }}
         </nuxt-link>
       </dd>
     </dl>
 
-    <hr>
+    <hr />
     <div class="d-flex justify-content-between">
       <div>
-        <b-button variant="primary" :to="'/comments/' + comment._id + '/update'" class="mr-3">編集</b-button>
+        <b-button
+          variant="primary"
+          :to="'/comments/' + comment._id + '/update'"
+          class="mr-3"
+          >編集</b-button
+        >
         <b-button variant="danger" @click="deleteRecord()">削除</b-button>
       </div>
       <b-button variant="secondary" to="/comments">一覧に戻る</b-button>
@@ -47,42 +51,47 @@
 </template>
 
 <script>
-const Prefectures = require('@/utils/prefectures')
+const Prefectures = require("@/utils/prefectures");
 
 export default {
-  components: {
+  components: {},
+  async asyncData(context) {
+    const { data } = await context.$axios.get(
+      "/api/comments/" + context.route.params.id
+    );
+    return {
+      comment: data,
+    };
   },
   data() {
     return {
-      prefectures : Prefectures.prefectures,
+      prefectures: Prefectures.prefectures,
       search: {
-        comment: this.$route.params.id
-      }
-    }
-  },
-  async asyncData(context){
-    const {data} = await context.$axios.get('/api/comments/' + context.route.params.id)
-    return {
-      comment : data
-    }
+        comment: this.$route.params.id,
+      },
+    };
   },
 
-  methods:{
-    deleteRecord(){
-      if(confirm("Are you sure?") === true){
-        this.$axios.delete('/api/comments/' + this.$route.params.id)
+  methods: {
+    deleteRecord() {
+      if (confirm("Are you sure?") === true) {
+        this.$axios
+          .delete("/api/comments/" + this.$route.params.id)
           .then((response) => {
-            if(response.data._id){
-              this.$router.push({ name:'comments', params:{ deleted:'yes' } })
+            if (response.data._id) {
+              this.$router.push({
+                name: "comments",
+                params: { deleted: "yes" },
+              });
             }
           })
-          .catch( (error) => {
+          .catch((error) => {
             console.log(error);
           });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style scoped>
 .show_image {

@@ -1,17 +1,16 @@
 <template>
   <div>
     <h1>ログイン</h1>
-    <hr>
+    <hr />
 
     <div class="row">
       <div class="col-12">
         <p>
-          情報の追加、更新、削除にはログインが必要です。<br>
-          SakepediaはGitHubのアカウントでログインすることができます。<br>
+          情報の追加、更新、削除にはログインが必要です。<br />
+          SakepediaはGitHubのアカウントでログインすることができます。<br />
           ユーザー名のみSakepediaのデータベースに残りますが、ログイン情報は残りません。
         </p>
-        <div class="">
-        </div>
+        <div class=""></div>
         <div class="mx-auto w-25">
           <b-button class="btn-lg mr-3 mx-auto" href="/api/auth/login">
             GitHubでログイン
@@ -25,14 +24,14 @@
 <script>
 export default {
   methods: {
-    githublogin(){
-      this.$axios.get('/api/auth/login')
-        .then((response) => {
-        })
-        .catch( (error) => {
+    githublogin() {
+      this.$axios
+        .get("/api/auth/login")
+        .then((response) => {})
+        .catch((error) => {
           console.log(error);
         });
     },
-  }
-}
+  },
+};
 </script>

@@ -1,41 +1,48 @@
 <template>
-<div class="FlexTextarea">
-  <div class="FlexTextarea__dummy" aria-hidden="true"></div>
-  <textarea
-    :id="id"
-    class="FlexTextarea__textarea"
-    :class="innerClass"
-    :value="value"
-    @input="$emit('input', $event.target.value)"
+  <div class="FlexTextarea">
+    <div class="FlexTextarea__dummy" aria-hidden="true"></div>
+    <textarea
+      :id="id"
+      class="FlexTextarea__textarea"
+      :class="innerClass"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
     >
-  </textarea>
-</div>
+    </textarea>
+  </div>
 </template>
 
 <script>
-
-
 export default {
-  name: 'FlexTextarea',
+  name: "FlexTextarea",
   props: {
-    id: String,
-    value: String,
-    innerClass: String,
+    id: {
+      type: String,
+      default: "",
+    },
+    innerClass: {
+      type: String,
+      default: "",
+    },
+    value: {
+      type: String,
+      default: "",
+    },
   },
-  mounted : function(){
-    this.flexTextarea(this.$el)
+  mounted: function () {
+    this.flexTextarea(this.$el);
   },
   methods: {
     flexTextarea(el) {
-      const dummy = el.querySelector('.FlexTextarea__dummy')
-      const textarea = el.querySelector('.FlexTextarea__textarea')
-      textarea.addEventListener('input', e => {
-        dummy.textContent = e.target.value + '\u200b'
-      })
-      dummy.textContent = textarea.value + '\u200b'
-    }
-  }
-}
+      const dummy = el.querySelector(".FlexTextarea__dummy");
+      const textarea = el.querySelector(".FlexTextarea__textarea");
+      textarea.addEventListener("input", (e) => {
+        dummy.textContent = e.target.value + "\u200b";
+      });
+      dummy.textContent = textarea.value + "\u200b";
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -78,5 +85,4 @@ export default {
   box-shadow: 0 0 0 4px rgba(35, 167, 195, 0.3);
   outline: 0;
 }
-
 </style>
