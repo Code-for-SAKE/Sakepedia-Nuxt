@@ -9,7 +9,9 @@
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate",
-    "test:jest": "jest --config jest.config.js"
+    "test:jest": "jest --config jest.config.js",
+    "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
+    "lintfix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
     "@nuxtjs/auth": "^4.9.1",
@@ -43,13 +45,22 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",
+    "@babel/eslint-parser": "^7.13.14",
     "@nuxtjs/moment": "^1.6.1",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "^1.1.4",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^26.6.3",
     "core-js": "3",
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-nuxt": "^2.0.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-vue": "^7.9.0",
+    "eslint-webpack-plugin": "^2.5.3",
     "jest": "^26.6.3",
     "nodemon": "^2.0.7",
+    "prettier": "^2.2.1",
     "vue-jest": "^3.0.7",
     "vue-template-compiler": "^2.6.12"
   }
