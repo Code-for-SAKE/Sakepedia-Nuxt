@@ -65,9 +65,9 @@
 </template>
 
 <script>
-const Prefectures = require("@/utils/prefectures");
-import BrandList from "@/components/BrandList.vue";
-import CommentList from "@/components/CommentList.vue";
+const Prefectures = require('@/utils/prefectures');
+import BrandList from '@/components/BrandList.vue';
+import CommentList from '@/components/CommentList.vue';
 
 export default {
   components: {
@@ -76,7 +76,7 @@ export default {
   },
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/breweries/" + context.route.params.id
+      '/api/breweries/' + context.route.params.id
     );
     return {
       brewery: data,
@@ -92,12 +92,12 @@ export default {
   },
   methods: {
     deleteRecord() {
-      if (confirm("Are you sure?") === true) {
+      if (confirm('Are you sure?') === true) {
         this.$axios
-          .delete("/api/breweries/" + this.$route.params.id)
+          .delete('/api/breweries/' + this.$route.params.id)
           .then((response) => {
             if (response.data._id) {
-              this.$router.push({ name: "breweries" });
+              this.$router.push({ name: 'breweries' });
             }
           })
           .catch((error) => {

@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import RangeValue from "@/components/RangeValue.vue";
+import RangeValue from '@/components/RangeValue.vue';
 
 export default {
   components: {
@@ -50,7 +50,7 @@ export default {
   props: {
     sake: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   data() {
@@ -62,7 +62,7 @@ export default {
     //初期値の設定
     if (this.sake) {
       this.$axios
-        .get("/api/bydatas/", { params: { sake: this.sake, limit: 1 } })
+        .get('/api/bydatas/', { params: { sake: this.sake, limit: 1 } })
         .then((response) => {
           this.bydata = response.data.bydatas[0];
         });
@@ -70,14 +70,14 @@ export default {
   },
   methods: {
     deleteRecord() {
-      if (confirm("Are you sure?") === true) {
+      if (confirm('Are you sure?') === true) {
         this.$axios
-          .delete("/api/bydatas/" + bydata._id)
+          .delete('/api/bydatas/' + bydata._id)
           .then((response) => {
             if (response.data._id) {
               this.$router.push({
-                name: "bydatas",
-                params: { deleted: "yes" },
+                name: 'bydatas',
+                params: { deleted: 'yes' },
               });
             }
           })

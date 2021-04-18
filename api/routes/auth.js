@@ -1,8 +1,8 @@
-import passport from "passport";
-import { Strategy } from "passport-github";
+import passport from 'passport';
+import { Strategy } from 'passport-github';
 
-const config = require("../config");
-const { Router } = require("express");
+const config = require('../config');
+const { Router } = require('express');
 
 const router = Router();
 
@@ -34,19 +34,19 @@ passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
 
-router.get("/session", (req, res) => {
-  console.log("/session req.user", req.user);
+router.get('/session', (req, res) => {
+  console.log('/session req.user', req.user);
   res.json({ user: req.user });
 });
 
 router.get(
-  "/auth/login",
-  passport.authenticate("github", { scope: ["user:email"] })
+  '/auth/login',
+  passport.authenticate('github', { scope: ['user:email'] })
 );
-router.get("/auth/callback", passport.authenticate("github"), (req, res) => {
+router.get('/auth/callback', passport.authenticate('github'), (req, res) => {
   res.json({ user: req.user });
 });
-router.get("/auth/logout", (req, res) => {
+router.get('/auth/logout', (req, res) => {
   req.logout();
   res.json({});
 });

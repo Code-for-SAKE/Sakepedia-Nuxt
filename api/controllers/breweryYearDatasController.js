@@ -1,7 +1,7 @@
-const BreweryYearData = require("../models/BreweryYearData");
-const validator = require("express-validator");
-const paginate = require("express-paginate");
-const japanese = require("../../utils/japanese");
+const BreweryYearData = require('../models/BreweryYearData');
+const validator = require('express-validator');
+const paginate = require('express-paginate');
+const japanese = require('../../utils/japanese');
 
 // Get all
 module.exports.all = function (req, res, next) {
@@ -11,9 +11,9 @@ module.exports.all = function (req, res, next) {
 
   if (sake) [(search.sake = { _id: sake })];
   if (keyword) {
-    search.$or = [{ sake: { name: new RegExp(keyword, "i") } }];
+    search.$or = [{ sake: { name: new RegExp(keyword, 'i') } }];
   }
-  refSake = { path: "sake", select: "name" };
+  refSake = { path: 'sake', select: 'name' };
   BreweryYearData.paginate(
     search,
     {
@@ -25,7 +25,7 @@ module.exports.all = function (req, res, next) {
     async function (err, result) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records.",
+          message: 'Error getting records.',
         });
       }
       return res.json({
@@ -44,16 +44,16 @@ module.exports.show = function (req, res) {
   BreweryYearData.findOne({ _id: id }).exec(async function (err, data) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record." + err,
+        message: 'Error getting record.' + err,
       });
     }
     if (!data) {
       return res.status(404).json({
-        message: "No such record",
+        message: 'No such record',
       });
     }
     try {
-      await data.populate("sake", "name").execPopulate();
+      await data.populate('sake', 'name').execPopulate();
     } catch (e) {}
     return res.json(data);
   });
@@ -66,18 +66,18 @@ module.exports.list = function (req, res, next) {
   if (keyword) {
     search = {
       $or: [
-        { name: new RegExp(keyword, "i") },
-        { kana: new RegExp(japanese.hiraToKana(keyword), "i") },
+        { name: new RegExp(keyword, 'i') },
+        { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
       ],
     };
   }
   BreweryYearData.find(search)
-    .select("name")
+    .select('name')
     .limit(10)
     .exec(function (err, data) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records. : " + err,
+          message: 'Error getting records. : ' + err,
         });
       }
       return res.json(data);
@@ -87,14 +87,14 @@ module.exports.list = function (req, res, next) {
 // Create
 module.exports.create = [
   // validations rules
-  validator.body("sake", "Please enter Sake").isLength({ min: 1 }),
-  validator.body("makedBY").custom((value, { req }) => {
+  validator.body('sake', 'Please enter Sake').isLength({ min: 1 }),
+  validator.body('makedBY').custom((value, { req }) => {
     return BreweryYearData.findOne({
       makedBY: value,
       sake: req.body.sake,
     }).then((bydata) => {
       if (bydata !== null) {
-        return Promise.reject("すでに登録済みです");
+        return Promise.reject('すでに登録済みです');
       }
     });
   }),
@@ -128,12 +128,12 @@ module.exports.create = [
     bydata.save(function (err, bydata) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record",
+          message: 'Error saving record',
           error: err,
         });
       }
       return res.json({
-        message: "saved",
+        message: 'saved',
         _id: bydata._id,
       });
     });
@@ -143,15 +143,15 @@ module.exports.create = [
 // Update
 module.exports.update = [
   // validation rules
-  validator.body("sake", "Please enter Sake").isLength({ min: 1 }),
-  validator.body("makedBY").custom((value, { req }) => {
+  validator.body('sake', 'Please enter Sake').isLength({ min: 1 }),
+  validator.body('makedBY').custom((value, { req }) => {
     return BreweryYearData.findOne({
       makedBY: value,
       sake: req.body.sake,
       _id: { $ne: req.params.id },
     }).then((bydata) => {
       if (bydata !== null) {
-        return Promise.reject("すでに登録済みです");
+        return Promise.reject('すでに登録済みです');
       }
     });
   }),
@@ -165,13 +165,13 @@ module.exports.update = [
     BreweryYearData.findOne({ _id: id }, function (err, bydata) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record update sake",
+          message: 'Error saving record update sake',
           error: err,
         });
       }
       if (!bydata) {
         return res.status(404).json({
-          message: "No such record",
+          message: 'No such record',
         });
       }
 
@@ -210,13 +210,13 @@ module.exports.update = [
       bydata.save(function (err, bydata) {
         if (err) {
           return res.status(500).json({
-            message: "Error getting record update bydata.",
+            message: 'Error getting record update bydata.',
             error: err,
           });
         }
         if (!bydata) {
           return res.status(404).json({
-            message: "No such record",
+            message: 'No such record',
           });
         }
         return res.json(bydata);
@@ -231,7 +231,7 @@ module.exports.delete = function (req, res) {
   BreweryYearData.findByIdAndRemove(id, function (err, data) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record.",
+        message: 'Error getting record.',
         error: err,
       });
     }

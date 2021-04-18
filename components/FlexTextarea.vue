@@ -14,19 +14,19 @@
 
 <script>
 export default {
-  name: "FlexTextarea",
+  name: 'FlexTextarea',
   props: {
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     innerClass: {
       type: String,
-      default: "",
+      default: '',
     },
     value: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   mounted: function () {
@@ -34,12 +34,12 @@ export default {
   },
   methods: {
     flexTextarea(el) {
-      const dummy = el.querySelector(".FlexTextarea__dummy");
-      const textarea = el.querySelector(".FlexTextarea__textarea");
-      textarea.addEventListener("input", (e) => {
-        dummy.textContent = e.target.value + "\u200b";
+      const dummy = el.querySelector('.FlexTextarea__dummy');
+      const textarea = el.querySelector('.FlexTextarea__textarea');
+      textarea.addEventListener('input', (e) => {
+        dummy.textContent = e.target.value + '\u200b';
       });
-      dummy.textContent = textarea.value + "\u200b";
+      dummy.textContent = textarea.value + '\u200b';
     },
   },
 };

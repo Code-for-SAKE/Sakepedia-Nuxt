@@ -79,22 +79,22 @@
 </template>
 
 <script>
-import { getList } from "../../lib/ApiClient/getList";
+import { getList } from '../../lib/ApiClient/getList';
 export default {
   components: {},
   async asyncData(context) {
-    const searchName = context.query.name != null ? context.query.name : "";
+    const searchName = context.query.name != null ? context.query.name : '';
     const limit = context.query.limit != null ? context.query.limit : 10;
     const page = context.query.page != null ? context.query.page : 1;
-    const searchTypes = context.query.type != null ? context.query.type : "";
+    const searchTypes = context.query.type != null ? context.query.type : '';
     const typeQuery = searchTypes.split(/[\s|　]+/);
     const { list, currentPage, count } = await getList(
-      "sakes",
+      'sakes',
       {
         searchName: searchName,
         page: page,
         limit: limit,
-        ...(typeQuery[0] === "" ? {} : { typeQuery: typeQuery }),
+        ...(typeQuery[0] === '' ? {} : { typeQuery: typeQuery }),
       },
       context
     );
@@ -110,35 +110,35 @@ export default {
     return {
       sakes: [],
       searchValue: null,
-      searchName: "",
-      types: "",
+      searchName: '',
+      types: '',
       page: 1,
       count: 0,
       limit: 10,
-      searchTypes: "",
+      searchTypes: '',
       typeQuery: [],
     };
   },
   mounted() {
-    window.addEventListener("popstate", () => {
+    window.addEventListener('popstate', () => {
       this.searchName =
-        this.$route.query.name != null ? this.$route.query.name : "";
+        this.$route.query.name != null ? this.$route.query.name : '';
       this.limit =
         this.$route.query.limit != null ? this.$route.query.limit : 10;
       this.page = this.$route.query.page != null ? this.$route.query.page : 1;
       this.searchTypes =
-        this.$route.query.type != null ? this.$route.query.type : "";
+        this.$route.query.type != null ? this.$route.query.type : '';
       this.retrieves();
     });
   },
   methods: {
     async retrieves() {
       this.typeQuery = this.searchTypes.split(/[\s|　]+/);
-      const { list, currentPage, count } = await getList("sakes", {
+      const { list, currentPage, count } = await getList('sakes', {
         searchName: this.searchName,
         page: this.page,
         limit: this.limit,
-        ...(this.typeQuery[0] === "" ? {} : { typeQuery: this.typeQuery }),
+        ...(this.typeQuery[0] === '' ? {} : { typeQuery: this.typeQuery }),
       });
       this.sakes = list;
       this.page = currentPage;
@@ -150,7 +150,7 @@ export default {
       this.retrieves();
     },
     setHistories() {
-      const url = window.location.href.replace(/\?.*$/, "");
+      const url = window.location.href.replace(/\?.*$/, '');
       const queries = `?name=${this.searchName}&type=${this.searchTypes}&page=${this.page}&limit=${this.limit}`;
       window.history.pushState(null, null, `${url}${queries}`);
     },

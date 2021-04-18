@@ -68,16 +68,16 @@
 </template>
 
 <script>
-import BrewerySelect from "@/components/BrewerySelect.vue";
+import BrewerySelect from '@/components/BrewerySelect.vue';
 export default {
   components: {
     BrewerySelect,
   },
-  middleware: ["authenticated"],
+  middleware: ['authenticated'],
 
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/brands/" + context.route.params.id
+      '/api/brands/' + context.route.params.id
     );
     return {
       brand: data,
@@ -94,16 +94,16 @@ export default {
   methods: {
     submitForm() {
       this.$axios
-        .put("/api/brands/" + this.$route.params.id, this.brand)
+        .put('/api/brands/' + this.$route.params.id, this.brand)
         .then((response) => {
           if (response.data._id) {
-            this.$store.dispatch("flash/show", {
-              text: "更新しました",
-              mode: "alert-success",
+            this.$store.dispatch('flash/show', {
+              text: '更新しました',
+              mode: 'alert-success',
             });
             this.$router.push({
-              name: "brands-id",
-              params: { updated: "yes", id: this.$route.params.id },
+              name: 'brands-id',
+              params: { updated: 'yes', id: this.$route.params.id },
             });
           }
         })

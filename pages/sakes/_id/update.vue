@@ -101,20 +101,20 @@
 </template>
 
 <script>
-import BrandSelect from "@/components/BrandSelect.vue";
-import BrewerySelect from "@/components/BrewerySelect.vue";
-import TagSelect from "@/components/TagSelect.vue";
+import BrandSelect from '@/components/BrandSelect.vue';
+import BrewerySelect from '@/components/BrewerySelect.vue';
+import TagSelect from '@/components/TagSelect.vue';
 export default {
   components: {
     BrandSelect,
     BrewerySelect,
     TagSelect,
   },
-  middleware: ["authenticated"],
+  middleware: ['authenticated'],
 
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/sakes/" + context.route.params.id
+      '/api/sakes/' + context.route.params.id
     );
     return {
       sake: data,
@@ -131,16 +131,16 @@ export default {
   methods: {
     submitForm() {
       this.$axios
-        .put("/api/sakes/" + this.$route.params.id, this.sake)
+        .put('/api/sakes/' + this.$route.params.id, this.sake)
         .then((response) => {
           if (response.data._id) {
-            this.$store.dispatch("flash/show", {
-              text: "更新しました",
-              mode: "alert-success",
+            this.$store.dispatch('flash/show', {
+              text: '更新しました',
+              mode: 'alert-success',
             });
             this.$router.push({
-              name: "sakes-id",
-              params: { updated: "yes", id: this.$route.params.id },
+              name: 'sakes-id',
+              params: { updated: 'yes', id: this.$route.params.id },
             });
           }
         })

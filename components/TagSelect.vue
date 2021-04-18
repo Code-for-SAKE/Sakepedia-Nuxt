@@ -12,34 +12,34 @@ export default {
   props: {
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     name: {
       type: String,
-      default: "",
+      default: '',
     },
     optionList: {
       type: Array,
       default: () => {
         return [
-          "純米",
-          "吟醸",
-          "大吟醸",
-          "火入れ",
-          "生酒",
-          "しぼりたて",
-          "おりがらみ",
-          "にごり酒",
-          "生酛",
-          "山廃",
-          "貴譲酒",
-          "古酒",
+          '純米',
+          '吟醸',
+          '大吟醸',
+          '火入れ',
+          '生酒',
+          'しぼりたて',
+          'おりがらみ',
+          'にごり酒',
+          '生酛',
+          '山廃',
+          '貴譲酒',
+          '古酒',
         ];
       },
     },
     value: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   computed: {
@@ -48,7 +48,7 @@ export default {
         return this.value;
       },
       set(newVal) {
-        if (this.value !== newVal) this.$emit("input", newVal);
+        if (this.value !== newVal) this.$emit('input', newVal);
       },
     },
   },

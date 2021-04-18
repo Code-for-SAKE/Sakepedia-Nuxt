@@ -1,7 +1,7 @@
-const Brewery = require("../models/Brewery");
-const validator = require("express-validator");
-const paginate = require("express-paginate");
-const japanese = require("../../utils/japanese");
+const Brewery = require('../models/Brewery');
+const validator = require('express-validator');
+const paginate = require('express-paginate');
+const japanese = require('../../utils/japanese');
 
 // Get all
 module.exports.all = function (req, res, next) {
@@ -10,8 +10,8 @@ module.exports.all = function (req, res, next) {
   if (keyword) {
     search = {
       $or: [
-        { name: new RegExp(keyword, "i") },
-        { kana: new RegExp(japanese.hiraToKana(keyword), "i") },
+        { name: new RegExp(keyword, 'i') },
+        { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
       ],
     };
   }
@@ -21,7 +21,7 @@ module.exports.all = function (req, res, next) {
     function (err, result) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records.",
+          message: 'Error getting records.',
         });
       }
       return res.json({
@@ -40,12 +40,12 @@ module.exports.show = function (req, res) {
   Brewery.findOne({ _id: id }).exec(function (err, brewery) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record." + err,
+        message: 'Error getting record.' + err,
       });
     }
     if (!brewery) {
       return res.status(404).json({
-        message: "No such record",
+        message: 'No such record',
       });
     }
     return res.json(brewery);
@@ -59,18 +59,18 @@ module.exports.list = function (req, res, next) {
   if (keyword) {
     search = {
       $or: [
-        { name: new RegExp(keyword, "i") },
-        { kana: new RegExp(japanese.hiraToKana(keyword), "i") },
+        { name: new RegExp(keyword, 'i') },
+        { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
       ],
     };
   }
   Brewery.find(search)
-    .select("name")
+    .select('name')
     .limit(10)
     .exec(function (err, breweries) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records. : " + err,
+          message: 'Error getting records. : ' + err,
         });
       }
       return res.json(breweries);
@@ -80,17 +80,17 @@ module.exports.list = function (req, res, next) {
 // Create
 module.exports.create = [
   // validations rules
-  validator.body("name", "Please enter Brewery Name").isLength({ min: 1 }),
+  validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
   //validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
-  validator.body("breweryId").custom((value, { req }) => {
+  validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
-    if (value == "") return true;
+    if (value == '') return true;
     return Brewery.findOne({
       breweryId: value,
       _id: { $ne: req.params.id },
     }).then((brewery) => {
       if (brewery !== null) {
-        return Promise.reject("すでに登録済みです");
+        return Promise.reject('すでに登録済みです');
       }
     });
   }),
@@ -128,12 +128,12 @@ module.exports.create = [
     brewery.save(function (err, brewery) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record",
+          message: 'Error saving record',
           error: err,
         });
       }
       return res.json({
-        message: "saved",
+        message: 'saved',
         _id: brewery._id,
       });
     });
@@ -143,17 +143,17 @@ module.exports.create = [
 // Update
 module.exports.update = [
   // validation rules
-  validator.body("name", "Please enter Brewery Name").isLength({ min: 1 }),
+  validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
   //validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
-  validator.body("breweryId").custom((value, { req }) => {
+  validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
-    if (value == "") return true;
+    if (value == '') return true;
     return Brewery.findOne({
       breweryId: value,
       _id: { $ne: req.params.id },
     }).then((brewery) => {
       if (brewery !== null) {
-        return Promise.reject("すでに登録済みです");
+        return Promise.reject('すでに登録済みです');
       }
     });
   }),
@@ -169,13 +169,13 @@ module.exports.update = [
     Brewery.findOne({ _id: id }, function (err, brewery) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record",
+          message: 'Error saving record',
           error: err,
         });
       }
       if (!brewery) {
         return res.status(404).json({
-          message: "No such record",
+          message: 'No such record',
         });
       }
 
@@ -219,12 +219,12 @@ module.exports.update = [
       brewery.save(function (err, brewery) {
         if (err) {
           return res.status(500).json({
-            message: "Error getting record.",
+            message: 'Error getting record.',
           });
         }
         if (!brewery) {
           return res.status(404).json({
-            message: "No such record",
+            message: 'No such record',
           });
         }
         return res.json(brewery);
@@ -239,7 +239,7 @@ module.exports.delete = function (req, res) {
   Brewery.findByIdAndRemove(id, function (err, brewery) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record.",
+        message: 'Error getting record.',
       });
     }
     return res.json(brewery);

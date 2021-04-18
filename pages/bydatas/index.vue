@@ -48,7 +48,7 @@
         class="list-group-item list-group-item-action"
         :to="'/bydatas/' + bydata._id"
       >
-        {{ bydata.sake ? bydata.sake.name : "" }}
+        {{ bydata.sake ? bydata.sake.name : '' }}
         {{ bydata.makedBY }}
       </nuxt-link>
     </div>
@@ -58,22 +58,22 @@
 </template>
 
 <script>
-import { getList } from "../../lib/ApiClient/getList";
+import { getList } from '../../lib/ApiClient/getList';
 export default {
   components: {},
   async asyncData(context) {
-    const searchText = context.query.name != null ? context.query.name : "";
+    const searchText = context.query.name != null ? context.query.name : '';
     const limit = context.query.limit != null ? context.query.limit : 10;
     const page = context.query.page != null ? context.query.page : 1;
-    const searchTypes = context.query.type != null ? context.query.type : "";
+    const searchTypes = context.query.type != null ? context.query.type : '';
     const typeQuery = searchTypes.split(/[\s|　]+/);
     const { list, currentPage, count } = await getList(
-      "bydatas",
+      'bydatas',
       {
         searchName: searchText,
         page: page,
         limit: limit,
-        ...(typeQuery[0] === "" ? {} : { typeQuery: typeQuery }),
+        ...(typeQuery[0] === '' ? {} : { typeQuery: typeQuery }),
       },
       context
     );
@@ -89,7 +89,7 @@ export default {
     return {
       bydatas: [],
       searchValue: null,
-      searchText: "",
+      searchText: '',
 
       page: 1,
       count: 0,
@@ -97,20 +97,20 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener("popstate", () => {
+    window.addEventListener('popstate', () => {
       this.searchText =
-        this.$route.query.name != null ? this.$route.query.name : "";
+        this.$route.query.name != null ? this.$route.query.name : '';
       this.limit =
         this.$route.query.limit != null ? this.$route.query.limit : 10;
       this.page = this.$route.query.page != null ? this.$route.query.page : 1;
       this.searchTypes =
-        this.$route.query.type != null ? this.$route.query.type : "";
+        this.$route.query.type != null ? this.$route.query.type : '';
       this.retrieves();
     });
   },
   methods: {
     async retrieves() {
-      const { list, currentPage, count } = await getList("bydatas", {
+      const { list, currentPage, count } = await getList('bydatas', {
         searchName: this.searchText,
         page: this.page,
         limit: this.limit,
@@ -125,7 +125,7 @@ export default {
       this.retrieves();
     },
     setHistories() {
-      const url = window.location.href.replace(/\?.*$/, "");
+      const url = window.location.href.replace(/\?.*$/, '');
       const queries = `?name=${this.searchText}&type=${this.searchTypes}&page=${this.page}&limit=${this.limit}`;
       window.history.pushState(null, null, `${url}${queries}`);
     },

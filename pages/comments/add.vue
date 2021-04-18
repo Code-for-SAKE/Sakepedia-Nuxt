@@ -75,11 +75,11 @@
 </template>
 
 <script>
-import BrewerySelect from "@/components/BrewerySelect.vue";
-import BrandSelect from "@/components/BrandSelect.vue";
-import SakeSelect from "@/components/SakeSelect.vue";
-import ImageUploader from "@/components/ImageUploader.vue";
-import FlexTextarea from "@/components/FlexTextarea.vue";
+import BrewerySelect from '@/components/BrewerySelect.vue';
+import BrandSelect from '@/components/BrandSelect.vue';
+import SakeSelect from '@/components/SakeSelect.vue';
+import ImageUploader from '@/components/ImageUploader.vue';
+import FlexTextarea from '@/components/FlexTextarea.vue';
 export default {
   components: {
     BrewerySelect,
@@ -88,11 +88,11 @@ export default {
     ImageUploader,
     FlexTextarea,
   },
-  middleware: ["authenticated"],
+  middleware: ['authenticated'],
   async asyncData(context) {
     if (context.route.query.sake) {
       const { data } = await context.$axios.get(
-        "/api/sakes/" + context.route.query.sake
+        '/api/sakes/' + context.route.query.sake
       );
       return {
         brand: data.brand,
@@ -102,7 +102,7 @@ export default {
     }
     if (context.route.query.brand) {
       const { data } = await context.$axios.get(
-        "/api/brands/" + context.route.query.brand
+        '/api/brands/' + context.route.query.brand
       );
       return {
         brand: data,
@@ -111,7 +111,7 @@ export default {
     }
     if (context.route.query.brewery) {
       const { data } = await context.$axios.get(
-        "/api/breweries/" + context.route.query.brewery
+        '/api/breweries/' + context.route.query.brewery
       );
       return {
         brewery: data,
@@ -132,7 +132,7 @@ export default {
   methods: {
     submitForm() {
       this.$axios
-        .post("/api/comments", {
+        .post('/api/comments', {
           comment: this.comment,
           image: this.image,
           brand: this.brand,
@@ -141,7 +141,7 @@ export default {
         })
         .then((response) => {
           if (response.data._id) {
-            this.$router.push({ name: "comments", params: { created: "yes" } });
+            this.$router.push({ name: 'comments', params: { created: 'yes' } });
           }
         })
         .catch((error) => {

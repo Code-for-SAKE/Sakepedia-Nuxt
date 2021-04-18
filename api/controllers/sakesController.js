@@ -1,9 +1,9 @@
-const Brewery = require("../models/Brewery");
-const Brand = require("../models/Brand");
-const Sake = require("../models/Sake");
-const validator = require("express-validator");
-const paginate = require("express-paginate");
-const japanese = require("../../utils/japanese");
+const Brewery = require('../models/Brewery');
+const Brand = require('../models/Brand');
+const Sake = require('../models/Sake');
+const validator = require('express-validator');
+const paginate = require('express-paginate');
+const japanese = require('../../utils/japanese');
 
 // Get all
 module.exports.all = function (req, res, next) {
@@ -17,8 +17,8 @@ module.exports.all = function (req, res, next) {
   if (brand) [(search.brand = brand)];
   if (keyword) {
     search.$or = [
-      { name: new RegExp(keyword, "i") },
-      { kana: new RegExp(japanese.hiraToKana(keyword), "i") },
+      { name: new RegExp(keyword, 'i') },
+      { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
     ];
   }
   if (typeQuery) {
@@ -37,7 +37,7 @@ module.exports.all = function (req, res, next) {
     function (err, result) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records.",
+          message: 'Error getting records.',
         });
       }
       return res.json({
@@ -56,19 +56,19 @@ module.exports.show = function (req, res) {
   Sake.findOne({ _id: id }).exec(async function (err, data) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record." + err,
+        message: 'Error getting record.' + err,
       });
     }
     if (!data) {
       return res.status(404).json({
-        message: "No such record",
+        message: 'No such record',
       });
     }
     try {
-      await data.populate("brewery", "name").execPopulate();
+      await data.populate('brewery', 'name').execPopulate();
     } catch (e) {}
     try {
-      await data.populate("brand", "name").execPopulate();
+      await data.populate('brand', 'name').execPopulate();
     } catch (e) {}
     return res.json(data);
   });
@@ -81,18 +81,18 @@ module.exports.list = function (req, res, next) {
   if (keyword) {
     search = {
       $or: [
-        { name: new RegExp(keyword, "i") },
-        { kana: new RegExp(japanese.hiraToKana(keyword), "i") },
+        { name: new RegExp(keyword, 'i') },
+        { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
       ],
     };
   }
   Sake.find(search)
-    .select("name")
+    .select('name')
     .limit(10)
     .exec(function (err, sakes) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records. : " + err,
+          message: 'Error getting records. : ' + err,
         });
       }
       return res.json(sakes);
@@ -102,12 +102,12 @@ module.exports.list = function (req, res, next) {
 // Create
 module.exports.create = [
   // validations rules
-  validator.body("name", "Please enter Sake Name").isLength({ min: 1 }),
-  validator.body("name").custom((value, { req }) => {
+  validator.body('name', 'Please enter Sake Name').isLength({ min: 1 }),
+  validator.body('name').custom((value, { req }) => {
     return Sake.findOne({ name: value, _id: { $ne: req.params.id } }).then(
       (sake) => {
         if (sake !== null) {
-          return Promise.reject("Name already in use");
+          return Promise.reject('Name already in use');
         }
       }
     );
@@ -135,12 +135,12 @@ module.exports.create = [
     sake.save(function (err, sake) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record",
+          message: 'Error saving record',
           error: err,
         });
       }
       return res.json({
-        message: "saved",
+        message: 'saved',
         _id: sake._id,
       });
     });
@@ -150,12 +150,12 @@ module.exports.create = [
 // Update
 module.exports.update = [
   // validation rules
-  validator.body("name", "Please enter Sake Name").isLength({ min: 1 }),
-  validator.body("name").custom((value, { req }) => {
+  validator.body('name', 'Please enter Sake Name').isLength({ min: 1 }),
+  validator.body('name').custom((value, { req }) => {
     return Sake.findOne({ name: value, _id: { $ne: req.params.id } }).then(
       (sake) => {
         if (sake !== null) {
-          return Promise.reject("Name already in use");
+          return Promise.reject('Name already in use');
         }
       }
     );
@@ -171,13 +171,13 @@ module.exports.update = [
     Sake.findOne({ _id: id }, function (err, sake) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record update sake",
+          message: 'Error saving record update sake',
           error: err,
         });
       }
       if (!sake) {
         return res.status(404).json({
-          message: "No such record",
+          message: 'No such record',
         });
       }
 
@@ -197,13 +197,13 @@ module.exports.update = [
       sake.save(function (err, sake) {
         if (err) {
           return res.status(500).json({
-            message: "Error getting record update sake.",
+            message: 'Error getting record update sake.',
             error: err,
           });
         }
         if (!sake) {
           return res.status(404).json({
-            message: "No such record",
+            message: 'No such record',
           });
         }
         return res.json(sake);
@@ -218,7 +218,7 @@ module.exports.delete = function (req, res) {
   Sake.findByIdAndRemove(id, function (err, sake) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record.",
+        message: 'Error getting record.',
         error: err,
       });
     }
@@ -234,7 +234,7 @@ module.exports.change = function (req, res) {
       Sake.find({}, function (err, result) {
         if (err) {
           return res.status(500).json({
-            message: "Error getting records.",
+            message: 'Error getting records.',
           });
         }
         for (var i = 0; i < result.length; i++) {
@@ -246,18 +246,18 @@ module.exports.change = function (req, res) {
           sake.save(function (err3, sake) {
             if (err3) {
               return res.status(500).json({
-                message: "Error getting record update sake.",
+                message: 'Error getting record update sake.',
                 error: err3,
               });
             }
             if (!sake) {
               return res.status(404).json({
-                message: "No such record",
+                message: 'No such record',
               });
             }
           });
         }
       });
-      console.log("done");
+      console.log('done');
     });
 };

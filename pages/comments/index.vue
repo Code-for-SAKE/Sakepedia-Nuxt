@@ -53,11 +53,11 @@
 </template>
 
 <script>
-import { getList } from "../../lib/ApiClient/getList";
-import BrewerySelect from "@/components/BrewerySelect.vue";
-import BrandSelect from "@/components/BrandSelect.vue";
-import SakeSelect from "@/components/SakeSelect.vue";
-import ImageList from "@/components/ImageList";
+import { getList } from '../../lib/ApiClient/getList';
+import BrewerySelect from '@/components/BrewerySelect.vue';
+import BrandSelect from '@/components/BrandSelect.vue';
+import SakeSelect from '@/components/SakeSelect.vue';
+import ImageList from '@/components/ImageList';
 export default {
   components: {
     BrewerySelect,
@@ -66,7 +66,7 @@ export default {
     ImageList,
   },
   async asyncData(context) {
-    const { list, currentPage, count } = await getList("comments", {}, context);
+    const { list, currentPage, count } = await getList('comments', {}, context);
     return {
       comments: list,
       page: currentPage,
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       comments: [],
-      keyword: "",
+      keyword: '',
       sake: null,
       brand: null,
       brewery: null,
@@ -90,7 +90,7 @@ export default {
   },
   methods: {
     async retrieves() {
-      const { list, currentPage, count } = await getList("comments", {
+      const { list, currentPage, count } = await getList('comments', {
         keyword: this.keyword,
         sake: this.sake,
         brand: this.brand,

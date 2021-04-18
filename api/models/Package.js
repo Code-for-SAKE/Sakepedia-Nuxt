@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const Package = new Schema({
-  sake: { type: Schema.Types.ObjectId, ref: "Sake", required: true },
+  sake: { type: Schema.Types.ObjectId, ref: 'Sake', required: true },
   volume: { type: Number },
   price: { type: Number },
   createdAt: { type: Date },
@@ -12,4 +12,4 @@ const Package = new Schema({
 });
 
 Package.plugin(mongoosePaginate);
-module.exports = mongoose.model("Package", Package);
+module.exports = mongoose.model('Package', Package);

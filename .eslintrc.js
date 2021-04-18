@@ -4,15 +4,23 @@ module.exports = {
     browser: true,
     node: true,
   },
-  parser: "vue-eslint-parser",
+  parser: 'vue-eslint-parser',
   extends: [
-    "prettier",
-    "plugin:prettier/recommended",
-    "plugin:vue/recommended",
-    "plugin:nuxt/recommended",
-    "@vue/prettier",
+    'plugin:vue/recommended',
+    'plugin:nuxt/recommended',
+    'prettier',
+    'plugin:prettier/recommended',
+    '@vue/prettier',
   ],
   plugins: [],
   // add your custom rules here
-  rules: {},
+  rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        trailingComma: 'es5',
+      },
+    ],
+  },
 };

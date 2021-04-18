@@ -1,35 +1,35 @@
-import express from "express";
-import session from "express-session";
+import express from 'express';
+import session from 'express-session';
 
-const db = require("./db");
+const db = require('./db');
 
 // Create express instnace
 const app = express();
 
 // Init body-parser options (inbuilt with express)
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // sessionの設定
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "secret",
+    secret: process.env.SESSION_SECRET || 'secret',
     resave: true,
     saveUninitialized: true,
     cookie: {
-      secure: "auto",
+      secure: 'auto',
     },
   })
 );
 
 // Require & Import API routes
-const auth = require("./routes/auth");
-const awards = require("./routes/awards");
-const breweries = require("./routes/breweries");
-const brands = require("./routes/brands");
-const sakes = require("./routes/sakes");
-const bydatas = require("./routes/bydatas");
-const comments = require("./routes/comments");
+const auth = require('./routes/auth');
+const awards = require('./routes/awards');
+const breweries = require('./routes/breweries');
+const brands = require('./routes/brands');
+const sakes = require('./routes/sakes');
+const bydatas = require('./routes/bydatas');
+const comments = require('./routes/comments');
 
 //Authenticate
 app.use(auth);
@@ -45,6 +45,6 @@ app.use(comments);
 
 // Export the server middleware
 module.exports = {
-  path: "/api",
+  path: '/api',
   handler: app,
 };

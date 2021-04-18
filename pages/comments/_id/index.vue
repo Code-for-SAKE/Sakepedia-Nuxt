@@ -51,13 +51,13 @@
 </template>
 
 <script>
-const Prefectures = require("@/utils/prefectures");
+const Prefectures = require('@/utils/prefectures');
 
 export default {
   components: {},
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/comments/" + context.route.params.id
+      '/api/comments/' + context.route.params.id
     );
     return {
       comment: data,
@@ -74,14 +74,14 @@ export default {
 
   methods: {
     deleteRecord() {
-      if (confirm("Are you sure?") === true) {
+      if (confirm('Are you sure?') === true) {
         this.$axios
-          .delete("/api/comments/" + this.$route.params.id)
+          .delete('/api/comments/' + this.$route.params.id)
           .then((response) => {
             if (response.data._id) {
               this.$router.push({
-                name: "comments",
-                params: { deleted: "yes" },
+                name: 'comments',
+                params: { deleted: 'yes' },
               });
             }
           })

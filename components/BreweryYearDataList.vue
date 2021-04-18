@@ -17,7 +17,7 @@
         class="list-group-item list-group-item-action"
         :to="'/bydatas/' + bydata._id"
       >
-        {{ bydata.sake ? bydata.sake.name : "" }}
+        {{ bydata.sake ? bydata.sake.name : '' }}
         {{ bydata.makedBY }}
       </nuxt-link>
     </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getList } from "../lib/ApiClient/getList";
+import { getList } from '../lib/ApiClient/getList';
 export default {
   props: {
     search: {
@@ -47,7 +47,7 @@ export default {
     };
   },
   mounted() {
-    getList("bydatas", { sake: this.search.sake }).then((res) => {
+    getList('bydatas', { sake: this.search.sake }).then((res) => {
       this.bydatas = res.list;
       this.page = res.currentPage;
       this.count = res.count;
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     async retrieves() {
-      const { list, currentPage, count } = await getList("bydatas", {
+      const { list, currentPage, count } = await getList('bydatas', {
         page: this.page,
         limit: this.limit,
       });

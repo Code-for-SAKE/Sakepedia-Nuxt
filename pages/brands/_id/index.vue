@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import SakeList from "@/components/SakeList.vue";
-import CommentList from "@/components/CommentList.vue";
+import SakeList from '@/components/SakeList.vue';
+import CommentList from '@/components/CommentList.vue';
 
 export default {
   components: {
@@ -68,7 +68,7 @@ export default {
   },
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/brands/" + context.route.params.id
+      '/api/brands/' + context.route.params.id
     );
     return {
       brand: data,
@@ -84,12 +84,12 @@ export default {
 
   methods: {
     deleteRecord() {
-      if (confirm("Are you sure?") === true) {
+      if (confirm('Are you sure?') === true) {
         this.$axios
-          .delete("/api/brands/" + this.$route.params.id)
+          .delete('/api/brands/' + this.$route.params.id)
           .then((response) => {
             if (response.data._id) {
-              this.$router.push({ name: "brands", params: { deleted: "yes" } });
+              this.$router.push({ name: 'brands', params: { deleted: 'yes' } });
             }
           })
           .catch((error) => {

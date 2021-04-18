@@ -246,9 +246,9 @@
 </template>
 
 <script>
-const Prefectures = require("../../utils/prefectures");
+const Prefectures = require('../../utils/prefectures');
 export default {
-  middleware: ["authenticated"],
+  middleware: ['authenticated'],
 
   data() {
     return {
@@ -279,7 +279,7 @@ export default {
   methods: {
     submitForm() {
       this.$axios
-        .post("/api/breweries", {
+        .post('/api/breweries', {
           breweryId: this.breweryId,
           name: this.name,
           kana: this.kana,
@@ -300,7 +300,7 @@ export default {
         })
         .then((response) => {
           if (response.data._id) {
-            this.$router.push({ name: "breweries" });
+            this.$router.push({ name: 'breweries' });
           }
         })
         .catch((error) => {

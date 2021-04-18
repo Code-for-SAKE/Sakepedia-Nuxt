@@ -245,13 +245,13 @@
 </template>
 
 <script>
-const Prefectures = require("../../../utils/prefectures");
+const Prefectures = require('../../../utils/prefectures');
 export default {
-  middleware: ["authenticated"],
+  middleware: ['authenticated'],
 
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/breweries/" + context.route.params.id
+      '/api/breweries/' + context.route.params.id
     );
     return {
       brewery: data,
@@ -310,7 +310,7 @@ export default {
 
     submitForm() {
       this.$axios
-        .put("/api/breweries/" + this.$route.params.id, {
+        .put('/api/breweries/' + this.$route.params.id, {
           breweryId: this.breweryId,
           name: this.name,
           kana: this.kana,
@@ -334,7 +334,7 @@ export default {
 
           if (response.data._id) {
             this.$router.push({
-              name: "breweries-id",
+              name: 'breweries-id',
               params: { id: this.$route.params.id },
             });
           }

@@ -9,18 +9,18 @@ export default {
   data() {
     return {
       limit: 0,
-      unit: "",
-      allow: "",
+      unit: '',
+      allow: '',
       allowType: [],
       lists: {
         mimeType: {
-          gif: "image/gif",
-          jpg: "image/jpeg",
-          png: "image/png",
-          text: "text/plain",
-          tsv: "text/tab-separated-values",
-          csv: ["application/vnd.ms-excel", "text/csv"],
-          pdf: "application/pdf",
+          gif: 'image/gif',
+          jpg: 'image/jpeg',
+          png: 'image/png',
+          text: 'text/plain',
+          tsv: 'text/tab-separated-values',
+          csv: ['application/vnd.ms-excel', 'text/csv'],
+          pdf: 'application/pdf',
         },
         unit: {
           kb: 1000,
@@ -33,7 +33,7 @@ export default {
   mounted() {
     this.limit = parseInt(this.params.limit);
     this.unit = this.params.unit;
-    this.allow = this.params.allow.split(",");
+    this.allow = this.params.allow.split(',');
     this.allowType = this._getAllowMimeType(this.allow);
   },
 
@@ -45,19 +45,19 @@ export default {
       return parseInt(size) < this._getLimitSizeByte();
     },
     isImage(type) {
-      return type.indexOf("image") !== -1;
+      return type.indexOf('image') !== -1;
     },
     getErrorMessageSize() {
-      return this.limit + this.unit + "未満のファイルのみアップロード可能です";
+      return this.limit + this.unit + '未満のファイルのみアップロード可能です';
     },
     getErrorMessageType() {
-      return this.allow.join("/") + " ファイルのみアップロード可能です";
+      return this.allow.join('/') + ' ファイルのみアップロード可能です';
     },
     _getAllowMimeType(allow) {
       let mimeTypes = [];
       for (let i = 0; i < allow.length; i++) {
         let target = this.lists.mimeType[allow[i]];
-        if (typeof target === "string") {
+        if (typeof target === 'string') {
           mimeTypes.push(target);
         } else if (target instanceof Array) {
           mimeTypes = mimeTypes.concat(target);

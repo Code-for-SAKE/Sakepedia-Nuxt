@@ -237,16 +237,16 @@
 </template>
 
 <script>
-import SakeSelect from "@/components/SakeSelect.vue";
+import SakeSelect from '@/components/SakeSelect.vue';
 export default {
   components: {
     SakeSelect,
   },
-  middleware: ["authenticated"],
+  middleware: ['authenticated'],
   async asyncData(context) {
     if (context.route.query.sake) {
       const { data } = await context.$axios.get(
-        "/api/sakes/" + context.route.query.sake
+        '/api/sakes/' + context.route.query.sake
       );
       return {
         brand: data.brand,
@@ -279,7 +279,7 @@ export default {
   methods: {
     submitForm() {
       this.$axios
-        .post("/api/bydatas", {
+        .post('/api/bydatas', {
           sake: this.sake,
           makedBY: this.makedBY,
           aminoAcidContent: [
@@ -300,7 +300,7 @@ export default {
         })
         .then((response) => {
           if (response.data._id) {
-            this.$router.push({ name: "bydatas", params: { created: "yes" } });
+            this.$router.push({ name: 'bydatas', params: { created: 'yes' } });
           }
         })
         .catch((error) => {

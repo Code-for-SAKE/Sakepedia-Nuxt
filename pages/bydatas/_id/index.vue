@@ -4,7 +4,7 @@
 
     <hr />
 
-    <h2>{{ bydata.sake ? bydata.sake.name : "" }}</h2>
+    <h2>{{ bydata.sake ? bydata.sake.name : '' }}</h2>
     <h4>{{ bydata.makedBY }}年</h4>
     <h6>By {{ bydata.author }}</h6>
     <dl>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import RangeValue from "@/components/RangeValue.vue";
+import RangeValue from '@/components/RangeValue.vue';
 
 export default {
   components: {
@@ -55,7 +55,7 @@ export default {
   },
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/bydatas/" + context.route.params.id
+      '/api/bydatas/' + context.route.params.id
     );
     return {
       bydata: data,
@@ -64,14 +64,14 @@ export default {
 
   methods: {
     deleteRecord() {
-      if (confirm("Are you sure?") === true) {
+      if (confirm('Are you sure?') === true) {
         this.$axios
-          .delete("/api/bydatas/" + this.$route.params.id)
+          .delete('/api/bydatas/' + this.$route.params.id)
           .then((response) => {
             if (response.data._id) {
               this.$router.push({
-                name: "bydatas",
-                params: { deleted: "yes" },
+                name: 'bydatas',
+                params: { deleted: 'yes' },
               });
             }
           })

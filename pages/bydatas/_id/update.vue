@@ -230,11 +230,11 @@
 <script>
 export default {
   components: {},
-  middleware: ["authenticated"],
+  middleware: ['authenticated'],
 
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/bydatas/" + context.route.params.id
+      '/api/bydatas/' + context.route.params.id
     );
     return {
       bydata: data,
@@ -250,16 +250,16 @@ export default {
   methods: {
     submitForm() {
       this.$axios
-        .put("/api/bydatas/" + this.$route.params.id, this.bydata)
+        .put('/api/bydatas/' + this.$route.params.id, this.bydata)
         .then((response) => {
           if (response.data._id) {
-            this.$store.dispatch("flash/show", {
-              text: "更新しました",
-              mode: "alert-success",
+            this.$store.dispatch('flash/show', {
+              text: '更新しました',
+              mode: 'alert-success',
             });
             this.$router.push({
-              name: "bydatas-id",
-              params: { updated: "yes", id: this.$route.params.id },
+              name: 'bydatas-id',
+              params: { updated: 'yes', id: this.$route.params.id },
             });
           }
         })

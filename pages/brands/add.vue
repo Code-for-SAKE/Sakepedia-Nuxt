@@ -65,16 +65,16 @@
 </template>
 
 <script>
-import BrewerySelect from "@/components/BrewerySelect.vue";
+import BrewerySelect from '@/components/BrewerySelect.vue';
 export default {
   components: {
     BrewerySelect,
   },
-  middleware: ["authenticated"],
+  middleware: ['authenticated'],
   async asyncData(context) {
     if (context.route.query.brewery) {
       const { data } = await context.$axios.get(
-        "/api/breweries/" + context.route.query.brewery
+        '/api/breweries/' + context.route.query.brewery
       );
       return {
         brewery: data,
@@ -94,7 +94,7 @@ export default {
   methods: {
     submitForm() {
       this.$axios
-        .post("/api/brands", {
+        .post('/api/brands', {
           name: this.name,
           brewery: this.brewery,
           logo: this.logo,
@@ -102,7 +102,7 @@ export default {
         })
         .then((response) => {
           if (response.data._id) {
-            this.$router.push({ name: "brands", params: { created: "yes" } });
+            this.$router.push({ name: 'brands', params: { created: 'yes' } });
           }
         })
         .catch((error) => {

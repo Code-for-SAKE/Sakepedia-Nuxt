@@ -81,11 +81,11 @@
 </template>
 
 <script>
-import BrandSelect from "@/components/BrandSelect.vue";
-import BrewerySelect from "@/components/BrewerySelect.vue";
-import SakeSelect from "@/components/SakeSelect.vue";
-import ImageUploader from "@/components/ImageUploader.vue";
-import FlexTextarea from "@/components/FlexTextarea.vue";
+import BrandSelect from '@/components/BrandSelect.vue';
+import BrewerySelect from '@/components/BrewerySelect.vue';
+import SakeSelect from '@/components/SakeSelect.vue';
+import ImageUploader from '@/components/ImageUploader.vue';
+import FlexTextarea from '@/components/FlexTextarea.vue';
 export default {
   components: {
     BrandSelect,
@@ -94,11 +94,11 @@ export default {
     ImageUploader,
     FlexTextarea,
   },
-  middleware: ["authenticated"],
+  middleware: ['authenticated'],
 
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/comments/" + context.route.params.id
+      '/api/comments/' + context.route.params.id
     );
     return {
       comment: data,
@@ -115,16 +115,16 @@ export default {
   methods: {
     submitForm() {
       this.$axios
-        .put("/api/comments/" + this.$route.params.id, this.comment)
+        .put('/api/comments/' + this.$route.params.id, this.comment)
         .then((response) => {
           if (response.data._id) {
-            this.$store.dispatch("flash/show", {
-              text: "更新しました",
-              mode: "alert-success",
+            this.$store.dispatch('flash/show', {
+              text: '更新しました',
+              mode: 'alert-success',
             });
             this.$router.push({
-              name: "comments-id",
-              params: { updated: "yes", id: this.$route.params.id },
+              name: 'comments-id',
+              params: { updated: 'yes', id: this.$route.params.id },
             });
           }
         })

@@ -1,8 +1,8 @@
-const Brand = require("../models/Brand");
-const validator = require("express-validator");
-const paginate = require("express-paginate");
-const japanese = require("../../utils/japanese");
-const Brewery = require("../models/Brewery");
+const Brand = require('../models/Brand');
+const validator = require('express-validator');
+const paginate = require('express-paginate');
+const japanese = require('../../utils/japanese');
+const Brewery = require('../models/Brewery');
 
 // Get all
 module.exports.all = function (req, res, next) {
@@ -13,8 +13,8 @@ module.exports.all = function (req, res, next) {
   if (brewery) [(search.brewery = brewery)];
   if (keyword) {
     search.$or = [
-      { name: new RegExp(keyword, "i") },
-      { kana: new RegExp(japanese.hiraToKana(keyword), "i") },
+      { name: new RegExp(keyword, 'i') },
+      { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
     ];
   }
   Brand.paginate(
@@ -23,7 +23,7 @@ module.exports.all = function (req, res, next) {
     function (err, result) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records.",
+          message: 'Error getting records.',
         });
       }
       return res.json({
@@ -42,16 +42,16 @@ module.exports.show = function (req, res) {
   Brand.findOne({ _id: id }).exec(async function (err, data) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record." + err,
+        message: 'Error getting record.' + err,
       });
     }
     if (!data) {
       return res.status(404).json({
-        message: "No such record",
+        message: 'No such record',
       });
     }
     try {
-      await data.populate("brewery", "name").execPopulate();
+      await data.populate('brewery', 'name').execPopulate();
     } catch (e) {}
     return res.json(data);
   });
@@ -64,18 +64,18 @@ module.exports.list = function (req, res, next) {
   if (keyword) {
     search = {
       $or: [
-        { name: new RegExp(keyword, "i") },
-        { kana: new RegExp(japanese.hiraToKana(keyword), "i") },
+        { name: new RegExp(keyword, 'i') },
+        { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
       ],
     };
   }
   Brand.find(search)
-    .select("name")
+    .select('name')
     .limit(10)
     .exec(function (err, datas) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records. : " + err,
+          message: 'Error getting records. : ' + err,
         });
       }
       return res.json(datas);
@@ -85,17 +85,17 @@ module.exports.list = function (req, res, next) {
 // Create
 module.exports.create = [
   // validations rules
-  validator.body("name", "名前を入力してください").isLength({ min: 1 }),
-  validator.body("name").custom((value, { req }) => {
+  validator.body('name', '名前を入力してください').isLength({ min: 1 }),
+  validator.body('name').custom((value, { req }) => {
     return Brand.findOne({ name: value, _id: { $ne: req.params.id } }).then(
       (data) => {
         if (data !== null) {
-          return Promise.reject("すでに存在します");
+          return Promise.reject('すでに存在します');
         }
       }
     );
   }),
-  validator.body("brewery", "酒蔵を入力してください").isLength({ min: 1 }),
+  validator.body('brewery', '酒蔵を入力してください').isLength({ min: 1 }),
 
   function (req, res) {
     // throw validation errors
@@ -117,12 +117,12 @@ module.exports.create = [
     brand.save(function (err, brand) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record",
+          message: 'Error saving record',
           error: err,
         });
       }
       return res.json({
-        message: "saved",
+        message: 'saved',
         _id: brand._id,
       });
     });
@@ -132,12 +132,12 @@ module.exports.create = [
 // Update
 module.exports.update = [
   // validation rules
-  validator.body("name", "名前を入力してください").isLength({ min: 1 }),
-  validator.body("name").custom((value, { req }) => {
+  validator.body('name', '名前を入力してください').isLength({ min: 1 }),
+  validator.body('name').custom((value, { req }) => {
     return Brand.findOne({ name: value, _id: { $ne: req.params.id } }).then(
       (data) => {
         if (data !== null) {
-          return Promise.reject("すでに存在します");
+          return Promise.reject('すでに存在します');
         }
       }
     );
@@ -154,13 +154,13 @@ module.exports.update = [
     Brand.findOne({ _id: id }, function (err, data) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record update sake",
+          message: 'Error saving record update sake',
           error: err,
         });
       }
       if (!data) {
         return res.status(404).json({
-          message: "No such record",
+          message: 'No such record',
         });
       }
 
@@ -177,13 +177,13 @@ module.exports.update = [
       data.save(function (err, data) {
         if (err) {
           return res.status(500).json({
-            message: "Error getting record update sake.",
+            message: 'Error getting record update sake.',
             error: err,
           });
         }
         if (!data) {
           return res.status(404).json({
-            message: "No such record",
+            message: 'No such record',
           });
         }
         return res.json(data);
@@ -198,7 +198,7 @@ module.exports.delete = function (req, res) {
   Brand.findByIdAndRemove(id, function (err, data) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record.",
+        message: 'Error getting record.',
         error: err,
       });
     }

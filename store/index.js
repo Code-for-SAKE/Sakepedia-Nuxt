@@ -16,12 +16,12 @@ export const mutations = {
 
 export const actions = {
   nuxtServerInit({ dispatch }, { req }) {
-    return dispatch("getSession");
+    return dispatch('getSession');
   },
   async getSession({ commit }) {
-    const session = await this.$axios.$get("/api/session");
+    const session = await this.$axios.$get('/api/session');
     if (session && session.user) {
-      commit("login", session.user);
+      commit('login', session.user);
     }
   },
 };

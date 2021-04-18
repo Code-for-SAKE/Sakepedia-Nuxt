@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const Sake = new Schema({
   name: { type: String, required: true, index: { unique: true } },
-  brand: { type: Schema.Types.ObjectId, ref: "Brand" },
-  brewery: { type: Schema.Types.ObjectId, ref: "Brewery" },
+  brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
+  brewery: { type: Schema.Types.ObjectId, ref: 'Brewery' },
   subname: { type: String },
   type: { type: [String] },
   description: { type: String },
@@ -14,8 +14,8 @@ const Sake = new Schema({
   modifiedAt: { type: Date },
   author: { type: String },
 });
-Sake.virtual("sakeId").get(function () {
+Sake.virtual('sakeId').get(function () {
   return this._id;
 });
 Sake.plugin(mongoosePaginate);
-module.exports = mongoose.model("Sake", Sake);
+module.exports = mongoose.model('Sake', Sake);

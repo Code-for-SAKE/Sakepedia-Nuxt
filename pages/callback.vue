@@ -10,7 +10,7 @@ export default {
     };
   },
   async mounted() {
-    const res = await this.$axios.get("/api/auth/callback", {
+    const res = await this.$axios.get('/api/auth/callback', {
       params: this.$route.query,
     });
     const user = {
@@ -18,8 +18,8 @@ export default {
       name: res.data.user.username,
       avatarUrl: res.data.user.photos[0].value,
     };
-    this.$store.commit("login", user);
-    this.$router.push("/auth/account");
+    this.$store.commit('login', user);
+    this.$router.push('/auth/account');
   },
 };
 </script>

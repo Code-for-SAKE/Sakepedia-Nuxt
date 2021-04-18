@@ -12,31 +12,31 @@
 </template>
 
 <script>
-import FileEvaluable from "@/components/mixins/FileEvaluable";
+import FileEvaluable from '@/components/mixins/FileEvaluable';
 
 export default {
-  name: "UserImageUploder",
+  name: 'UserImageUploder',
   mixins: [FileEvaluable],
   model: {
     // このcurrentImageは親で指定した(v-model="avatar")と同値。
-    prop: "currentImage",
-    event: "change",
+    prop: 'currentImage',
+    event: 'change',
   },
   props: {
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     currentImage: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   data() {
     return {
       file: null,
-      message: "",
-      error: "",
+      message: '',
+      error: '',
     };
   },
   methods: {
@@ -53,8 +53,8 @@ export default {
       //オーバーしている場合はリサイズ
 
       // canvas要素を作成
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
 
       // 縦横比を算出
       const ratio = image.height / image.width;
@@ -80,7 +80,7 @@ export default {
       );
 
       // data_url形式に変換したものを返す
-      return canvas.toDataURL("image/jpeg");
+      return canvas.toDataURL('image/jpeg');
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
@@ -99,7 +99,7 @@ export default {
       });
     },
     setImage(currentImage) {
-      this.$emit("change", currentImage);
+      this.$emit('change', currentImage);
     },
     onImageChange(e) {
       const images = e.target.files || e.dataTransfer.files;
@@ -107,7 +107,7 @@ export default {
         this.getBase64(images[0])
           .then((image) => this.setImage(image))
           .catch((error) =>
-            this.setError(error, "画像のアップロードに失敗しました。")
+            this.setError(error, '画像のアップロードに失敗しました。')
           );
       } else {
       }
@@ -123,7 +123,7 @@ export default {
         this.canBeUploaded = false;
         return false;
       }
-      this.error = "";
+      this.error = '';
       this.canBeUploaded = true;
       return true;
     },
@@ -133,6 +133,6 @@ export default {
 
 <style>
 .custom-file-input ~ .custom-file-label[data-browse]::after {
-  content: "...";
+  content: '...';
 }
 </style>

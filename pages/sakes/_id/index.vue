@@ -87,10 +87,10 @@
 </template>
 
 <script>
-const Prefectures = require("@/utils/prefectures");
-import BreweryYearDataList from "@/components/BreweryYearDataList.vue";
-import LastBreweryYearData from "@/components/LastBreweryYearData.vue";
-import CommentList from "@/components/CommentList.vue";
+const Prefectures = require('@/utils/prefectures');
+import BreweryYearDataList from '@/components/BreweryYearDataList.vue';
+import LastBreweryYearData from '@/components/LastBreweryYearData.vue';
+import CommentList from '@/components/CommentList.vue';
 
 export default {
   components: {
@@ -100,7 +100,7 @@ export default {
   },
   async asyncData(context) {
     const { data } = await context.$axios.get(
-      "/api/sakes/" + context.route.params.id
+      '/api/sakes/' + context.route.params.id
     );
     return {
       sake: data,
@@ -117,12 +117,12 @@ export default {
 
   methods: {
     deleteRecord() {
-      if (confirm("Are you sure?") === true) {
+      if (confirm('Are you sure?') === true) {
         this.$axios
-          .delete("/api/sakes/" + this.$route.params.id)
+          .delete('/api/sakes/' + this.$route.params.id)
           .then((response) => {
             if (response.data._id) {
-              this.$router.push({ name: "sakes", params: { deleted: "yes" } });
+              this.$router.push({ name: 'sakes', params: { deleted: 'yes' } });
             }
           })
           .catch((error) => {

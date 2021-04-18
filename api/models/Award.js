@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const Award = new Schema({
-  brewery: { type: Schema.Types.ObjectId, ref: "Brewery", required: true },
+  brewery: { type: Schema.Types.ObjectId, ref: 'Brewery', required: true },
   award: { type: String, required: true },
   sakeName: { type: String },
   year: { type: Number, required: true },
@@ -13,4 +13,4 @@ const Award = new Schema({
 });
 
 Award.plugin(mongoosePaginate);
-module.exports = mongoose.model("Award", Award);
+module.exports = mongoose.model('Award', Award);

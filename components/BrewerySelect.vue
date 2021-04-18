@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { ModelListSelect } from "vue-search-select";
+import { ModelListSelect } from 'vue-search-select';
 export default {
   components: {
     ModelListSelect,
@@ -25,23 +25,23 @@ export default {
   props: {
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     name: {
       type: String,
-      default: "",
+      default: '',
     },
     optionValue: {
       type: String,
-      default: "_id",
+      default: '_id',
     },
     optionText: {
       type: String,
-      default: "name",
+      default: 'name',
     },
     placeholder: {
       type: String,
-      default: "酒蔵",
+      default: '酒蔵',
     },
     value: {
       type: [Object, String],
@@ -59,13 +59,13 @@ export default {
     //初期値の設定
     if (this.value) {
       this.$axios
-        .get("/api/breweries/" + this.value[this.optionValue])
+        .get('/api/breweries/' + this.value[this.optionValue])
         .then((response) => {
           this.searchedBreweries = [response.data];
           this.innerName = response.data[this.optionText];
         });
     } else {
-      this.$axios.get("/api/breweries/").then((response) => {
+      this.$axios.get('/api/breweries/').then((response) => {
         this.searchedBreweries = response.data.breweries;
       });
     }
@@ -73,26 +73,26 @@ export default {
   methods: {
     onInput(item) {
       if (item) {
-        console.log("onInput item", item);
-        this.$emit("input", item);
+        console.log('onInput item', item);
+        this.$emit('input', item);
       } else {
-        console.log("onInput value", this.value);
-        this.$emit("input", this.value);
+        console.log('onInput value', this.value);
+        this.$emit('input', this.value);
       }
     },
     searchBreweries(searchText) {
       if (searchText) {
-        console.log("searchBreweries searchText", searchText);
-        this.$emit("input", { name: searchText });
+        console.log('searchBreweries searchText', searchText);
+        this.$emit('input', { name: searchText });
         this.$axios
-          .get("/api/list/breweries", { params: { keyword: searchText } })
+          .get('/api/list/breweries', { params: { keyword: searchText } })
           .then((response) => {
             this.searchedBreweries = response.data;
           });
       } else {
-        this.innerValue = "";
-        console.log("searchBreweries value", this.innerValue);
-        this.$emit("input", this.innerValue);
+        this.innerValue = '';
+        console.log('searchBreweries value', this.innerValue);
+        this.$emit('input', this.innerValue);
       }
     },
   },

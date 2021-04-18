@@ -36,7 +36,7 @@ export default {
   props: {
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     list: {
       type: Array,
@@ -44,7 +44,7 @@ export default {
     },
     urlPrefix: {
       type: String,
-      default: "",
+      default: '',
     },
   },
 };

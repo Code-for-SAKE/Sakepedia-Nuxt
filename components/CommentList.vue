@@ -14,8 +14,8 @@
   </div>
 </template>
 <script>
-import { getList } from "@/lib/ApiClient/getList";
-import ImageList from "@/components/ImageList";
+import { getList } from '@/lib/ApiClient/getList';
+import ImageList from '@/components/ImageList';
 export default {
   components: {
     ImageList,
@@ -23,19 +23,19 @@ export default {
   props: {
     sake: {
       type: String,
-      default: "",
+      default: '',
     },
     brand: {
       type: String,
-      default: "",
+      default: '',
     },
     brewery: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   async asyncData(context) {
-    const { list, currentPage, count } = await getList("comments", {}, context);
+    const { list, currentPage, count } = await getList('comments', {}, context);
     return {
       comments: list,
       page: currentPage,
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       comments: [],
-      keyword: "",
+      keyword: '',
       page: 1,
       count: 0,
       limit: 10,
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     async retrieves() {
-      const { list, currentPage, count } = await getList("comments", {
+      const { list, currentPage, count } = await getList('comments', {
         keyword: this.keyword,
         sake: this.sake,
         brand: this.brand,

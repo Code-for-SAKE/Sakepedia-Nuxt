@@ -1,8 +1,8 @@
-const Award = require("../models/Award");
-const validator = require("express-validator");
-const paginate = require("express-paginate");
-const japanese = require("../../utils/japanese");
-const Brewery = require("../models/Brewery");
+const Award = require('../models/Award');
+const validator = require('express-validator');
+const paginate = require('express-paginate');
+const japanese = require('../../utils/japanese');
+const Brewery = require('../models/Brewery');
 
 // Get all
 module.exports.all = function (req, res, next) {
@@ -15,7 +15,7 @@ module.exports.all = function (req, res, next) {
     function (err, result) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records.",
+          message: 'Error getting records.',
         });
       }
       return res.json({
@@ -32,16 +32,16 @@ module.exports.all = function (req, res, next) {
 module.exports.show = function (req, res) {
   var id = req.params.id;
   Award.findOne({ _id: id })
-    .populate("brewery")
+    .populate('brewery')
     .exec(function (err, data) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting record." + err,
+          message: 'Error getting record.' + err,
         });
       }
       if (!data) {
         return res.status(404).json({
-          message: "No such record",
+          message: 'No such record',
         });
       }
       return res.json(data);
@@ -55,18 +55,18 @@ module.exports.list = function (req, res, next) {
   if (keyword) {
     search = {
       $or: [
-        { name: new RegExp(keyword, "i") },
-        { kana: new RegExp(japanese.hiraToKana(keyword), "i") },
+        { name: new RegExp(keyword, 'i') },
+        { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
       ],
     };
   }
   Award.find(search)
-    .select("name")
+    .select('name')
     .limit(10)
     .exec(function (err, datas) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records. : " + err,
+          message: 'Error getting records. : ' + err,
         });
       }
       return res.json(datas);
@@ -97,12 +97,12 @@ module.exports.create = [
     award.save(function (err, award) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record",
+          message: 'Error saving record',
           error: err,
         });
       }
       return res.json({
-        message: "saved",
+        message: 'saved',
         _id: award._id,
       });
     });
@@ -122,13 +122,13 @@ module.exports.update = [
     Award.findOne({ _id: id }, function (err, data) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record update sake",
+          message: 'Error saving record update sake',
           error: err,
         });
       }
       if (!data) {
         return res.status(404).json({
-          message: "No such record",
+          message: 'No such record',
         });
       }
 
@@ -144,13 +144,13 @@ module.exports.update = [
       data.save(function (err, data) {
         if (err) {
           return res.status(500).json({
-            message: "Error getting record update sake.",
+            message: 'Error getting record update sake.',
             error: err,
           });
         }
         if (!data) {
           return res.status(404).json({
-            message: "No such record",
+            message: 'No such record',
           });
         }
         return res.json(data);
@@ -165,7 +165,7 @@ module.exports.delete = function (req, res) {
   Award.findByIdAndRemove(id, function (err, data) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record.",
+        message: 'Error getting record.',
         error: err,
       });
     }

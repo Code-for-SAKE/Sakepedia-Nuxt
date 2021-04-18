@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const Brewery = new Schema({
@@ -24,4 +24,4 @@ const Brewery = new Schema({
 });
 
 Brewery.plugin(mongoosePaginate);
-module.exports = mongoose.model("Brewery", Brewery);
+module.exports = mongoose.model('Brewery', Brewery);

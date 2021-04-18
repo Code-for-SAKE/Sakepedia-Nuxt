@@ -26,7 +26,7 @@ export default {
   methods: {
     githublogin() {
       this.$axios
-        .get("/api/auth/login")
+        .get('/api/auth/login')
         .then((response) => {})
         .catch((error) => {
           console.log(error);

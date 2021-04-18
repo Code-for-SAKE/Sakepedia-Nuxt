@@ -1,10 +1,10 @@
-const Brewery = require("../models/Brewery");
-const Brand = require("../models/Brand");
-const Sake = require("../models/Sake");
-const Comment = require("../models/Comment");
-const validator = require("express-validator");
-const paginate = require("express-paginate");
-const japanese = require("../../utils/japanese");
+const Brewery = require('../models/Brewery');
+const Brand = require('../models/Brand');
+const Sake = require('../models/Sake');
+const Comment = require('../models/Comment');
+const validator = require('express-validator');
+const paginate = require('express-paginate');
+const japanese = require('../../utils/japanese');
 
 // Get all
 module.exports.all = function (req, res, next) {
@@ -29,9 +29,9 @@ module.exports.all = function (req, res, next) {
   }
   if (keyword) {
     search.$or = [
-      { comment: new RegExp(keyword, "i") },
-      { comment: new RegExp(japanese.hiraToKana(keyword), "i") },
-      { comment: new RegExp(japanese.kanaToHira(keyword), "i") },
+      { comment: new RegExp(keyword, 'i') },
+      { comment: new RegExp(japanese.hiraToKana(keyword), 'i') },
+      { comment: new RegExp(japanese.kanaToHira(keyword), 'i') },
     ];
   }
   Comment.paginate(
@@ -40,7 +40,7 @@ module.exports.all = function (req, res, next) {
     function (err, result) {
       if (err) {
         return res.status(500).json({
-          message: "Error getting records.",
+          message: 'Error getting records.',
         });
       }
       return res.json({
@@ -59,22 +59,22 @@ module.exports.show = function (req, res) {
   Comment.findOne({ _id: id }).exec(async function (err, data) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record." + err,
+        message: 'Error getting record.' + err,
       });
     }
     if (!data) {
       return res.status(404).json({
-        message: "No such record",
+        message: 'No such record',
       });
     }
     try {
-      await data.populate("brewery", "name").execPopulate();
+      await data.populate('brewery', 'name').execPopulate();
     } catch (e) {}
     try {
-      await data.populate("brand", "name").execPopulate();
+      await data.populate('brand', 'name').execPopulate();
     } catch (e) {}
     try {
-      await data.populate("sake", "name").execPopulate();
+      await data.populate('sake', 'name').execPopulate();
     } catch (e) {}
     return res.json(data);
   });
@@ -103,12 +103,12 @@ module.exports.create = [
     comment.save(function (err, data) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record",
+          message: 'Error saving record',
           error: err,
         });
       }
       return res.json({
-        message: "saved",
+        message: 'saved',
         _id: data._id,
       });
     });
@@ -118,17 +118,17 @@ module.exports.create = [
 // Update
 module.exports.update = [
   // validations rules
-  validator.body("comment").custom((value, { req }) => {
-    console.log("update comments validator");
+  validator.body('comment').custom((value, { req }) => {
+    console.log('update comments validator');
     return Comment.findOne({ _id: req.params.id }).then((comment) => {
       if (comment.author !== req.user.name) {
-        return Promise.reject("Not your comment");
+        return Promise.reject('Not your comment');
       }
     });
   }),
 
   function (req, res) {
-    console.log("update comments");
+    console.log('update comments');
     // throw validation errors
     const errors = validator.validationResult(req);
     if (!errors.isEmpty()) {
@@ -138,16 +138,16 @@ module.exports.update = [
     Comment.findOne({ _id: id }, function (err, data) {
       if (err) {
         return res.status(500).json({
-          message: "Error saving record update comment",
+          message: 'Error saving record update comment',
           error: err,
         });
       }
       if (!data) {
         return res.status(404).json({
-          message: "No such record",
+          message: 'No such record',
         });
       }
-      console.log("update comments2");
+      console.log('update comments2');
 
       // initialize record
       data.comment = req.body.comment ? req.body.comment : data.comment;
@@ -162,13 +162,13 @@ module.exports.update = [
       data.save(function (err, data) {
         if (err) {
           return res.status(500).json({
-            message: "Error getting record update comment.",
+            message: 'Error getting record update comment.',
             error: err,
           });
         }
         if (!data) {
           return res.status(404).json({
-            message: "No such record",
+            message: 'No such record',
           });
         }
         return res.json(data);
@@ -183,7 +183,7 @@ module.exports.delete = function (req, res) {
   Comment.findByIdAndRemove(id, function (err, data) {
     if (err) {
       return res.status(500).json({
-        message: "Error getting record.",
+        message: 'Error getting record.',
         error: err,
       });
     }

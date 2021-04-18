@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { getList } from "../lib/ApiClient/getList";
+import { getList } from '../lib/ApiClient/getList';
 export default {
   props: {
     search: {
@@ -46,7 +46,7 @@ export default {
     };
   },
   created() {
-    getList("brands", { brewery: this.search.brewery }).then((res) => {
+    getList('brands', { brewery: this.search.brewery }).then((res) => {
       this.brands = res.list;
       this.page = res.currentPage;
       this.count = res.count;
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     async retrieves() {
-      const { list, currentPage, count } = await getList("brands", {
+      const { list, currentPage, count } = await getList('brands', {
         page: this.page,
         limit: this.limit,
       });

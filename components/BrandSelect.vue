@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { ModelListSelect } from "vue-search-select";
+import { ModelListSelect } from 'vue-search-select';
 export default {
   components: {
     ModelListSelect,
@@ -25,23 +25,23 @@ export default {
   props: {
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     name: {
       type: String,
-      default: "",
+      default: '',
     },
     optionValue: {
       type: String,
-      default: "_id",
+      default: '_id',
     },
     optionText: {
       type: String,
-      default: "name",
+      default: 'name',
     },
     placeholder: {
       type: String,
-      default: "銘柄",
+      default: '銘柄',
     },
     value: {
       type: [Object, String],
@@ -59,13 +59,13 @@ export default {
     //初期値の設定
     if (this.value) {
       this.$axios
-        .get("/api/brands/" + this.value[this.optionValue])
+        .get('/api/brands/' + this.value[this.optionValue])
         .then((response) => {
           this.searchedBrands = [response.data];
           this.innerName = response.data[this.optionText];
         });
     } else {
-      this.$axios.get("/api/brands/").then((response) => {
+      this.$axios.get('/api/brands/').then((response) => {
         this.searchedBrands = response.data.brands;
       });
     }
@@ -73,22 +73,22 @@ export default {
   methods: {
     onInput(item) {
       if (item) {
-        this.$emit("input", item);
+        this.$emit('input', item);
       } else {
-        this.$emit("input", this.value);
+        this.$emit('input', this.value);
       }
     },
     searchBrands(searchText) {
       if (searchText) {
-        this.$emit("input", { name: searchText });
+        this.$emit('input', { name: searchText });
         this.$axios
-          .get("/api/list/brands", { params: { keyword: searchText } })
+          .get('/api/list/brands', { params: { keyword: searchText } })
           .then((response) => {
             this.searchedBrands = response.data;
           });
       } else {
-        this.innerValue = "";
-        this.$emit("input", this.innerValue);
+        this.innerValue = '';
+        this.$emit('input', this.innerValue);
       }
     },
   },

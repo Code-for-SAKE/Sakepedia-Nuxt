@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate");
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const BreweryYearData = new Schema({
-  sake: { type: Schema.Types.ObjectId, ref: "Sake", required: true },
+  sake: { type: Schema.Types.ObjectId, ref: 'Sake', required: true },
   makedBY: { type: Number, required: true },
   aminoAcidContent: { type: [Number, Number] },
   alcoholContent: { type: [Number, Number] },
@@ -20,4 +20,4 @@ const BreweryYearData = new Schema({
 });
 
 BreweryYearData.plugin(mongoosePaginate);
-module.exports = mongoose.model("BreweryYearData", BreweryYearData);
+module.exports = mongoose.model('BreweryYearData', BreweryYearData);
