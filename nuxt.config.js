@@ -3,7 +3,6 @@ require('dotenv').config({ path: envPath })
 
 module.exports = {
   telemetry: false,
-  mode: 'universal',
   /*
   ** Headers of the page
   */
