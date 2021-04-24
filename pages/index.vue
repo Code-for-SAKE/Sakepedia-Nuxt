@@ -11,5 +11,17 @@
       <li>検索、追加、編集ができます。</li>
       <li>APIでも取得できます。</li>
     </ul>
+    <breweries-map />
   </div>
 </template>
+
+<script>
+import BreweriesMap from '@/components/BreweriesMap.vue';
+
+export default {
+  components: {
+    BreweriesMap,
+  },
+}
+</script>
+
