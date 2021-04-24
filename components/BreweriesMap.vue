@@ -34,7 +34,6 @@ export default{
   mounted(){
     this.$axios.get('/api/locations/breweries').then((response) => {
         this.brewery_positions = response.data;
-        console.log(this.brewery_positions)
     });
   }
 }
