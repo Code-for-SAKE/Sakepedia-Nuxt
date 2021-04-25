@@ -16,6 +16,9 @@ router.get('/breweries/:id', breweriesController.show);
 // List
 router.get('/list/breweries', breweriesController.list);
 
+// Get Locations of Breweries
+router.get('/locations/breweries', breweriesController.getLocations);
+
 // Create
 router.post('/breweries', config.isAuthenticated, breweriesController.create);
 
