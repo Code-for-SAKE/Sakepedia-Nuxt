@@ -88,19 +88,9 @@ module.exports.getLocations = function (req, res, next) {
         });
       }
 
-      brewery_positions = resp.map(x => getLatitudeAndLongitude(x['address']));
-      return res.json(brewery_positions);
+      return res.json(resp);
     });
 };
-
-function getLatitudeAndLongitude(address){
-  latitude = 0;
-  longitude = 0;
-  return {
-    "latitude": latitude,
-    "longitude": longitude
-  }
-}
 
 // Create
 module.exports.create = [

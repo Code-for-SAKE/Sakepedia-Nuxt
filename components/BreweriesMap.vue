@@ -1,47 +1,65 @@
 <template>
-  <div id="map">
-    <client-only>
-        <!-- 気仙沼大島の緯度・経度 -->
-        <l-map :zoom="zoom" :center="center">
+  <client-only>
+    <div id="map" :style="{ width: `${width}px`, height: `${height}px` }">
+      <l-map :zoom="zoom" :center="center">
         <l-tile-layer :url="url"></l-tile-layer>
-        <l-marker v-for="marker of marker" :lat-lng="marker" :key="marker"}></l-marker>
-        </l-map>
-    </client-only>
+        <div
+          v-for="(brewery_position, index) in brewery_positions"
+          :key="index"
+        >
+          <l-marker :lat-lng="brewery_position">
+            <l-popup :content="`${brewery_position.name}`"></l-popup>
+          </l-marker>
+        </div>
+      </l-map>
     </div>
+  </client-only>
 </template>
 
 <script>
-export default{
+export default {
+  props: ['width', 'height'],
+  head() {
+    return {
+      script: [
+        {
+          hid: "stripe",
+          src: "https://cdn.geolonia.com/community-geocoder.js",
+          defer: true,
+        },
+      ],
+    };
+  },
   data() {
-    return{
-      // leafletの設定
-      center: [38.856355,141.615593],
-      zoom: 13,
+    return {
+      center: [35.999887, 138.75],
+      zoom: 4,
       url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
-      // マーカーを置く場所一覧（観光地）
-      marker: {
-        center:  [38.856355,141.615593],
-        kugunaribeach: [38.873171,141.63164],
-        mtkame: [38.87373,141.617855],
-        tatsumai: [38.830445,141.624526],
-        kodanobeach: [38.851971,141.622216],
-        bridge: [38.878459,141.606309]
-      },
-      brewery_positions : []
-
+      brewery_positions: [],
+    };
+  },
+  mounted() {
+    if (!process.server) {
+      this.$axios.get("/api/locations/breweries").then((response) => {
+        this.brewery_positions = [];
+        response.data.map((brewery) => {
+          window.getLatLng(
+            brewery["address"],
+            (latlng) => {
+              this.brewery_positions.push(Object.assign({}, latlng, brewery));
+            },
+            console.log
+          );
+        });
+      });
     }
   },
-  mounted(){
-    this.$axios.get('/api/locations/breweries').then((response) => {
-        this.brewery_positions = response.data;
-    });
-  }
-}
+};
 </script>
 
 <style scoped>
 #map {
-    height: 400px;
-    width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
