@@ -77,21 +77,6 @@ module.exports.list = function (req, res, next) {
     });
 };
 
-// get locations of all breweries
-module.exports.getLocations = function (req, res, next) {
-  Brewery.find({})
-    .select('name address latitude longitude')
-    .exec(function (err, resp) {
-      if (err) {
-        return res.status(500).json({
-          message: 'Error getting records. : ' + err,
-        });
-      }
-
-      return res.json(resp);
-    });
-};
-
 // Create
 module.exports.create = [
   // validations rules
