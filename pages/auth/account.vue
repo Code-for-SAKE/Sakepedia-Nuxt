@@ -14,11 +14,10 @@
 
         <b-button to="/auth/logout" variant="danger">Logout</b-button>
         <div class="username">
-          <div class='error-message'>{{errorMessage}}</div>
-          <input type="text" v-model="name" @keypress.enter="save">
-          <input type="submit" value="保存" @click="save">
+          <div class="error-message">{{ errorMessage }}</div>
+          <input v-model="name" type="text" @keypress.enter="save" />
+          <input type="submit" value="保存" @click="save" />
         </div>
-        
       </div>
     </div>
   </div>
@@ -27,24 +26,26 @@
 <script>
 export default {
   middleware: 'authenticated',
-  data () {
+  data() {
     return {
       name: '',
-      errorMessage: ''
-    }
+      errorMessage: '',
+    };
   },
   methods: {
-    async save () {
-      await this.$axios.post(`api/users/${this.$store.state.user._id}/name`, {name: this.name})
+    async save() {
+      await this.$axios
+        .post(`api/users/${this.$store.state.user._id}/name`, {
+          name: this.name,
+        })
         .then((res) => {
           if (res.data.error) {
-            this.errorMessage = res.data.error
+            this.errorMessage = res.data.error;
           } else {
             this.$store.commit('login', res.data.user);
           }
-          
         });
-    }
-  }
+    },
+  },
 };
 </script>
