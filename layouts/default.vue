@@ -1,12 +1,17 @@
 <template>
   <div id="wrap">
     <header id="header">
-      <b-navbar toggleable="md" type="dark" variant="info">
-        <b-navbar-brand href="/">Sakepedia</b-navbar-brand>
+      <b-navbar toggleable="md" variant="white">
+        <b-navbar-brand href="/"
+          ><img
+            height="50"
+            src="~/assets/image/sakepedia-yoko.png"
+            alt="Sakepedia"
+        /></b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-        <b-collapse id="nav-collapse" type="dark" variant="info" is-nav>
+        <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <b-nav-item to="/sakes" exact-active-class="active"
               >日本酒</b-nav-item

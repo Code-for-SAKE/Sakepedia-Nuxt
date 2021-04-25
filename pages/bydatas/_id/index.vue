@@ -34,7 +34,7 @@
     <div class="d-flex justify-content-between">
       <div>
         <b-button
-          variant="primary"
+          variant="light"
           :to="'/bydatas/' + bydata._id + '/update'"
           class="mr-3"
           >編集</b-button

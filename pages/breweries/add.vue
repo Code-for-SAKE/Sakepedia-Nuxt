@@ -235,7 +235,7 @@
             </div>
           </div>
 
-          <b-button variant="primary" type="submit" value="追加" class="mr-3"
+          <b-button variant="light" type="submit" value="追加" class="mr-3"
             >追加</b-button
           >
           <b-button to="/breweries" class="mr-3">キャンセル</b-button>

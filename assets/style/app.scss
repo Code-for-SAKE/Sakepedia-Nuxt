@@ -1,7 +1,16 @@
+$primary: #004761;
+$secondary: #004761;
+$danger: #B61584;
+$success: #8CBD21;
+$warning: #F4F0DC;
+$light: #0C8BBA;
+
+@import '~bootstrap/scss/bootstrap';
+
 :root {
   --sidebar-width: 240px;
   --content-width: calc(100vw - var(--sidebar-width));
-  --header-height: 50px;
+  --header-height: 60px;
   --footer-height: 52px;
   --content-padding: 20px;
   --method-area-padding: 3vw;
@@ -55,8 +64,7 @@ body {
 }
 
 #footer {
-  background: var(--info);
-  color: var(--white);
+  color: var(--primary);
   display: flex;
   justify-content: center;
   height: var(--footer-height);
@@ -65,6 +73,6 @@ body {
 a {
   font-weight: 500;
   text-decoration: none;
-  color: var(--gray500);
+  color: var(--light);
 }
 
