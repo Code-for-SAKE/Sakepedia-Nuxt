@@ -1,5 +1,7 @@
 import passport from 'passport';
 import { Strategy } from 'passport-github';
+const User = require('../models/User');
+const usersController = require('../controllers/usersController')
 
 const config = require('../config');
 const { Router } = require('express');
@@ -16,22 +18,29 @@ passport.use(
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     },
-    (accessToken, refreshToken, profile, done) => {
-      return done(null, profile);
+    async (accessToken, refreshToken, profile, done) => {
+      const user = await User.findOne({type: 'git', identity: profile.id})
+      if(user === null) {
+        usersController.create(
+          'git',
+          profile.id,
+          profile.photos[0].value
+        )
+      }
+      const currentUser = await User.findOne({type: 'git', identity: profile.id})
+      return done(null, currentUser);
     }
   )
 );
 
-passport.serializeUser((user, done) => {
+passport.serializeUser((currentUser, done) => {
   done(null, {
-    id: user.id,
-    name: user.username,
-    avatarUrl: user.photos[0].value,
-    email: user.email,
+    _id: currentUser._id
   });
 });
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
+passport.deserializeUser(async(obj, done) => {
+  const user = await User.findOne({_id: obj._id})
+  done(null, user);
 });
 
 router.get('/session', (req, res) => {
