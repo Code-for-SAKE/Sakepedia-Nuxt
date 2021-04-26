@@ -7,10 +7,14 @@
       <div class="col-md-6">
         <form action="" method="post" @submit.prevent="submitForm()">
           <div class="form-group">
-            <label for="">法人番号 etc</label>
+            <label for="">法人番号</label>
             <input
               v-model="breweryId"
-              type="number"
+              type="text"
+              inputmode="numeric"
+              pattern="\d*"
+              maxlength=13
+              placeholder="国税庁が指定する13桁の識別番号"
               class="form-control"
               :class="{ 'is-invalid': errors && errors.breweryId }"
             />
