@@ -13,7 +13,7 @@
               type="text"
               inputmode="numeric"
               pattern="\d*"
-              maxlength=13
+              maxlength="13"
               placeholder="国税庁が指定する13桁の識別番号"
               class="form-control"
               :class="{ 'is-invalid': errors && errors.breweryId }"
