@@ -15,6 +15,9 @@ module.exports.create = function (type, identity, avatarUrl) {
 };
 
 module.exports.update = async function (req, res) {
+  if (req.body.name === '' ) {
+    return res.json({error: '名前を入力してください'})
+  }
   const user = await User.findOne({ _id: req.params.id });
   if (await User.findOne({ name: req.body.name })) {
     return res.json({ error: 'その名前はすでに使用されています' });
