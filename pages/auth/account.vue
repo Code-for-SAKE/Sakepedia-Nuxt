@@ -42,6 +42,7 @@ export default {
           if (res.data.error) {
             this.errorMessage = res.data.error;
           } else {
+            this.errorMessage = ''
             this.$store.commit('login', res.data.user);
           }
         });
