@@ -15,7 +15,8 @@
         <b-button to="/auth/logout" variant="danger">Logout</b-button>
         <div class="username">
           <div class="error-message">{{ errorMessage }}</div>
-          <input v-model="name" type="text" @keypress.enter="save" />
+          <label for="name"> 名前: </label>
+          <input v-model="name" id="name" type="text" @keypress.enter="save" />
           <input type="submit" value="保存" @click="save" />
         </div>
       </div>
