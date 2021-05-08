@@ -21,7 +21,7 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       const user = await User.findOne({ type: 'git', identity: profile.id });
       if (user === null) {
-        usersController.create('git', profile.id, profile.photos[0].value);
+        usersController.create('git', profile.id, profile.photos[0].value, profile.username);
       }
       const currentUser = await User.findOne({
         type: 'git',

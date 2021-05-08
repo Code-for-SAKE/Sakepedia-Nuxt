@@ -1,10 +1,11 @@
 const User = require('../models/User');
 
-module.exports.create = function (type, identity, avatarUrl) {
+module.exports.create = function (type, identity, avatarUrl, username=null) {
   const user = new User({
     type: type,
     identity: identity,
     avatarUrl: avatarUrl,
+    gitUsername: username
   });
   user.save(function (err, user) {
     if (err) {
