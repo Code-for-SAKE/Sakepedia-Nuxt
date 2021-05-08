@@ -43,13 +43,9 @@ export default {
       this.$axios.get("/api/locations/breweries").then((response) => {
         this.brewery_positions = [];
         response.data.map((brewery) => {
-          window.getLatLng(
-            brewery["address"],
-            (latlng) => {
-              this.brewery_positions.push(Object.assign({}, latlng, brewery));
-            },
-            console.log
-          );
+          brewery['lat'] = brewery.latitude;
+          brewery['lng'] = brewery.longitude;
+          this.brewery_positions.push(brewery);
         });
       });
     }
