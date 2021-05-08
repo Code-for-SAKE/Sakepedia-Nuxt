@@ -110,7 +110,7 @@ module.exports.create = [
       description: req.body.description,
       logo: req.body.logo,
       brewery: req.body.brewery,
-      author: req.user.name,
+      userId: req.user._id
     });
 
     // save record
@@ -171,7 +171,7 @@ module.exports.update = [
       data.description = req.body.description
         ? req.body.description
         : data.description;
-      data.author = req.user.name;
+      data.userId = req.user._id;
 
       // save record
       data.save(function (err, data) {
