@@ -24,7 +24,7 @@ module.exports.all = function (req, res, next) {
   if (sake) {
     search.sake = sake;
   }
-  if (user) {
+  if (userId) {
     search.userId = user;
   }
   if (keyword) {
