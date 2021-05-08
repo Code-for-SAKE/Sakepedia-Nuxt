@@ -8,6 +8,7 @@ const Brand = new Schema({
   logo: { type: String },
   description: { type: String },
   author: { type: String },
+  userId: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 Brand.virtual('brandId').get(function () {

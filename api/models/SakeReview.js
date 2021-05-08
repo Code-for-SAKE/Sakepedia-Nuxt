@@ -14,6 +14,7 @@ const SakeReview = new Schema({
   createdAt: { type: Date },
   modifiedAt: { type: Date },
   author: { type: String, required: true },
+  userId: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('SakeReview', SakeReview);

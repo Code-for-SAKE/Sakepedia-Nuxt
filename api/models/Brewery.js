@@ -21,6 +21,7 @@ const Brewery = new Schema({
   startYear: { type: Number },
   endYear: { type: Number },
   author: { type: String },
+  userId: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 Brewery.plugin(mongoosePaginate);
