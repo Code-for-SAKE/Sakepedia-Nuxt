@@ -2,6 +2,7 @@ const Brewery = require('../models/Brewery');
 const validator = require('express-validator');
 const paginate = require('express-paginate');
 const japanese = require('../../utils/japanese');
+const geocoder = require('nuxt-simple-geocoding-ja');
 
 // Get all
 module.exports.all = function (req, res, next) {
@@ -77,6 +78,20 @@ module.exports.list = function (req, res, next) {
     });
 };
 
+// get locations of all breweries
+module.exports.getLocations = function (req, res, next) {
+  Brewery.find({ latitude: { $exists: true } })
+    .select('name address latitude longitude')
+    .exec(function (err, breweries) {
+      if (err) {
+        return res.status(500).json({
+          message: 'Error getting records. : ' + err,
+        });
+      }
+      return res.json(breweries);
+    });
+};
+
 // Create
 module.exports.create = [
   // validations rules
@@ -119,21 +134,37 @@ module.exports.create = [
       author: req.user.name,
     });
 
-    // save record
-    brewery.save(function (err, brewery) {
-      if (err) {
-        return res.status(500).json({
-          message: 'Error saving record',
-          error: err,
-        });
-      }
-      return res.json({
-        message: 'saved',
-        _id: brewery._id,
-      });
-    });
+    // update geocode from address when geocode is null
+    if (req.body.latitude === null || req.body.longitude === null) {
+      geocoder(
+        brewery.address,
+        (latlng) => {
+          brewery.latitude = latlng.lat;
+          brewery.longitude = latlng.lng;
+          saveBrewery(brewery, res);
+        }
+      )
+    } else {
+      saveBrewery(brewery, res);
+    }
   },
 ];
+
+function saveBrewery(brewery, res) {
+  // save record
+  brewery.save(function (err, brewery) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Error saving record',
+        error: err,
+      });
+    }
+    return res.json({
+      message: 'saved',
+      _id: brewery._id,
+    });
+  });
+}
 
 // Update
 module.exports.update = [
