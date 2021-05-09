@@ -96,18 +96,13 @@ module.exports.getLocations = function (req, res, next) {
 module.exports.create = [
   // validations rules
   validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
-  //validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
   validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
     if (value == '') return true;
-    return Brewery.findOne({
-      breweryId: value,
-      _id: { $ne: req.params.id },
-    }).then((brewery) => {
-      if (brewery !== null) {
-        return Promise.reject('すでに登録済みです');
-      }
-    });
+    if (value.length != 13) {
+      return Promise.reject('法人番号は13桁です。');
+    }
+    return true;
   }),
 
   function (req, res) {
@@ -175,18 +170,13 @@ function saveBrewery(brewery, res) {
 module.exports.update = [
   // validation rules
   validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
-  //validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
   validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
     if (value == '') return true;
-    return Brewery.findOne({
-      breweryId: value,
-      _id: { $ne: req.params.id },
-    }).then((brewery) => {
-      if (brewery !== null) {
-        return Promise.reject('すでに登録済みです');
-      }
-    });
+    if (value.length != 13) {
+      return Promise.reject('法人番号は13桁です。');
+    }
+    return true;
   }),
 
   function (req, res) {

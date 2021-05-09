@@ -48,7 +48,6 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     'semantic-ui-vue/nuxt',
-    'nuxt-leaflet'
   ],
 
   /*
