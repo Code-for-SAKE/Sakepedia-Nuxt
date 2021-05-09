@@ -31,6 +31,31 @@
           </div>
 
           <div class="form-group">
+            <label for="">クレジット表示</label>
+            <input
+              v-model="creditText"
+              type="text"
+              class="form-control"
+              :class="{ 'is-invalid': errors && errors.creditText }"
+            />
+            <div v-if="errors && errors.creditText" class="invalid-feedback">
+              {{ errors.creditText.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">ライセンス</label>
+            <license-select
+              ref="license_select"
+              v-model="license"
+              :class="{ 'is-invalid': errors && errors.license }"
+            />
+            <div v-if="errors && errors.license" class="invalid-feedback">
+              {{ errors.license.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">酒蔵</label>
             <brewery-select
               ref="brewery_search"
@@ -75,6 +100,7 @@
 </template>
 
 <script>
+import LicenseSelect from '@/components/LicenseSelect.vue';
 import BrewerySelect from '@/components/BrewerySelect.vue';
 import BrandSelect from '@/components/BrandSelect.vue';
 import SakeSelect from '@/components/SakeSelect.vue';
@@ -82,6 +108,7 @@ import ImageUploader from '@/components/ImageUploader.vue';
 import FlexTextarea from '@/components/FlexTextarea.vue';
 export default {
   components: {
+    LicenseSelect,
     BrewerySelect,
     BrandSelect,
     SakeSelect,
@@ -124,6 +151,8 @@ export default {
       errors: null,
       comment: null,
       image: null,
+      license: null,
+      creditText: null,
       brand: null,
       brewery: null,
       sake: null,
@@ -135,6 +164,8 @@ export default {
         .post('/api/comments', {
           comment: this.comment,
           image: this.image,
+          license: this.license,
+          creditText: this.creditText,
           brand: this.brand,
           brewery: this.brewery,
           sake: this.sake,

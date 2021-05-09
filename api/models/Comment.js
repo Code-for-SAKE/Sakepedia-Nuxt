@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 
 const Comment = new Schema({
   comment: { type: String },
+  license: { type: String },
+  creditText: { type: String },
   image: { type: String },
   brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
   brewery: { type: Schema.Types.ObjectId, ref: 'Brewery' },

@@ -92,6 +92,8 @@ module.exports.create = [
     // initialize record
     var comment = new Comment({
       comment: req.body.comment,
+      license: req.body.license,
+      creditText: req.body.creditText,
       image: req.body.image,
       brand: req.body.brand,
       brewery: req.body.brewery,
@@ -119,7 +121,6 @@ module.exports.create = [
 module.exports.update = [
   // validations rules
   validator.body('comment').custom((value, { req }) => {
-    console.log('update comments validator');
     return Comment.findOne({ _id: req.params.id }).then((comment) => {
       if (comment.author !== req.user.name) {
         return Promise.reject('Not your comment');
@@ -128,7 +129,6 @@ module.exports.update = [
   }),
 
   function (req, res) {
-    console.log('update comments');
     // throw validation errors
     const errors = validator.validationResult(req);
     if (!errors.isEmpty()) {
@@ -147,16 +147,17 @@ module.exports.update = [
           message: 'No such record',
         });
       }
-      console.log('update comments2');
 
       // initialize record
       data.comment = req.body.comment ? req.body.comment : data.comment;
+      data.license = req.body.license ? req.body.license : data.license;
+      data.creditText = req.body.creditText
+        ? req.body.creditText
+        : data.creditText;
       data.image = req.body.image ? req.body.image : data.image;
       data.brand = req.body.brand ? req.body.brand : data.brand;
       data.brewery = req.body.brewery ? req.body.brewery : data.brewery;
       data.sake = req.body.sake ? req.body.sake : data.sake;
-
-      console.log(req.body);
 
       // save record
       data.save(function (err, data) {

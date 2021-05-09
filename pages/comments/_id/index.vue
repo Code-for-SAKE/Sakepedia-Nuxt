@@ -8,6 +8,8 @@
       :src="comment.image"
       class="show_image"
     />
+    <p class="credit">{{ comment.creditText }}</p>
+    <p class="license"><license-view v-model="comment.license" /></p>
     <p class="comment">{{ comment.comment }}</p>
     <h6>By {{ comment.author }}</h6>
     <dl>
@@ -51,10 +53,11 @@
 </template>
 
 <script>
+import LicenseView from '@/components/LicenseView.vue';
 const Prefectures = require('@/utils/prefectures');
 
 export default {
-  components: {},
+  components: { LicenseView },
   async asyncData(context) {
     const { data } = await context.$axios.get(
       '/api/comments/' + context.route.params.id
