@@ -6,7 +6,7 @@ const Brewery = new Schema({
   breweryId: { type: Number, index: { unique: true } },
   name: { type: String, required: true },
   kana: { type: String },
-  prefecture: { type: Number },
+  prefecture: { type: String },
   address: { type: String },
   latitude: { type: Number },
   longitude: { type: Number },
@@ -18,8 +18,8 @@ const Brewery = new Schema({
   twitter: { type: String },
   instagram: { type: String },
   othersns: { type: String },
-  startYear: { type: Number },
-  endYear: { type: Number },
+  startYear: { type: String },
+  endYear: { type: String },
   author: { type: String },
 });
 
