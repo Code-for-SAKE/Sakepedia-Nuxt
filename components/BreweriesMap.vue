@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <div id="map" :style="{ width: `${width}px`, height: `${height}px` }">
+    <div id="map">
       <l-map :zoom="zoom" :center="center">
         <l-tile-layer :url="url"></l-tile-layer>
         <div
@@ -18,16 +18,6 @@
 
 <script>
 export default {
-  props: {
-    width: {
-      type: Number,
-      default: 500,
-    },
-    height: {
-      type: Number,
-      default: 500,
-    },
-  },
   data() {
     return {
       center: [35.999887, 138.75],
@@ -64,5 +54,7 @@ export default {
 #map {
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
+  height: 100%;
 }
 </style>
