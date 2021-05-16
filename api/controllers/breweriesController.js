@@ -136,14 +136,11 @@ module.exports.create = [
 
     // update geocode from address when geocode is null
     if (req.body.latitude === null || req.body.longitude === null) {
-      geocoder(
-        brewery.address,
-        (latlng) => {
-          brewery.latitude = latlng.lat;
-          brewery.longitude = latlng.lng;
-          saveBrewery(brewery, res);
-        }
-      )
+      geocoder(brewery.address, (latlng) => {
+        brewery.latitude = latlng.lat;
+        brewery.longitude = latlng.lng;
+        saveBrewery(brewery, res);
+      });
     } else {
       saveBrewery(brewery, res);
     }
@@ -236,20 +233,16 @@ module.exports.update = [
       brewery.endYear = req.body.endYear ? req.body.endYear : brewery.endYear;
       brewery.author = req.user.name;
 
-      // save record
-      brewery.save(function (err, brewery) {
-        if (err) {
-          return res.status(500).json({
-            message: 'Error getting record.',
-          });
-        }
-        if (!brewery) {
-          return res.status(404).json({
-            message: 'No such record',
-          });
-        }
-        return res.json(brewery);
-      });
+      // update geocode from address when geocode is null
+      if (req.body.latitude === null || req.body.longitude === null) {
+        geocoder(brewery.address, (latlng) => {
+          brewery.latitude = latlng.lat;
+          brewery.longitude = latlng.lng;
+          saveBrewery(brewery, res);
+        });
+      } else {
+        saveBrewery(brewery, res);
+      }
     });
   },
 ];
@@ -264,5 +257,45 @@ module.exports.delete = function (req, res) {
       });
     }
     return res.json(brewery);
+  });
+};
+
+//Update Location & Return None Location Breweries
+module.exports.updateLocation = function (req, res, next) {
+  cnt = 0;
+  Brewery.find().exec(function (err, breweries) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Error getting records. : ' + err,
+      });
+    }
+    updated = breweries.map((brewery) => {
+      // update geocode from address when geocode is null
+      if (cnt < 100) {
+        if (brewery.latitude === null || brewery.longitude === null) {
+          cnt += 1;
+          geocoder(brewery.address, (latlng) => {
+            console.log('GEOCODE:' + latlng.lat + ' add:' + brewery.address);
+            brewery.latitude = latlng.lat;
+            brewery.longitude = latlng.lng;
+            brewery.save(function (err, brewery) {
+              if (err) console.log('SAVE:' + err);
+            });
+          });
+        }
+        return { name: brewery.name, latitude: brewery.latitude };
+      }
+    });
+
+    search = {
+      $or: [{ latitude: null }, { longitude: null }],
+    };
+    Brewery.find(search).exec(function (err, breweries) {
+      return res.json(
+        breweries.map((brewery) => {
+          return { name: brewery.name, address: brewery.address };
+        })
+      );
+    });
   });
 };
