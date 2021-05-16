@@ -13,8 +13,8 @@
           <li>APIでも取得できます。</li>
         </ul>
       </div>
-      <div class="col-sm-8">
-        <breweries-map :width="500" :height="500"></breweries-map>
+      <div id="map" class="col-sm-8">
+        <breweries-map />
       </div>
     </div>
   </div>
@@ -28,3 +28,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#map {
+  min-height: 500px;
+}
+</style>
