@@ -18,37 +18,44 @@
 
 <script>
 export default {
-  props: ['width', 'height'],
-  head() {
-    return {
-      script: [
-        {
-          hid: "stripe",
-          src: "https://cdn.geolonia.com/community-geocoder.js",
-          defer: true,
-        },
-      ],
-    };
+  props: {
+    width: {
+      type: Number,
+      default: 500,
+    },
+    height: {
+      type: Number,
+      default: 500,
+    },
   },
   data() {
     return {
       center: [35.999887, 138.75],
       zoom: 4,
-      url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       brewery_positions: [],
     };
   },
+  head() {
+    return {
+      script: [
+        {
+          hid: 'stripe',
+          src: 'https://cdn.geolonia.com/community-geocoder.js',
+          defer: true,
+        },
+      ],
+    };
+  },
   mounted() {
-    if (!process.server) {
-      this.$axios.get("/api/locations/breweries").then((response) => {
-        this.brewery_positions = [];
-        response.data.map((brewery) => {
-          brewery['lat'] = brewery.latitude;
-          brewery['lng'] = brewery.longitude;
-          this.brewery_positions.push(brewery);
-        });
+    this.$axios.get('/api/locations/breweries').then((response) => {
+      this.brewery_positions = [];
+      response.data.map((brewery) => {
+        brewery['lat'] = brewery.latitude;
+        brewery['lng'] = brewery.longitude;
+        this.brewery_positions.push(brewery);
       });
-    }
+    });
   },
 };
 </script>
