@@ -4,13 +4,9 @@
     <hr /> -->
     <div class="row">
       <div class="col-sm-4">
-        <h3>日本酒オープンデータを作る</h3>
-        <ul>
-          <li>日本酒の情報をWikipediaのようにみんなで更新、公開します。</li>
-          <li>Sakepediaの更新が終わってしまったので、Nuxtで作り直しました。</li>
-          <li>酒蔵と銘柄のデータを公開します。</li>
-          <li>検索、追加、編集ができます。</li>
-          <li>APIでも取得できます。</li>
+        <ul class="list-group">
+          <li class="list-group-item disabled font-weight-bold text-white bg-info bg-gradient-1">おすすめ酒蔵マップ</li>
+          <li class="list-group-item">すべての酒蔵</li>
         </ul>
       </div>
       <div id="map" class="col-sm-8">
