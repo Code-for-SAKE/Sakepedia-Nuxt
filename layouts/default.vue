@@ -57,8 +57,9 @@
       <nuxt />
     </div>
     <footer id="footer">
-      <span class="m-3">Code for SAKE</span>
-      <a></a>
+      <span class="m-3"><a class="text-white" href="https://www.code4sake.org/">Code for SAKE</a></span>
+      <span class="m-3"><a class="text-white" href="https://github.com/Code-for-SAKE/Sakepedia-Nuxt">Github</a></span>
+      <span class="m-3"><a class="text-white">API仕様(未着手)</a></span>
       <nuxt-link class="m-3 text-white" to="/about">Sakepediaについて</nuxt-link>
     </footer>
   </div>
