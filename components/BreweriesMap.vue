@@ -37,14 +37,18 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.$axios.get('/api/locations/breweries').then((response) => {
-      this.brewery_positions = [];
-      response.data.map((brewery) => {
-        brewery['lat'] = brewery.latitude;
-        brewery['lng'] = brewery.longitude;
-        this.brewery_positions.push(brewery);
-      });
+  async mounted() {
+    const iconUrl = require('~/assets/icons/sake.svg');
+    const L = require('leaflet');
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.imagePath = '';
+    L.Icon.Default.mergeOptions({
+      iconUrl,
+      iconRetinaUrl: iconUrl,
+    });
+    const response = await this.$axios.get('/api/locations/breweries');
+    this.brewery_positions = response.data.map((brewery) => {
+      return { lat: brewery.latitude, lng: brewery.longitude };
     });
   },
 };
