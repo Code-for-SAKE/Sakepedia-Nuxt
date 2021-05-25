@@ -11,7 +11,7 @@ $light: #0C8BBA;
   --sidebar-width: 240px;
   --content-width: calc(100vw - var(--sidebar-width));
   --header-height: 60px;
-  --footer-height: 52px;
+  --footer-height: 145px;
   --content-padding: 20px;
   --method-area-padding: 3vw;
   --sp2: 2px;
@@ -37,6 +37,7 @@ body {
 }
 
 #wrap {
+  padding-top: var(--header-height);
   min-height: 100vh;
   display: flex;
   flex-direction: column;

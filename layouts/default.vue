@@ -1,6 +1,6 @@
 <template>
   <div id="wrap">
-    <header id="header">
+    <header id="header" class="fixed-top">
       <b-navbar toggleable="md" variant="white">
         <b-navbar-brand href="/"
           ><img
@@ -64,8 +64,23 @@
       </div>
       <nuxt />
     </div>
-    <footer id="footer">
-      <span class="m-3">Code for SAKE</span>
+    <footer id="footer" class="align-items-end text-center">
+      <div class="p-3">
+        <span>Code for SAKE</span>
+      </div>
     </footer>
   </div>
 </template>
+
+<style scoped>
+#footer {
+  background-image: url('~/assets/image/sake-footer_bg.png');
+  background-repeat: repeat-x;
+  background-position: top;
+}
+#footer div {
+  width: 100%;
+  color: var(--white);
+  background-color: var(--primary);
+}
+</style>
