@@ -16,6 +16,9 @@ router.get('/breweries/:id', breweriesController.show);
 // List
 router.get('/list/breweries', breweriesController.list);
 
+// Get Locations of Breweries
+router.get('/locations/breweries', breweriesController.getLocations);
+
 // Create
 router.post('/breweries', config.isAuthenticated, breweriesController.create);
 
@@ -32,5 +35,8 @@ router.delete(
   config.isAuthenticated,
   breweriesController.delete
 );
+
+// Update Locations and Return None Location Breweries
+router.get('/updateLocations/breweries', breweriesController.updateLocation);
 
 module.exports = router;

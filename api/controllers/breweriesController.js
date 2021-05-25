@@ -2,6 +2,7 @@ const Brewery = require('../models/Brewery');
 const validator = require('express-validator');
 const paginate = require('express-paginate');
 const japanese = require('../../utils/japanese');
+const geocoder = require('nuxt-simple-geocoding-ja');
 
 // Get all
 module.exports.all = function (req, res, next) {
@@ -77,22 +78,31 @@ module.exports.list = function (req, res, next) {
     });
 };
 
+// get locations of all breweries
+module.exports.getLocations = function (req, res, next) {
+  Brewery.find({ latitude: { $exists: true } })
+    .select('name address latitude longitude')
+    .exec(function (err, breweries) {
+      if (err) {
+        return res.status(500).json({
+          message: 'Error getting records. : ' + err,
+        });
+      }
+      return res.json(breweries);
+    });
+};
+
 // Create
 module.exports.create = [
   // validations rules
   validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
-  //validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
   validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
     if (value == '') return true;
-    return Brewery.findOne({
-      breweryId: value,
-      _id: { $ne: req.params.id },
-    }).then((brewery) => {
-      if (brewery !== null) {
-        return Promise.reject('すでに登録済みです');
-      }
-    });
+    if (value.length != 13) {
+      return Promise.reject('法人番号は13桁です。');
+    }
+    return true;
   }),
 
   function (req, res) {
@@ -124,38 +134,46 @@ module.exports.create = [
       author: req.user.name,
     });
 
-    // save record
-    brewery.save(function (err, brewery) {
-      if (err) {
-        return res.status(500).json({
-          message: 'Error saving record',
-          error: err,
-        });
-      }
-      return res.json({
-        message: 'saved',
-        _id: brewery._id,
+    // update geocode from address when geocode is null
+    if (req.body.latitude === null || req.body.longitude === null) {
+      geocoder(brewery.address, (latlng) => {
+        brewery.latitude = latlng.lat;
+        brewery.longitude = latlng.lng;
+        saveBrewery(brewery, res);
       });
-    });
+    } else {
+      saveBrewery(brewery, res);
+    }
   },
 ];
+
+function saveBrewery(brewery, res) {
+  // save record
+  brewery.save(function (err, brewery) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Error saving record',
+        error: err,
+      });
+    }
+    return res.json({
+      message: 'saved',
+      _id: brewery._id,
+    });
+  });
+}
 
 // Update
 module.exports.update = [
   // validation rules
   validator.body('name', 'Please enter Brewery Name').isLength({ min: 1 }),
-  //validator.body('breweryId', '法人番号を入力してください。').isLength({ min: 1 }),
   validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
     if (value == '') return true;
-    return Brewery.findOne({
-      breweryId: value,
-      _id: { $ne: req.params.id },
-    }).then((brewery) => {
-      if (brewery !== null) {
-        return Promise.reject('すでに登録済みです');
-      }
-    });
+    if (value.length != 13) {
+      return Promise.reject('法人番号は13桁です。');
+    }
+    return true;
   }),
 
   function (req, res) {
@@ -215,20 +233,16 @@ module.exports.update = [
       brewery.endYear = req.body.endYear ? req.body.endYear : brewery.endYear;
       brewery.author = req.user.name;
 
-      // save record
-      brewery.save(function (err, brewery) {
-        if (err) {
-          return res.status(500).json({
-            message: 'Error getting record.',
-          });
-        }
-        if (!brewery) {
-          return res.status(404).json({
-            message: 'No such record',
-          });
-        }
-        return res.json(brewery);
-      });
+      // update geocode from address when geocode is null
+      if (req.body.latitude === null || req.body.longitude === null) {
+        geocoder(brewery.address, (latlng) => {
+          brewery.latitude = latlng.lat;
+          brewery.longitude = latlng.lng;
+          saveBrewery(brewery, res);
+        });
+      } else {
+        saveBrewery(brewery, res);
+      }
     });
   },
 ];
@@ -243,5 +257,45 @@ module.exports.delete = function (req, res) {
       });
     }
     return res.json(brewery);
+  });
+};
+
+//Update Location & Return None Location Breweries
+module.exports.updateLocation = function (req, res, next) {
+  cnt = 0;
+  Brewery.find().exec(function (err, breweries) {
+    if (err) {
+      return res.status(500).json({
+        message: 'Error getting records. : ' + err,
+      });
+    }
+    updated = breweries.map((brewery) => {
+      // update geocode from address when geocode is null
+      if (cnt < 100) {
+        if (brewery.latitude === null || brewery.longitude === null) {
+          cnt += 1;
+          geocoder(brewery.address, (latlng) => {
+            console.log('GEOCODE:' + latlng.lat + ' add:' + brewery.address);
+            brewery.latitude = latlng.lat;
+            brewery.longitude = latlng.lng;
+            brewery.save(function (err, brewery) {
+              if (err) console.log('SAVE:' + err);
+            });
+          });
+        }
+        return { name: brewery.name, latitude: brewery.latitude };
+      }
+    });
+
+    search = {
+      $or: [{ latitude: null }, { longitude: null }],
+    };
+    Brewery.find(search).exec(function (err, breweries) {
+      return res.json(
+        breweries.map((brewery) => {
+          return { name: brewery.name, address: brewery.address };
+        })
+      );
+    });
   });
 };
