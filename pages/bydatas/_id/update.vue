@@ -217,7 +217,7 @@
             </div>
           </div>
 
-          <b-button variant="primary" type="submit" class="mr-3">更新</b-button>
+          <b-button variant="light" type="submit" class="mr-3">更新</b-button>
           <b-button :to="'/bydatas/' + $route.params.id" class="mr-3"
             >キャンセル</b-button
           >

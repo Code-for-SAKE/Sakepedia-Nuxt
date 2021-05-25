@@ -24,14 +24,14 @@
     <div class="d-flex justify-content-between">
       <div>
         <b-button
-          variant="primary"
+          variant="light"
           :to="'/brands/' + brand._id + '/update'"
           class="mr-3"
           >編集</b-button
         >
         <b-button variant="danger" @click="deleteRecord()">削除</b-button>
       </div>
-      <b-button variant="secondary" to="/brands">一覧に戻る</b-button>
+      <b-button to="/brands">一覧に戻る</b-button>
     </div>
     <div class="my-4">
       <div class="d-flex justify-content-between align-items-center">

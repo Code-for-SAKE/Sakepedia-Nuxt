@@ -1,6 +1,6 @@
 <template>
   <div id="wrap">
-    <header id="header">
+    <header id="header" class="fixed-top">
       <b-navbar toggleable="md" type="dark" variant="info">
         <b-navbar-brand href="/">Sakepedia - みんなで作る日本酒オープンデータ</b-navbar-brand>
 
@@ -56,11 +56,24 @@
       </div>
       <nuxt />
     </div>
-    <footer id="footer">
-      <span class="m-3"><a class="text-white" href="https://www.code4sake.org/">Code for SAKE</a></span>
-      <span class="m-3"><a class="text-white" href="https://github.com/Code-for-SAKE/Sakepedia-Nuxt">Github</a></span>
-      <span class="m-3"><a class="text-white">API仕様(未着手)</a></span>
+    <footer id="footer" class="align-items-end text-center">
+      <span class="p-3"><a class="text-white" href="https://www.code4sake.org/">Code for SAKE</a></span>
+      <span class="p-3"><a class="text-white" href="https://github.com/Code-for-SAKE/Sakepedia-Nuxt">Github</a></span>
+      <span class="p-3"><a class="text-white">API仕様(未着手)</a></span>
       <nuxt-link class="m-3 text-white" to="/about">Sakepediaについて</nuxt-link>
     </footer>
   </div>
 </template>
+
+<style scoped>
+#footer {
+  background-image: url('~/assets/image/sake-footer_bg.png');
+  background-repeat: repeat-x;
+  background-position: top;
+}
+#footer div {
+  width: 100%;
+  color: var(--white);
+  background-color: var(--primary);
+}
+</style>
