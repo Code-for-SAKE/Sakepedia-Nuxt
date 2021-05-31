@@ -76,6 +76,14 @@ export default {
     };
   },
   mounted() {
+    const iconUrl = require('~/assets/icons/sake.svg');
+    const L = require('leaflet');
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.imagePath = '';
+    L.Icon.Default.mergeOptions({
+      iconUrl,
+      iconRetinaUrl: iconUrl,
+    });
     this.$axios.get('/api/locations/breweries').then((response) => {
       this.brewery_positions = {};
       response.data.map((brewery) => {
