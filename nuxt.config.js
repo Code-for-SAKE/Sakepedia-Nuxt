@@ -34,6 +34,7 @@ module.exports = {
     '@/plugins/vueselect.js',
     '@/plugins/moment-filter.js',
     '@/plugins/string-filter.js',
+    { src: '@/plugins/vue2-leaflet-markercluster.js', mode: 'client' },
   ],
   /*
    ** Nuxt.js dev-modules
