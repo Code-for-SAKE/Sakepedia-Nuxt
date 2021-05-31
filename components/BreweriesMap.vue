@@ -83,6 +83,11 @@ export default {
     L.Icon.Default.mergeOptions({
       iconUrl,
       iconRetinaUrl: iconUrl,
+      iconSize: [20, 20],
+      iconAnchor: [12, 18],
+      popupAnchor: [-3, -24],
+      shadowSize: [30, 20],
+      shadowAnchor: [12, 18],
     });
     this.$axios.get('/api/locations/breweries').then((response) => {
       this.brewery_positions = {};
