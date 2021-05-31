@@ -3,14 +3,19 @@
     <div id="map">
       <l-map :zoom="zoom" :center="center">
         <l-tile-layer :url="url"></l-tile-layer>
-        <div
-          v-for="(brewery_position, index) in brewery_positions"
-          :key="index"
+        <v-marker-cluster
+          v-for="(prefectures, ind) in brewery_positions"
+          :key="ind"
+          :options="cluster_options"
         >
-          <l-marker :lat-lng="brewery_position">
-            <l-popup :content="`${brewery_position.name}`"></l-popup>
+          <l-marker
+            v-for="(point, index) in prefectures"
+            :key="index"
+            :lat-lng="point"
+          >
+            <l-popup :content="`${point.name}`"></l-popup>
           </l-marker>
-        </div>
+        </v-marker-cluster>
       </l-map>
     </div>
   </client-only>
@@ -23,11 +28,44 @@ export default {
       center: [35.999887, 138.75],
       zoom: 4,
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-      brewery_positions: [],
+      cluster_options: {
+        showCoverageOnHover: false,
+        maxClusterRadius: 80,
+        iconCreateFunction: function (cluster) {
+          var childCount = cluster.getChildCount();
+
+          var c = ' marker-cluster-';
+          if (childCount < 20) {
+            c += 'small';
+          } else if (childCount < 50) {
+            c += 'medium';
+          } else {
+            c += 'large';
+          }
+
+          return new L.DivIcon({
+            html: '<div><span>' + childCount + '</span></div>',
+            className: 'marker-cluster' + c,
+          });
+        },
+      },
+      brewery_positions: {},
     };
   },
   head() {
     return {
+      link: [
+        {
+          rel: 'stylesheet',
+          href:
+            'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css',
+        },
+        {
+          rel: 'stylesheet',
+          href:
+            'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css',
+        },
+      ],
       script: [
         {
           hid: 'stripe',
@@ -39,11 +77,19 @@ export default {
   },
   mounted() {
     this.$axios.get('/api/locations/breweries').then((response) => {
-      this.brewery_positions = [];
+      this.brewery_positions = {};
       response.data.map((brewery) => {
         brewery['lat'] = brewery.latitude;
         brewery['lng'] = brewery.longitude;
-        this.brewery_positions.push(brewery);
+        brewery['prefecture'] = brewery.prefecture
+          ? brewery.prefecture
+          : brewery.address
+          ? brewery.address.replace(/^(.{2}[都道府県]|.{3}県)(.+)/, '$1')
+          : '住所なし';
+        if (!(brewery['prefecture'] in this.brewery_positions)) {
+          this.brewery_positions[brewery['prefecture']] = [];
+        }
+        this.brewery_positions[brewery['prefecture']].push(brewery);
       });
     });
   },
@@ -56,5 +102,24 @@ export default {
   margin-right: auto;
   width: 100%;
   height: 100%;
+}
+#map >>> .marker-cluster {
+  width: 20px !important;
+  height: 20px !important;
+  margin-top: −10px !important;
+  margin-left: -10px !important;
+  border-radius: 20px;
+}
+#map >>> .marker-cluster div {
+  width: 16px !important;
+  height: 16px !important;
+  margin-top: 2px;
+  margin-left: 2px;
+
+  border-radius: 16px;
+  font-size: 12px;
+}
+#map >>> .marker-cluster span {
+  line-height: 16px;
 }
 </style>
