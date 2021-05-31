@@ -56,7 +56,7 @@
             </div>
           </div>
 
-          <b-button variant="primary" type="submit" class="mr-3">追加</b-button>
+          <b-button variant="light" type="submit" class="mr-3">追加</b-button>
           <b-button to="/brands" class="mr-3">キャンセル</b-button>
         </form>
       </div>
