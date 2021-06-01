@@ -19,8 +19,8 @@ const User = new Schema({
     unique: true,
   },
   gitUsername: {
-    type: String
-  }
+    type: String,
+  },
 });
 User.index({ type: '1', identity: '1' }, { unique: true });
 module.exports = mongoose.model('User', User);

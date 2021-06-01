@@ -70,25 +70,25 @@ export default {
     const { data } = await context.$axios.get(
       '/api/brands/' + context.route.params.id
     );
-    const author = data.author
+    const author = data.author;
     if (author) {
       return {
         brand: data,
-        author: author
-      }
+        author: author,
+      };
     } else {
-      const userId = data.userId
+      const userId = data.userId;
       if (userId) {
-        const response = await context.$axios.get(`/api/users/${userId}/name`)
+        const response = await context.$axios.get(`/api/users/${userId}/name`);
         return {
-            brand: data,
-            author: response.data.name
-          }
+          brand: data,
+          author: response.data.name,
+        };
       } else {
         return {
           brand: data,
-          author: ''
-        }
+          author: '',
+        };
       }
     }
   },
@@ -97,7 +97,7 @@ export default {
       search: {
         brand: this.$route.params.id,
       },
-      author: ''
+      author: '',
     };
   },
 

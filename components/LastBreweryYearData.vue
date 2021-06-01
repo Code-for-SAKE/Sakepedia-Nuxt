@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       bydata: null,
-      author: ''
+      author: '',
     };
   },
   mounted() {
@@ -66,15 +66,19 @@ export default {
         .get('/api/bydatas/', { params: { sake: this.sake, limit: 1 } })
         .then((response) => {
           this.bydata = response.data.bydatas[0];
-          const author = response.data.bydatas[0].author
+          const author = response.data.bydatas[0].author;
           if (author) {
-            this.author = author
+            this.author = author;
           } else {
-            const userId = response.data.bydatas[0].userId
+            const userId = response.data.bydatas[0].userId;
             if (userId) {
               this.$axios.get(`/users/${userId}/name`).then((response) => {
-                this.author = response.data.name ?? ''
-              })
+                if (response.data.name) {
+                  this.author = response.data.name;
+                } else {
+                  this.author = '';
+                }
+              });
             }
           }
         });

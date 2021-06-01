@@ -90,7 +90,7 @@ module.exports.create = [
       year: req.body.year,
       createdAt: new Date(),
       modifiedAt: new Date(),
-      userId: req.user._id
+      userId: req.user._id,
     });
 
     // save record
@@ -138,7 +138,7 @@ module.exports.update = [
       data.sakeName = req.body.sakeName ? req.body.sakeName : data.sakeName;
       data.year = req.body.year ? req.body.year : data.year;
       data.modifiedAt = new Date();
-      data.userId = req.user._id
+      data.userId = req.user._id;
 
       // save record
       data.save(function (err, data) {

@@ -128,7 +128,7 @@ module.exports.create = [
       type: req.body.type,
       description: req.body.description,
       url: req.body.url,
-      userId: req.user._id
+      userId: req.user._id,
     });
 
     // save record

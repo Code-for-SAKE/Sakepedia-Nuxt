@@ -57,25 +57,25 @@ export default {
     const { data } = await context.$axios.get(
       '/api/bydatas/' + context.route.params.id
     );
-    const author = data.author
+    const author = data.author;
     if (author) {
       return {
         bydata: data,
-        author: author
-      }
+        author: author,
+      };
     } else {
-      const userId = data.userId
+      const userId = data.userId;
       if (userId) {
-        const response = await context.$axios.get(`/api/users/${userId}/name`)
+        const response = await context.$axios.get(`/api/users/${userId}/name`);
         return {
-            bydata: data,
-            author: response.data.name
-          }
+          bydata: data,
+          author: response.data.name,
+        };
       } else {
         return {
           bydata: data,
-          author: ''
-        }
+          author: '',
+        };
       }
     }
   },

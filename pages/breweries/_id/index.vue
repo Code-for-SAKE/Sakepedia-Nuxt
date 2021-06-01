@@ -78,25 +78,25 @@ export default {
     const { data } = await context.$axios.get(
       '/api/breweries/' + context.route.params.id
     );
-    const author = data.author
+    const author = data.author;
     if (author) {
       return {
         brewery: data,
-        author: author
-      }
+        author: author,
+      };
     } else {
-      const userId = data.userId
+      const userId = data.userId;
       if (userId) {
-        const response = await context.$axios.get(`/api/users/${userId}/name`)
+        const response = await context.$axios.get(`/api/users/${userId}/name`);
         return {
-            brewery: data,
-            author: response.data.name
-          }
+          brewery: data,
+          author: response.data.name,
+        };
       } else {
         return {
           brewery: data,
-          author: ''
-        }
+          author: '',
+        };
       }
     }
   },
@@ -106,7 +106,7 @@ export default {
       search: {
         brewery: this.$route.params.id,
       },
-      author: ''
+      author: '',
     };
   },
   methods: {

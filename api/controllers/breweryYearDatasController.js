@@ -121,7 +121,7 @@ module.exports.create = [
       bottledDate: req.body.bottledDate,
       createdAt: new Date(),
       modifiedAt: new Date(),
-      userId: req.user._id
+      userId: req.user._id,
     });
 
     // save record

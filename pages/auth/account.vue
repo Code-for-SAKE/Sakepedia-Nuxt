@@ -16,7 +16,7 @@
         <div class="username">
           <div class="error-message">{{ errorMessage }}</div>
           <label for="name"> 名前: </label>
-          <input v-model="name" id="name" type="text" @keypress.enter="save" />
+          <input id="name" v-model="name" type="text" @keypress.enter="save" />
           <input type="submit" value="保存" @click="save" />
         </div>
       </div>
@@ -43,7 +43,7 @@ export default {
           if (res.data.error) {
             this.errorMessage = res.data.error;
           } else {
-            this.errorMessage = ''
+            this.errorMessage = '';
             this.$store.commit('login', res.data.user);
           }
         });

@@ -110,7 +110,7 @@ module.exports.create = [
       description: req.body.description,
       logo: req.body.logo,
       brewery: req.body.brewery,
-      userId: req.user._id
+      userId: req.user._id,
     });
 
     // save record

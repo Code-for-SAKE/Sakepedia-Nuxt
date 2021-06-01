@@ -59,25 +59,25 @@ export default {
     const { data } = await context.$axios.get(
       '/api/comments/' + context.route.params.id
     );
-    const author = data.author
+    const author = data.author;
     if (author) {
       return {
         comment: data,
-        author: author
-      }
+        author: author,
+      };
     } else {
-      const userId = data.userId
+      const userId = data.userId;
       if (userId) {
-        const response = await context.$axios.get(`/api/users/${userId}/name`)
+        const response = await context.$axios.get(`/api/users/${userId}/name`);
         return {
-            comment: data,
-            author: response.data.name
-          }
+          comment: data,
+          author: response.data.name,
+        };
       } else {
         return {
           comment: data,
-          author: ''
-        }
+          author: '',
+        };
       }
     }
   },
@@ -87,7 +87,7 @@ export default {
       search: {
         comment: this.$route.params.id,
       },
-      author: ''
+      author: '',
     };
   },
 
