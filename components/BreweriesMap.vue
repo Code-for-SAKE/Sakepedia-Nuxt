@@ -97,7 +97,10 @@ export default {
         brewery['prefecture'] = brewery.prefecture
           ? brewery.prefecture
           : brewery.address
-          ? brewery.address.replace(/^(.{2}[都道府県]|.{3}県)(.+)/, '$1')
+          ? brewery.address.replace(
+              /^([〒0-9 -]*)(.{2}[都道府県]|.{3}県)(.+)/,
+              '$2'
+            )
           : '住所なし';
         if (!(brewery['prefecture'] in this.brewery_positions)) {
           this.brewery_positions[brewery['prefecture']] = [];
