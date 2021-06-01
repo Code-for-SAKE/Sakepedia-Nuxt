@@ -5,7 +5,7 @@
     <hr />
 
     <h2>{{ brand.name }}</h2>
-    <h6>By {{ brand.author }}</h6>
+    <h6>By {{ author }}</h6>
 
     <dl>
       <dt>酒蔵</dt>
@@ -70,15 +70,34 @@ export default {
     const { data } = await context.$axios.get(
       '/api/brands/' + context.route.params.id
     );
-    return {
-      brand: data,
-    };
+    const author = data.author
+    if (author) {
+      return {
+        brand: data,
+        author: author
+      }
+    } else {
+      const userId = data.userId
+      if (userId) {
+        const response = await context.$axios.get(`/api/users/${userId}/name`)
+        return {
+            brand: data,
+            author: response.data.name
+          }
+      } else {
+        return {
+          brand: data,
+          author: ''
+        }
+      }
+    }
   },
   data() {
     return {
       search: {
         brand: this.$route.params.id,
       },
+      author: ''
     };
   },
 

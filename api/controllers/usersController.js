@@ -31,3 +31,8 @@ module.exports.update = async function (req, res) {
     return res.json({ user: user });
   });
 };
+
+module.exports.show = async function (req, res) {
+  const user = await User.findOne({ _id: req.params.id })
+  return res.json({name: user.name})
+}

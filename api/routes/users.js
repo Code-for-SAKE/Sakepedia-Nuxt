@@ -7,6 +7,7 @@ const router = Router();
 const usersController = require('../controllers/usersController');
 
 // Update
+router.get('/users/:id/name', config.isAuthenticated, usersController.show);
 router.post('/users/:id/name', config.isAuthenticated, usersController.update);
 
 module.exports = router;

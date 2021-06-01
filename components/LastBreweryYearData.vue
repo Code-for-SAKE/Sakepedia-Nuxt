@@ -2,7 +2,7 @@
   <div class="bydata">
     <div v-if="bydata">
       <h4>{{ bydata.makedBY }}年</h4>
-      <h6>By {{ bydata.author }} {{ bydata.modifiedAt | datetime }}</h6>
+      <h6>By {{ author }} {{ bydata.modifiedAt | datetime }}</h6>
       <dl>
         <dt>アミノ酸度</dt>
         <dd><range-value :values="bydata.aminoAcidContent" /></dd>
@@ -56,6 +56,7 @@ export default {
   data() {
     return {
       bydata: null,
+      author: ''
     };
   },
   mounted() {
@@ -65,6 +66,17 @@ export default {
         .get('/api/bydatas/', { params: { sake: this.sake, limit: 1 } })
         .then((response) => {
           this.bydata = response.data.bydatas[0];
+          const author = response.data.bydatas[0].author
+          if (author) {
+            this.author = author
+          } else {
+            const userId = response.data.bydatas[0].userId
+            if (userId) {
+              this.$axios.get(`/users/${userId}/name`).then((response) => {
+                this.author = response.data.name ?? ''
+              })
+            }
+          }
         });
     }
   },
