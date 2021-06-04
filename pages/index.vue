@@ -6,8 +6,12 @@
       <div class="col-12 my-3">
         <!-- List group -->
         <div>
-          <h3>酒蔵マップ</h3>
-          <b-card no-body>
+          <b-card no-body border-variant="primary">
+            <b-card-header
+              header-bg-variant="primary"
+              header-text-variant="white"
+              >酒蔵マップ</b-card-header
+            >
             <b-tabs
               pills
               card
