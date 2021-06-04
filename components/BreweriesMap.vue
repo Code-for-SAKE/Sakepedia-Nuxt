@@ -112,30 +112,72 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #map {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
   height: 100%;
 }
-#map >>> .marker-cluster {
+</style>
+<style lang="scss">
+#map .marker-cluster {
   width: 20px !important;
   height: 20px !important;
   margin-top: −10px !important;
   margin-left: -10px !important;
   border-radius: 20px;
-}
-#map >>> .marker-cluster div {
-  width: 16px !important;
-  height: 16px !important;
-  margin-top: 2px;
-  margin-left: 2px;
+  div {
+    width: 16px !important;
+    height: 16px !important;
+    margin-top: 2px;
+    margin-left: 2px;
 
-  border-radius: 16px;
-  font-size: 12px;
+    border-radius: 16px;
+    font-size: 12px;
+  }
+  span {
+    line-height: 16px;
+  }
+  &.marker-cluster-small {
+    background-color: var(--cluster-small);
+    div {
+      background-color: var(--cluster-small);
+    }
+  }
+  &.marker-cluster-medium {
+    background-color: var(--cluster-medium);
+    div {
+      background-color: var(--cluster-medium);
+    }
+  }
+  &.marker-cluster-large {
+    background-color: var(--cluster-large);
+    div {
+      background-color: var(--cluster-large);
+    }
+  }
 }
-#map >>> .marker-cluster span {
-  line-height: 16px;
+
+/* IE 6-8 fallback colors */
+#map .leaflet-oldie {
+  .marker-cluster-small {
+    background-color: var(--success);
+    div {
+      background-color: var(--success);
+    }
+  }
+  .marker-cluster-medium {
+    background-color: var(--warning);
+    div {
+      background-color: var(--warning);
+    }
+  }
+  .marker-cluster-large {
+    background-color: var(--danger);
+    div {
+      background-color: var(--danger);
+    }
+  }
 }
 </style>
