@@ -1,9 +1,14 @@
+$white: #ffffff;
+$dark: #323642;
 $primary: #004761;
-$secondary: #004761;
-$danger: #B61584;
+$warning: #E8D058;
+$danger: #823E73;
 $success: #8CBD21;
-$warning: #F4F0DC;
 $light: #0C8BBA;
+$more-light: #82CFD3;
+$info: #F4E9AF;
+
+$secondary: $primary;
 
 @import '~bootstrap/scss/bootstrap';
 
@@ -28,12 +33,16 @@ $light: #0C8BBA;
   --font14: 14px;
   --background-color: rgb(249, 250, 251);
   --table-td-padding: 11px;
+
+  --cluster-small: rgba(140, 189, 33, 0.4);
+  --cluster-medium: rgba(232, 208, 88, 0.4);
+  --cluster-large: rgba(130, 62, 115, 0.4);
 }
-  
 
 #__nuxt, #__layout,
 body {
   height: 100vh;
+  color: $dark;
 }
 
 #wrap {
@@ -64,7 +73,6 @@ body {
 }
 
 #footer {
-  color: var(--primary);
   display: flex;
   justify-content: center;
   min-height: var(--footer-height);
@@ -73,6 +81,6 @@ body {
 a {
   font-weight: 500;
   text-decoration: none;
-  color: var(--light);
+  color: $light;
 }
 
