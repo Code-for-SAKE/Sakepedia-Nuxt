@@ -4,20 +4,32 @@
 
     <hr />
 
-    <div class="card col-4 mx-auto text-center">
-      <div class="card-body">
-        <h4>
-          <img :src="$store.state.user.avatarUrl" width="72" class="mx-3" />{{
-            $store.state.user.name
-          }}
-        </h4>
-
-        <b-button to="/auth/logout" variant="danger">Logout</b-button>
-        <div class="username">
-          <div class="error-message">{{ errorMessage }}</div>
-          <label for="name"> 名前: </label>
-          <input id="name" v-model="name" type="text" @keypress.enter="save" />
-          <input type="submit" value="保存" @click="save" />
+    <div class="col-md-8 col-lg-4 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="text-center">
+            <img :src="$store.state.user.avatarUrl" width="72" class="pr-2" />{{
+              $store.state.user.name
+            }}
+          </h4>
+          <div class="username form-group">
+            <label for="">名前</label>
+            <input
+              id="name"
+              v-model="name"
+              type="text"
+              class="form-control"
+              :class="{ 'is-invalid': errorMessage }"
+              @keypress.enter="save"
+            />
+            <div v-if="errorMessage" class="invalid-feedback">
+              {{ errorMessage }}
+            </div>
+          </div>
+          <b-button variant="light" @click="save">保存</b-button>
+        </div>
+        <div class="card-footer">
+          <b-button to="/auth/logout" variant="danger">Logout</b-button>
         </div>
       </div>
     </div>
