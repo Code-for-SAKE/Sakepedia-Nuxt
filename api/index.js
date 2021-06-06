@@ -30,6 +30,7 @@ const brands = require('./routes/brands');
 const sakes = require('./routes/sakes');
 const bydatas = require('./routes/bydatas');
 const comments = require('./routes/comments');
+const users = require('./routes/users');
 
 //Authenticate
 app.use(auth);
@@ -42,6 +43,7 @@ app.use(brands);
 app.use(sakes);
 app.use(bydatas);
 app.use(comments);
+app.use(users);
 
 // Export the server middleware
 module.exports = {

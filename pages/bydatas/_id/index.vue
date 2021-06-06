@@ -6,7 +6,7 @@
 
     <h2>{{ bydata.sake ? bydata.sake.name : '' }}</h2>
     <h4>{{ bydata.makedBY }}年</h4>
-    <h6>By {{ bydata.author }}</h6>
+    <h6>By {{ author }}</h6>
     <dl>
       <dt>アミノ酸度</dt>
       <dd><range-value :values="bydata.aminoAcidContent" /></dd>
@@ -57,9 +57,27 @@ export default {
     const { data } = await context.$axios.get(
       '/api/bydatas/' + context.route.params.id
     );
-    return {
-      bydata: data,
-    };
+    const author = data.author;
+    if (author) {
+      return {
+        bydata: data,
+        author: author,
+      };
+    } else {
+      const userId = data.userId;
+      if (userId) {
+        const response = await context.$axios.get(`/api/users/${userId}/name`);
+        return {
+          bydata: data,
+          author: response.data.name,
+        };
+      } else {
+        return {
+          bydata: data,
+          author: '',
+        };
+      }
+    }
   },
 
   methods: {

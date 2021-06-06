@@ -13,6 +13,7 @@ const Sake = new Schema({
   createdAt: { type: Date },
   modifiedAt: { type: Date },
   author: { type: String },
+  userId: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 Sake.virtual('sakeId').get(function () {
   return this._id;

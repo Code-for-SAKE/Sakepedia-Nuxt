@@ -9,7 +9,7 @@
       class="show_image"
     />
     <p class="comment">{{ comment.comment }}</p>
-    <h6>By {{ comment.author }}</h6>
+    <h6>By {{ author }}</h6>
     <dl>
       <dt>酒蔵</dt>
       <dd>
@@ -59,9 +59,27 @@ export default {
     const { data } = await context.$axios.get(
       '/api/comments/' + context.route.params.id
     );
-    return {
-      comment: data,
-    };
+    const author = data.author;
+    if (author) {
+      return {
+        comment: data,
+        author: author,
+      };
+    } else {
+      const userId = data.userId;
+      if (userId) {
+        const response = await context.$axios.get(`/api/users/${userId}/name`);
+        return {
+          comment: data,
+          author: response.data.name,
+        };
+      } else {
+        return {
+          comment: data,
+          author: '',
+        };
+      }
+    }
   },
   data() {
     return {
@@ -69,6 +87,7 @@ export default {
       search: {
         comment: this.$route.params.id,
       },
+      author: '',
     };
   },
 

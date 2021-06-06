@@ -11,6 +11,7 @@ const Comment = new Schema({
   createdAt: { type: Date },
   modifiedAt: { type: Date },
   author: { type: String },
+  userId: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 Comment.virtual('commentId').get(function () {
   return this._id;

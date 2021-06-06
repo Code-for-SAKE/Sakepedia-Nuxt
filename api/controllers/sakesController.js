@@ -128,7 +128,7 @@ module.exports.create = [
       type: req.body.type,
       description: req.body.description,
       url: req.body.url,
-      author: req.user.name,
+      userId: req.user._id,
     });
 
     // save record
@@ -191,7 +191,7 @@ module.exports.update = [
         ? req.body.description
         : sake.description;
       sake.url = req.body.url ? req.body.url : sake.url;
-      sake.author = req.user.name;
+      sake.userId = req.user._id;
 
       // save record
       sake.save(function (err, sake) {

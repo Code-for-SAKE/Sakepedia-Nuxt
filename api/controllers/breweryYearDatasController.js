@@ -121,7 +121,7 @@ module.exports.create = [
       bottledDate: req.body.bottledDate,
       createdAt: new Date(),
       modifiedAt: new Date(),
-      author: req.user.name,
+      userId: req.user._id,
     });
 
     // save record
@@ -204,7 +204,7 @@ module.exports.update = [
         ? req.body.bottledDate
         : bydata.bottledDate;
       bydata.modifiedAt = new Date();
-      bydata.author = req.user.name;
+      bydata.userId = req.user._id;
 
       // save record
       bydata.save(function (err, bydata) {

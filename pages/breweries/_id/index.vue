@@ -8,7 +8,7 @@
     <h2 v-if="brewery">{{ brewery.name }}</h2>
     <h6 v-if="brewery">{{ brewery.kana }}</h6>
 
-    <h6 v-if="brewery.author">By {{ brewery.author.full_name }}</h6>
+    <h6 v-if="author">By {{ author }}</h6>
 
     <p v-if="brewery">{{ prefectures[brewery.prefecture] }}</p>
     <p v-if="brewery">{{ brewery.address }}</p>
@@ -78,9 +78,27 @@ export default {
     const { data } = await context.$axios.get(
       '/api/breweries/' + context.route.params.id
     );
-    return {
-      brewery: data,
-    };
+    const author = data.author;
+    if (author) {
+      return {
+        brewery: data,
+        author: author,
+      };
+    } else {
+      const userId = data.userId;
+      if (userId) {
+        const response = await context.$axios.get(`/api/users/${userId}/name`);
+        return {
+          brewery: data,
+          author: response.data.name,
+        };
+      } else {
+        return {
+          brewery: data,
+          author: '',
+        };
+      }
+    }
   },
   data() {
     return {
@@ -88,6 +106,7 @@ export default {
       search: {
         brewery: this.$route.params.id,
       },
+      author: '',
     };
   },
   methods: {

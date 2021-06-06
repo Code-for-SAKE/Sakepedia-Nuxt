@@ -10,6 +10,7 @@ const Award = new Schema({
   createdAt: { type: Date },
   modifiedAt: { type: Date },
   author: { type: String },
+  userId: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 Award.plugin(mongoosePaginate);

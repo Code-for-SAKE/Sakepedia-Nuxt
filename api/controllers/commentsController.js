@@ -12,7 +12,7 @@ module.exports.all = function (req, res, next) {
   var brewery = req.query.brewery;
   var brand = req.query.brand;
   var sake = req.query.sake;
-  var author = req.query.author;
+  var userId = req.query.user;
   var search = {};
 
   if (brewery) {
@@ -24,8 +24,8 @@ module.exports.all = function (req, res, next) {
   if (sake) {
     search.sake = sake;
   }
-  if (author) {
-    search.author = author;
+  if (userId) {
+    search.userId = user;
   }
   if (keyword) {
     search.$or = [
@@ -96,7 +96,7 @@ module.exports.create = [
       brand: req.body.brand,
       brewery: req.body.brewery,
       sake: req.body.sake,
-      author: req.user.name,
+      userId: req.user._id,
     });
 
     // save record
@@ -121,7 +121,7 @@ module.exports.update = [
   validator.body('comment').custom((value, { req }) => {
     console.log('update comments validator');
     return Comment.findOne({ _id: req.params.id }).then((comment) => {
-      if (comment.author !== req.user.name) {
+      if (comment.userId !== req.user._id) {
         return Promise.reject('Not your comment');
       }
     });

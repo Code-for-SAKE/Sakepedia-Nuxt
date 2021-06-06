@@ -14,9 +14,9 @@ export default {
       params: this.$route.query,
     });
     const user = {
-      id: res.data.user.id,
-      name: res.data.user.username,
-      avatarUrl: res.data.user.photos[0].value,
+      _id: res.data.user._id,
+      name: res.data.user.name,
+      avatarUrl: res.data.user.avatarUrl,
     };
     this.$store.commit('login', user);
     this.$router.push('/auth/account');

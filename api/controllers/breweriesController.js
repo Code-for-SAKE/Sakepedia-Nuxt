@@ -131,7 +131,7 @@ module.exports.create = [
       othersns: req.body.othersns,
       startYear: req.body.startYear,
       endYear: req.body.endYear,
-      author: req.user.name,
+      userId: req.user._id,
     });
 
     // update geocode from address when geocode is null
@@ -231,7 +231,7 @@ module.exports.update = [
         ? req.body.startYear
         : brewery.startYear;
       brewery.endYear = req.body.endYear ? req.body.endYear : brewery.endYear;
-      brewery.author = req.user.name;
+      brewery.userId = req.user._id;
 
       // update geocode from address when geocode is null
       if (req.body.latitude === null || req.body.longitude === null) {

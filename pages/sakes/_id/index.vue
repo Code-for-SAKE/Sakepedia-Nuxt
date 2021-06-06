@@ -6,7 +6,7 @@
 
     <h2>{{ sake.name }}</h2>
     <h4>{{ sake.subname }}</h4>
-    <h6>By {{ sake.author }}</h6>
+    <h6>By {{ author }}</h6>
     <dl>
       <dt>酒蔵</dt>
       <dd>
@@ -102,9 +102,27 @@ export default {
     const { data } = await context.$axios.get(
       '/api/sakes/' + context.route.params.id
     );
-    return {
-      sake: data,
-    };
+    const author = data.author;
+    if (author) {
+      return {
+        sake: data,
+        author: author,
+      };
+    } else {
+      const userId = data.userId;
+      if (userId) {
+        const response = await context.$axios.get(`/api/users/${userId}/name`);
+        return {
+          sake: data,
+          author: response.data.name,
+        };
+      } else {
+        return {
+          sake: data,
+          author: '',
+        };
+      }
+    }
   },
   data() {
     return {
