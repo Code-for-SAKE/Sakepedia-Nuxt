@@ -135,7 +135,10 @@ module.exports.create = [
     });
 
     // update geocode from address when geocode is null
-    if (req.body.latitude === null || req.body.longitude === null) {
+    if (
+      req.body.address != null &&
+      (req.body.latitude === null || req.body.longitude === null)
+    ) {
       geocoder(brewery.address, (latlng) => {
         brewery.latitude = latlng.lat;
         brewery.longitude = latlng.lng;
