@@ -123,6 +123,7 @@ module.exports.create = [
       longitude: req.body.longitude,
       email: req.body.email,
       tel: req.body.tel,
+      fax: req.body.fax,
       url: req.body.url,
       ecurl: req.body.ecurl,
       facebook: req.body.facebook,

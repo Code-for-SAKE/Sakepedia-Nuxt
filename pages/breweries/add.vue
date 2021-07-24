@@ -136,6 +136,19 @@
           </div>
 
           <div class="form-group">
+            <label for="">FAX番号</label>
+            <input
+              v-model="fax"
+              type="fax"
+              class="form-control"
+              :class="{ 'is-invalid': errors && errors.fax }"
+            />
+            <div v-if="errors && errors.fax" class="invalid-feedback">
+              {{ errors.fax.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">URL</label>
             <input
               v-model="url"
@@ -239,9 +252,7 @@
             </div>
           </div>
 
-          <b-button variant="light" type="submit" value="追加" class="mr-3"
-            >追加</b-button
-          >
+          <b-button variant="light" type="submit" class="mr-3">追加</b-button>
           <b-button to="/breweries" class="mr-3">キャンセル</b-button>
         </form>
       </div>
@@ -266,6 +277,7 @@ export default {
       longitude: null,
       email: null,
       tel: null,
+      fax: null,
       url: null,
       ecurl: null,
       facebook: null,
@@ -293,6 +305,7 @@ export default {
           address: this.address,
           email: this.email,
           tel: this.tel,
+          fax: this.fax,
           url: this.url,
           ecurl: this.ecurl,
           facebook: this.facebook,
