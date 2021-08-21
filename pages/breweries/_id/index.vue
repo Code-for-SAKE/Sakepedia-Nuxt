@@ -16,6 +16,7 @@
     <p v-if="brewery">{{ brewery.longitude }}</p>
     <p v-if="brewery">{{ brewery.email }}</p>
     <p v-if="brewery">{{ brewery.tel }}</p>
+    <p v-if="brewery">{{ brewery.fax }}</p>
     <p v-if="brewery">{{ brewery.url }}</p>
     <p v-if="brewery">{{ brewery.ecurl }}</p>
     <p v-if="brewery">{{ brewery.facebook }}</p>

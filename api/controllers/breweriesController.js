@@ -219,6 +219,7 @@ module.exports.update = [
         : brewery.longitude;
       brewery.email = req.body.email ? req.body.email : brewery.email;
       brewery.tel = req.body.tel ? req.body.tel : brewery.tel;
+      brewery.fax = req.body.fax ? req.body.fax : brewery.fax;
       brewery.url = req.body.url ? req.body.url : brewery.url;
       brewery.ecurl = req.body.ecurl ? req.body.ecurl : brewery.ecurl;
       brewery.facebook = req.body.facebook
@@ -238,7 +239,10 @@ module.exports.update = [
       brewery.userId = req.user._id;
 
       // update geocode from address when geocode is null
-      if (req.body.latitude === null || req.body.longitude === null) {
+      if (
+        req.body.address != null &&
+        (req.body.latitude === null || req.body.longitude === null)
+      ) {
         geocoder(brewery.address, (latlng) => {
           brewery.latitude = latlng.lat;
           brewery.longitude = latlng.lng;
