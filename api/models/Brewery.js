@@ -12,6 +12,7 @@ const Brewery = new Schema({
   longitude: { type: Number },
   email: { type: String },
   tel: { type: String },
+  fax: { type: String },
   url: { type: String },
   ecurl: { type: String },
   facebook: { type: String },
