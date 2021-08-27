@@ -99,7 +99,7 @@ module.exports.create = [
   validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
     if (value == '') return true;
-    if (value.length != 13) {
+    if (String(value).length != 13) {
       return Promise.reject('法人番号は13桁です。');
     }
     return true;
@@ -174,7 +174,7 @@ module.exports.update = [
   validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
     if (value == '') return true;
-    if (value.length != 13) {
+    if (String(value).length != 13) {
       return Promise.reject('法人番号は13桁です。');
     }
     return true;
