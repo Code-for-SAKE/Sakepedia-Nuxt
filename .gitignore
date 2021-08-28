@@ -91,3 +91,5 @@ sw.*
 
 # secret for development
 config/.env.*
+
+tmp/*
