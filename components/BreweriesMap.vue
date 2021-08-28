@@ -1,7 +1,7 @@
 <template>
   <client-only>
     <div id="map">
-      <l-map :zoom="zoom" :center="center">
+      <l-map ref="map" :zoom="zoom" :center="center">
         <l-tile-layer :url="url"></l-tile-layer>
         <v-marker-cluster
           v-for="(prefectures, ind) in brewery_positions"
@@ -16,6 +16,18 @@
             <l-popup :content="`${point.name}`"></l-popup>
           </l-marker>
         </v-marker-cluster>
+        <l-control position="bottomleft">
+          <b-alert v-if="locationError" variant="danger" show>
+            {{ locationError }}
+          </b-alert>
+          <b-button class="control-btn" @click="getLocate"
+            >現在地付近<b-spinner
+              v-if="locationLoading"
+              small
+              label="Spinning"
+            ></b-spinner
+          ></b-button>
+        </l-control>
       </l-map>
     </div>
   </client-only>
@@ -50,6 +62,8 @@ export default {
         },
       },
       brewery_positions: {},
+      locationError: null,
+      locationLoading: false,
     };
   },
   head() {
@@ -108,6 +122,33 @@ export default {
         this.brewery_positions[brewery['prefecture']].push(brewery);
       });
     });
+  },
+  methods: {
+    geoSuccess(position) {
+      let coords = position.coords;
+      this.$refs.map.mapObject.setView([coords.latitude, coords.longitude], 10);
+      this.locationLoading = false;
+      this.locationError = null;
+    },
+    geoError(error) {
+      this.locationLoading = false;
+      this.locationError = '現在地を取得できませんでした。';
+      console.log('現在地を取得できませんでした。');
+    },
+    getLocate() {
+      console.log('getLocate');
+      this.locationLoading = true;
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          this.geoSuccess,
+          this.geoError
+        );
+      } else {
+        this.locationLoading = false;
+        this.locationError = '現在地を取得できませんでした。';
+        console.log('現在地を取得できませんでした。');
+      }
+    },
   },
 };
 </script>
@@ -179,5 +220,8 @@ export default {
       background-color: var(--danger);
     }
   }
+}
+#map .control-btn {
+  display: block;
 }
 </style>
