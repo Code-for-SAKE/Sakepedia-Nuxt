@@ -92,6 +92,34 @@ module.exports.getLocations = function (req, res, next) {
     });
 };
 
+// Get Locations of Breweries Surrounding Input Positions
+module.exports.getLocationsSurroundingIpnutPositions = function(req, res, next){
+  var locations_in = req.body.locations;
+  var locations_out = {}; // キーを入力位置配列のindex, 値を入力位置周辺の酒蔵位置とする辞書
+  locations_in.map((location_in, index)=>{
+    Brewery.find({
+      location: {
+        $near: {
+          $geometry: { type: "Point", coordinates: [location_in.lng, location_in.lat] },
+          $maxDistance: 10000,
+        }
+      }
+    })
+    .exec((err, breweries) => {
+      console.log(index);
+      if (err){
+        return res.status(500).json({
+          message: 'Error occurred when getting records. : ' + err,
+        });
+      }
+      locations_out[index] = breweries;
+      if (index == locations_in.length-1){
+        return res.json(locations_out);
+      }
+    })
+  })
+}
+
 // Create
 module.exports.create = [
   // validations rules
@@ -143,6 +171,8 @@ module.exports.create = [
       geocoder(brewery.address, (latlng) => {
         brewery.latitude = latlng.lat;
         brewery.longitude = latlng.lng;
+        brewery.location = [latlng.lng, latlng.lat];
+        brewery.createIndex({location:"2dsphere"});
         saveBrewery(brewery, res);
       });
     } else {

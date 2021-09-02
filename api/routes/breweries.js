@@ -19,6 +19,9 @@ router.get('/list/breweries', breweriesController.list);
 // Get Locations of Breweries
 router.get('/locations/breweries', breweriesController.getLocations);
 
+// Get Locations of Breweries Surrounding Input Positions
+router.post('/locations/breweries', breweriesController.getLocationsSurroundingIpnutPositions);
+
 // Create
 router.post('/breweries', config.isAuthenticated, breweriesController.create);
 
