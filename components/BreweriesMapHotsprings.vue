@@ -1,39 +1,37 @@
 <template>
   <client-only>
     <div id="map">
-      <l-map ref="map" :zoom="zoom" :center="center">
+      <l-map :zoom="zoom" :center="center">
         <l-tile-layer :url="url"></l-tile-layer>
         <v-marker-cluster
-          v-for="(prefectures, ind) in brewery_positions"
+          v-for="(locations, ind) in dict_hotsprings"
           :key="ind"
           :options="cluster_options"
         >
           <l-marker
-            v-for="(point, index) in prefectures"
+            v-for="(location, index) in locations"
             :key="index"
-            :lat-lng="point"
+            :lat-lng="location"
           >
-            <l-popup :content="`${point.name}`"></l-popup>
+            <l-popup :content="`${location.name}`"></l-popup>
+            <l-icon
+              :icon-size="[20, 20]"
+              :icon-anchor="[12, 18]"
+              :popup-anchor="[-3, -24]"
+              :shadow-size="[30, 20]"
+              :shadow-anchor="[12, 18]"
+              :icon-url="`${location.iconUrl}`"
+            />
           </l-marker>
         </v-marker-cluster>
-        <l-control position="bottomleft">
-          <b-alert v-if="locationError" variant="danger" show>
-            {{ locationError }}
-          </b-alert>
-          <b-button class="control-btn" @click="getLocate"
-            >現在地付近<b-spinner
-              v-if="locationLoading"
-              small
-              label="Spinning"
-            ></b-spinner
-          ></b-button>
-        </l-control>
       </l-map>
     </div>
   </client-only>
 </template>
 
 <script>
+import hotsprings from '@/data/related_locations/hot_springs.json';
+
 export default {
   data() {
     return {
@@ -61,9 +59,8 @@ export default {
           });
         },
       },
-      brewery_positions: {},
-      locationError: null,
-      locationLoading: false,
+      dict_hotsprings: {},
+      hotsprings: hotsprings,
     };
   },
   head() {
@@ -91,6 +88,7 @@ export default {
   },
   mounted() {
     const iconUrl = require('~/assets/icons/sake.svg');
+    const iconUrlHotspring = require('~/assets/icons/hotspring.svg');
     const L = require('leaflet');
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.imagePath = '';
@@ -103,52 +101,50 @@ export default {
       shadowSize: [30, 20],
       shadowAnchor: [12, 18],
     });
-    this.$axios.get('/api/locations/breweries').then((response) => {
-      this.brewery_positions = {};
-      response.data.map((brewery) => {
-        brewery['lat'] = brewery.latitude;
-        brewery['lng'] = brewery.longitude;
-        brewery['prefecture'] = brewery.prefecture
-          ? brewery.prefecture
-          : brewery.address
-          ? brewery.address.replace(
-              /^([〒0-9 -]*)(.{2}[都道府県]|.{3}県)(.+)/,
-              '$2'
-            )
-          : '住所なし';
-        if (!(brewery['prefecture'] in this.brewery_positions)) {
-          this.brewery_positions[brewery['prefecture']] = [];
-        }
-        this.brewery_positions[brewery['prefecture']].push(brewery);
-      });
-    });
-  },
-  methods: {
-    geoSuccess(position) {
-      let coords = position.coords;
-      this.$refs.map.mapObject.setView([coords.latitude, coords.longitude], 10);
-      this.locationLoading = false;
-      this.locationError = null;
-    },
-    geoError(error) {
-      this.locationLoading = false;
-      this.locationError = '現在地を取得できませんでした。';
-      console.log('現在地を取得できませんでした。');
-    },
-    getLocate() {
-      console.log('getLocate');
-      this.locationLoading = true;
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          this.geoSuccess,
-          this.geoError
-        );
-      } else {
-        this.locationLoading = false;
-        this.locationError = '現在地を取得できませんでした。';
-        console.log('現在地を取得できませんでした。');
+    // 温泉地ごとの酒蔵位置辞書の作成
+    var hotspring_positions = [];
+    hotsprings.results.bindings.map((hotspring) => {
+      if (
+        'lat' in hotspring &&
+        'value' in hotspring.lat &&
+        hotspring.lat.value !== null &&
+        'long' in hotspring &&
+        'value' in hotspring.long &&
+        hotspring.long.value !== null
+      ) {
+        hotspring_positions.push({
+          name: hotspring.name.value,
+          lat: parseFloat(hotspring.lat.value),
+          lng: parseFloat(hotspring.long.value),
+          iconUrl: iconUrlHotspring,
+        });
       }
-    },
+    });
+    this.$axios
+      .post('/api/locations/breweries', {
+        locations: hotspring_positions,
+      })
+      .then((response) => {
+        this.dict_hotsprings = {};
+        //console.log(response);
+        Object.keys(response.data).forEach((key, index) => {
+          var locations = [];
+          var breweries = response.data[key];
+          if (breweries.length > 0) {
+            breweries.map((brewery) => {
+              locations.push({
+                name: brewery.name,
+                lat: brewery.latitude,
+                lng: brewery.longitude,
+                iconUrl: iconUrl,
+              });
+            });
+            locations.push(hotspring_positions[index]);
+            this.dict_hotsprings[index] = locations;
+          }
+        });
+        //console.log(this.dict_hotsprings);
+      });
   },
 };
 </script>
@@ -220,8 +216,5 @@ export default {
       background-color: var(--danger);
     }
   }
-}
-#map .control-btn {
-  display: block;
 }
 </style>

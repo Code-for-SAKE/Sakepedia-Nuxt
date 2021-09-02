@@ -91,4 +91,6 @@ sw.*
 
 # secret for development
 config/.env.*
+
 mongo/
+tmp/*

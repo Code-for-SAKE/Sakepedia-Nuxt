@@ -27,7 +27,9 @@
                 </div>
               </b-tab>
               <b-tab title="温泉近くの酒蔵">
-                <div class="map-wrap">Comming Soon...</div>
+                <div class="map-wrap">
+                  <breweries-map-hotsprings />
+                </div>
               </b-tab>
               <b-tab title="自然の中の酒蔵">
                 <div class="map-wrap">Comming Soon...</div>
@@ -42,9 +44,11 @@
 
 <script>
 import BreweriesMap from '@/components/BreweriesMap.vue';
+import BreweriesMapHotsprings from '@/components/BreweriesMapHotsprings.vue';
 export default {
   components: {
     BreweriesMap,
+    BreweriesMapHotsprings,
   },
   data() {
     return {
