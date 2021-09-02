@@ -20,7 +20,8 @@
               :popup-anchor="[-3, -24]"
               :shadow-size="[30, 20]"
               :shadow-anchor="[12, 18]"
-              :icon-url="`${location.iconUrl}`"/>
+              :icon-url="`${location.iconUrl}`"
+            />
           </l-marker>
         </v-marker-cluster>
       </l-map>
@@ -29,8 +30,7 @@
 </template>
 
 <script>
-
-import hotsprings from '@/data/related_locations/hot_springs.json'
+import hotsprings from '@/data/related_locations/hot_springs.json';
 
 export default {
   data() {
@@ -60,7 +60,7 @@ export default {
         },
       },
       dict_hotsprings: {},
-      hotsprings: hotsprings
+      hotsprings: hotsprings,
     };
   },
   head() {
@@ -88,7 +88,7 @@ export default {
   },
   mounted() {
     const iconUrl = require('~/assets/icons/sake.svg');
-    const iconUrlHotspring = require('~/assets/icons/hotspring.svg')
+    const iconUrlHotspring = require('~/assets/icons/hotspring.svg');
     const L = require('leaflet');
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.imagePath = '';
@@ -103,43 +103,48 @@ export default {
     });
     // 温泉地ごとの酒蔵位置辞書の作成
     var hotspring_positions = [];
-    hotsprings.results.bindings.map((hotspring) =>{
-      if ('lat' in hotspring && 'value' in hotspring.lat && hotspring.lat.value !== null
-          && 'long' in hotspring && 'value' in hotspring.long && hotspring.long.value !== null){
+    hotsprings.results.bindings.map((hotspring) => {
+      if (
+        'lat' in hotspring &&
+        'value' in hotspring.lat &&
+        hotspring.lat.value !== null &&
+        'long' in hotspring &&
+        'value' in hotspring.long &&
+        hotspring.long.value !== null
+      ) {
         hotspring_positions.push({
-          "name": hotspring.name.value,
-          "lat": parseFloat(hotspring.lat.value),
-          "lng": parseFloat(hotspring.long.value),
-          "iconUrl": iconUrlHotspring
+          name: hotspring.name.value,
+          lat: parseFloat(hotspring.lat.value),
+          lng: parseFloat(hotspring.long.value),
+          iconUrl: iconUrlHotspring,
         });
       }
-    })
-    this.$axios.post(
-      '/api/locations/breweries',
-      {
-        locations: hotspring_positions
-      }
-    ).then((response) => {
-      this.dict_hotsprings = {};
-      console.log(response);
-      Object.keys(response.data).forEach((key, index)=>{
-        var locations = [];
-        var breweries = response.data[key];
-        if (breweries.length > 0){
-          breweries.map((brewery)=>{
-            locations.push({
-              name: brewery.name,
-              lat: brewery.latitude,
-              lng: brewery.longitude,
-              iconUrl: iconUrl
-            })
-          })
-          locations.push(hotspring_positions[index]);
-          this.dict_hotsprings[index] = locations;
-        }
-      })
-      console.log(this.dict_hotsprings);
     });
+    this.$axios
+      .post('/api/locations/breweries', {
+        locations: hotspring_positions,
+      })
+      .then((response) => {
+        this.dict_hotsprings = {};
+        //console.log(response);
+        Object.keys(response.data).forEach((key, index) => {
+          var locations = [];
+          var breweries = response.data[key];
+          if (breweries.length > 0) {
+            breweries.map((brewery) => {
+              locations.push({
+                name: brewery.name,
+                lat: brewery.latitude,
+                lng: brewery.longitude,
+                iconUrl: iconUrl,
+              });
+            });
+            locations.push(hotspring_positions[index]);
+            this.dict_hotsprings[index] = locations;
+          }
+        });
+        //console.log(this.dict_hotsprings);
+      });
   },
 };
 </script>
