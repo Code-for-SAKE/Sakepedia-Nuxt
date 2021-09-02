@@ -163,6 +163,11 @@ module.exports.create = [
       twitter: req.body.twitter,
       instagram: req.body.instagram,
       othersns: req.body.othersns,
+      visit: request.body.hasVisit ? req.body.visit : null,
+      tasting: request.body.hasTasting ? req.body.tasting : null,
+      cafe: request.body.hasCafe ? req.body.cafe : null,
+      shop: request.body.hasShop ? req.body.shop : null,
+      otherBrewing: request.body.hasOtherBrewing ? req.body.otherBrewing : null,
       startYear: req.body.startYear,
       endYear: req.body.endYear,
       userId: req.user._id,
@@ -267,6 +272,31 @@ module.exports.update = [
       brewery.othersns = req.body.othersns
         ? req.body.othersns
         : brewery.othersns;
+      if (req.body.hasVisit === true) {
+        rewery.visit = req.body.visit;
+      } else if (req.body.hasVisit === false) {
+        rewery.visit = null;
+      }
+      if (req.body.hasTasting === true) {
+        rewery.tasting = req.body.tasting;
+      } else if (req.body.hasTasting === false) {
+        rewery.tasting = null;
+      }
+      if (req.body.hasCafe === true) {
+        rewery.cafe = req.body.tasting;
+      } else if (req.body.hasCafe === false) {
+        rewery.cafe = null;
+      }
+      if (req.body.hasShop === true) {
+        rewery.shop = req.body.shop;
+      } else if (req.body.hasShop === false) {
+        rewery.shop = null;
+      }
+      if (req.body.hasOtherBrewing === true) {
+        rewery.otherBrewing = req.body.otherBrewing;
+      } else if (req.body.hasOtherBrewing === false) {
+        rewery.otherBrewing = null;
+      }
       brewery.startYear = req.body.startYear
         ? req.body.startYear
         : brewery.startYear;

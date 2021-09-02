@@ -21,6 +21,11 @@ const Brewery = new Schema({
   othersns: { type: String },
   startYear: { type: String },
   endYear: { type: String },
+  visit: { type: String },
+  tasting: { type: String },
+  cafe: { type: String },
+  shop: { type: String },
+  otherBrewing: { type: String },
   author: { type: String },
   userId: { type: Schema.Types.ObjectId, ref: 'User' },
 });
