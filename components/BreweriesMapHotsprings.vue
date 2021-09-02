@@ -126,7 +126,7 @@ export default {
       })
       .then((response) => {
         this.dict_hotsprings = {};
-        console.log(response);
+        //console.log(response);
         Object.keys(response.data).forEach((key, index) => {
           var locations = [];
           var breweries = response.data[key];
@@ -143,7 +143,7 @@ export default {
             this.dict_hotsprings[index] = locations;
           }
         });
-        console.log(this.dict_hotsprings);
+        //console.log(this.dict_hotsprings);
       });
   },
 };
