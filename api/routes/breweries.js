@@ -20,7 +20,10 @@ router.get('/list/breweries', breweriesController.list);
 router.get('/locations/breweries', breweriesController.getLocations);
 
 // Get Locations of Breweries Surrounding Input Positions
-router.post('/locations/breweries', breweriesController.getLocationsSurroundingIpnutPositions);
+router.post(
+  '/locations/breweries',
+  breweriesController.getLocationsSurroundingIpnutPositions
+);
 
 // Create
 router.post('/breweries', config.isAuthenticated, breweriesController.create);
