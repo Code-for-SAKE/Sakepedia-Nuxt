@@ -273,29 +273,29 @@ module.exports.update = [
         ? req.body.othersns
         : brewery.othersns;
       if (req.body.hasVisit === true) {
-        rewery.visit = req.body.visit;
+        brewery.visit = req.body.visit;
       } else if (req.body.hasVisit === false) {
-        rewery.visit = null;
+        brewery.visit = null;
       }
       if (req.body.hasTasting === true) {
-        rewery.tasting = req.body.tasting;
+        brewery.tasting = req.body.tasting;
       } else if (req.body.hasTasting === false) {
-        rewery.tasting = null;
+        brewery.tasting = null;
       }
       if (req.body.hasCafe === true) {
-        rewery.cafe = req.body.tasting;
+        brewery.cafe = req.body.tasting;
       } else if (req.body.hasCafe === false) {
-        rewery.cafe = null;
+        brewery.cafe = null;
       }
       if (req.body.hasShop === true) {
-        rewery.shop = req.body.shop;
+        brewery.shop = req.body.shop;
       } else if (req.body.hasShop === false) {
-        rewery.shop = null;
+        brewery.shop = null;
       }
       if (req.body.hasOtherBrewing === true) {
-        rewery.otherBrewing = req.body.otherBrewing;
+        brewery.otherBrewing = req.body.otherBrewing;
       } else if (req.body.hasOtherBrewing === false) {
-        rewery.otherBrewing = null;
+        brewery.otherBrewing = null;
       }
       brewery.startYear = req.body.startYear
         ? req.body.startYear
