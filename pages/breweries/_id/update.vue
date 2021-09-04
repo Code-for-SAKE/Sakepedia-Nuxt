@@ -37,7 +37,7 @@
           </div>
 
           <div class="form-group">
-            <label for="">フリガナ</label>
+            <label for="">ふりがな</label>
             <input
               v-model="kana"
               type="text"
