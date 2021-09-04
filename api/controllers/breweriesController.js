@@ -12,7 +12,7 @@ module.exports.all = function (req, res, next) {
     search = {
       $or: [
         { name: new RegExp(keyword, 'i') },
-        { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
+        { kana: new RegExp(japanese.kanaToHira(keyword), 'i') },
       ],
     };
   }
@@ -149,7 +149,7 @@ module.exports.create = [
     var brewery = new Brewery({
       breweryId: req.body.breweryId,
       name: req.body.name,
-      kana: req.body.kana,
+      kana: japanese.kanaToHira(req.body.kana),
       prefecture: req.body.prefecture,
       address: req.body.address,
       latitude: req.body.latitude,
@@ -246,7 +246,9 @@ module.exports.update = [
         ? req.body.breweryId
         : brewery.breweryId;
       brewery.name = req.body.name ? req.body.name : brewery.name;
-      brewery.kana = req.body.kana ? req.body.kana : brewery.kana;
+      brewery.kana = req.body.kana
+        ? japanese.kanaToHira(req.body.kana)
+        : brewery.kana;
       brewery.prefecture = req.body.prefecture
         ? req.body.prefecture
         : brewery.prefecture;
