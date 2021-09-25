@@ -14,11 +14,11 @@
     <p v-if="brewery">{{ brewery.address }}</p>
     <p v-if="brewery">{{ brewery.latitude }}</p>
     <p v-if="brewery">{{ brewery.longitude }}</p>
-    <p v-if="brewery">{{ brewery.email }}</p>
+    <a v-if="brewery" v-bind:href="brewery.email">{{ brewery.email }}</a>
     <p v-if="brewery">{{ brewery.tel }}</p>
     <p v-if="brewery">{{ brewery.fax }}</p>
-    <p v-if="brewery">{{ brewery.url }}</p>
-    <p v-if="brewery">{{ brewery.ecurl }}</p>
+    <a v-if="brewery" v-bind:href="brewery.url">{{ brewery.url }}</a>
+    <a v-if="brewery" v-bind:href="brewery.ecurl">{{ brewery.ecurl }}</a>
     <p v-if="brewery">{{ brewery.facebook }}</p>
     <p v-if="brewery">{{ brewery.twitter }}</p>
     <p v-if="brewery">{{ brewery.instagram }}</p>
