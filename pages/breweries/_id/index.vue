@@ -23,6 +23,11 @@
     <p v-if="brewery">{{ brewery.twitter }}</p>
     <p v-if="brewery">{{ brewery.instagram }}</p>
     <p v-if="brewery">{{ brewery.othersns }}</p>
+    <p v-if="brewery">{{ brewery.visit }}</p>
+    <p v-if="brewery">{{ brewery.tasting }}</p>
+    <p v-if="brewery">{{ brewery.cafe }}</p>
+    <p v-if="brewery">{{ brewery.shop }}</p>
+    <p v-if="brewery">{{ brewery.otherBrewing }}</p>
     <p v-if="brewery">{{ brewery.startYear }}</p>
     <p v-if="brewery">{{ brewery.endYear }}</p>
 

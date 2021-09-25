@@ -12,7 +12,7 @@ module.exports.all = function (req, res, next) {
     search = {
       $or: [
         { name: new RegExp(keyword, 'i') },
-        { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
+        { kana: new RegExp(japanese.kanaToHira(keyword), 'i') },
       ],
     };
   }
@@ -92,6 +92,39 @@ module.exports.getLocations = function (req, res, next) {
     });
 };
 
+// Get Locations of Breweries Surrounding Input Positions
+module.exports.getLocationsSurroundingIpnutPositions = function (
+  req,
+  res,
+  next
+) {
+  var locations_in = req.body.locations;
+  var locations_out = {}; // キーを入力位置配列のindex, 値を入力位置周辺の酒蔵位置とする辞書
+  locations_in.map((location_in, index) => {
+    Brewery.find({
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [location_in.lng, location_in.lat],
+          },
+          $maxDistance: 10000,
+        },
+      },
+    }).exec((err, breweries) => {
+      if (err) {
+        return res.status(500).json({
+          message: 'Error occurred when getting records. : ' + err,
+        });
+      }
+      locations_out[index] = breweries;
+      if (index == locations_in.length - 1) {
+        return res.json(locations_out);
+      }
+    });
+  });
+};
+
 // Create
 module.exports.create = [
   // validations rules
@@ -99,7 +132,7 @@ module.exports.create = [
   validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
     if (value == '') return true;
-    if (value.length != 13) {
+    if (String(value).length != 13) {
       return Promise.reject('法人番号は13桁です。');
     }
     return true;
@@ -116,7 +149,7 @@ module.exports.create = [
     var brewery = new Brewery({
       breweryId: req.body.breweryId,
       name: req.body.name,
-      kana: req.body.kana,
+      kana: japanese.kanaToHira(req.body.kana),
       prefecture: req.body.prefecture,
       address: req.body.address,
       latitude: req.body.latitude,
@@ -130,6 +163,11 @@ module.exports.create = [
       twitter: req.body.twitter,
       instagram: req.body.instagram,
       othersns: req.body.othersns,
+      visit: request.body.hasVisit ? req.body.visit : null,
+      tasting: request.body.hasTasting ? req.body.tasting : null,
+      cafe: request.body.hasCafe ? req.body.cafe : null,
+      shop: request.body.hasShop ? req.body.shop : null,
+      otherBrewing: request.body.hasOtherBrewing ? req.body.otherBrewing : null,
       startYear: req.body.startYear,
       endYear: req.body.endYear,
       userId: req.user._id,
@@ -143,6 +181,8 @@ module.exports.create = [
       geocoder(brewery.address, (latlng) => {
         brewery.latitude = latlng.lat;
         brewery.longitude = latlng.lng;
+        brewery.location = [latlng.lng, latlng.lat];
+        brewery.createIndex({ location: '2dsphere' });
         saveBrewery(brewery, res);
       });
     } else {
@@ -174,7 +214,7 @@ module.exports.update = [
   validator.body('breweryId').custom((value, { req }) => {
     if (!value) return true;
     if (value == '') return true;
-    if (value.length != 13) {
+    if (String(value).length != 13) {
       return Promise.reject('法人番号は13桁です。');
     }
     return true;
@@ -206,7 +246,9 @@ module.exports.update = [
         ? req.body.breweryId
         : brewery.breweryId;
       brewery.name = req.body.name ? req.body.name : brewery.name;
-      brewery.kana = req.body.kana ? req.body.kana : brewery.kana;
+      brewery.kana = req.body.kana
+        ? japanese.kanaToHira(req.body.kana)
+        : brewery.kana;
       brewery.prefecture = req.body.prefecture
         ? req.body.prefecture
         : brewery.prefecture;
@@ -232,6 +274,31 @@ module.exports.update = [
       brewery.othersns = req.body.othersns
         ? req.body.othersns
         : brewery.othersns;
+      if (req.body.hasVisit === true) {
+        brewery.visit = req.body.visit;
+      } else if (req.body.hasVisit === false) {
+        brewery.visit = null;
+      }
+      if (req.body.hasTasting === true) {
+        brewery.tasting = req.body.tasting;
+      } else if (req.body.hasTasting === false) {
+        brewery.tasting = null;
+      }
+      if (req.body.hasCafe === true) {
+        brewery.cafe = req.body.tasting;
+      } else if (req.body.hasCafe === false) {
+        brewery.cafe = null;
+      }
+      if (req.body.hasShop === true) {
+        brewery.shop = req.body.shop;
+      } else if (req.body.hasShop === false) {
+        brewery.shop = null;
+      }
+      if (req.body.hasOtherBrewing === true) {
+        brewery.otherBrewing = req.body.otherBrewing;
+      } else if (req.body.hasOtherBrewing === false) {
+        brewery.otherBrewing = null;
+      }
       brewery.startYear = req.body.startYear
         ? req.body.startYear
         : brewery.startYear;

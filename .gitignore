@@ -93,3 +93,5 @@ sw.*
 config/.env.*
 
 /data
+mongo/
+tmp/*

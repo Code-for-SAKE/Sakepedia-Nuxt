@@ -37,7 +37,7 @@
           </div>
 
           <div class="form-group">
-            <label for="">フリガナ</label>
+            <label for="">ふりがな</label>
             <input
               v-model="kana"
               type="text"
@@ -226,6 +226,146 @@
           </div>
 
           <div class="form-group">
+            <label for="">見学</label>
+            <div class="form-check">
+              <input
+                v-model="hasVisit"
+                type="checkbox"
+                class="form-check-input"
+                id="hasVisit"
+              />
+              <label for="hasVisit" class="form-check=label">あり</label>
+            </div>
+            <div v-if="hasVisit">
+              <input
+                v-model="visit"
+                type="text"
+                required="required"
+                class="form-control"
+                :class="{ 'is-invalid': errors && errors.visit }"
+              />
+              <div class="form-control-sm">
+                参加方法など
+              </div>
+              <div v-if="errors && errors.visit" class="invalid-feedback">
+                {{ errors.visit.msg }}
+              </div>
+          </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">試飲</label>
+            <div class="form-check">
+              <input
+                v-model="hasTasting"
+                type="checkbox"
+                class="form-check-input"
+                id="hasTasting"
+              />
+              <label for="hasTasting" class="form-check=label">あり</label>
+            </div>
+            <div v-if="hasTasting">
+              <input
+                v-model="tasting"
+                type="text"
+                required="required"
+                class="form-control"
+                :class="{ 'is-invalid': errors && errors.tasting }"
+              />
+              <div class="form-control-sm">
+                営業時間や定休日など
+              </div>
+              <div v-if="errors && errors.tasting" class="invalid-feedback">
+                {{ errors.tasting.msg }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">併設カフェ</label>
+            <div class="form-check">
+              <input
+                v-model="hasCafe"
+                type="checkbox"
+                class="form-check-input"
+                id="hasCafe"
+              />
+              <label for="hasCafe" class="form-check=label">あり</label>
+            </div>
+            <div v-if="hasCafe">
+              <input
+                v-model="cafe"
+                type="text"
+                required="required"
+                class="form-control"
+                :class="{ 'is-invalid': errors && errors.cafe }"
+              />
+              <div class="form-control-sm">
+                営業時間や定休日など
+              </div>
+              <div v-if="errors && errors.cafe" class="invalid-feedback">
+                {{ errors.cafe.msg }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">併設ショップ</label>
+            <div class="form-check">
+              <input
+                v-model="hasShop"
+                type="checkbox"
+                class="form-check-input"
+                id="hasShop"
+              />
+              <label for="hasShop" class="form-check=label">あり</label>
+            </div>
+            <div v-if="hasShop">
+              <input
+                v-model="shop"
+                type="text"
+                required="required"
+                class="form-control"
+                :class="{ 'is-invalid': errors && errors.shop }"
+              />
+              <div class="form-control-sm">
+                営業時間や定休日など
+              </div>
+              <div v-if="errors && errors.shop" class="invalid-feedback">
+                {{ errors.shop.msg }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">日本酒以外の醸造・蒸留</label>
+            <div class="form-check">
+              <input
+                v-model="hasOtherBrewing"
+                type="checkbox"
+                class="form-check-input"
+                id="hasOtherBrewing"
+              />
+              <label for="hasOtherBrewing" class="form-check=label">あり</label>
+            </div>
+            <div v-if="hasOtherBrewing">
+              <input
+                v-model="otherBrewing"
+                type="text"
+                required="required"
+                class="form-control"
+                :class="{ 'is-invalid': errors && errors.otherBrewing }"
+              />
+              <div v-if="errors && errors.otherBrewing" class="invalid-feedback">
+                {{ errors.visit.otherBrewing }}
+              </div>
+              <div v-else class="form-control-sm">
+                種類など
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">創業年</label>
             <input
               v-model="startYear"
@@ -294,6 +434,16 @@ export default {
       twitter: null,
       instagram: null,
       othersns: null,
+      hasVisit: null,
+      visit: null,
+      hasTasting: null,
+      tasting: null,
+      hasCafe: null,
+      cafe: null,
+      hasShop: null,
+      shop: null,
+      hasOtherBrewing: null,
+      otherBrewing: null,
       startYear: null,
       endYear: null,
       author: null,
@@ -323,6 +473,16 @@ export default {
       this.twitter = this.brewery.twitter;
       this.instagram = this.brewery.instagram;
       this.othersns = this.brewery.othersns;
+      this.hasVisit = !!this.brewery.visit;
+      this.visit = this.brewery.visit;
+      this.hasTasting = !!this.brewery.tasting;
+      this.tasting = this.brewery.tasting;
+      this.hasCafe = !!this.brewery.cafe;
+      this.cafe = this.brewery.cafe;
+      this.hasShop = !!this.brewery.shop;
+      this.shop = this.brewery.shop;
+      this.hasOtherBrewing  = !!this.brewery.otherBrewing ;
+      this.otherBrewing = this.brewery.otherBrewing;
       this.startYear = this.brewery.startYear;
       this.endYear = this.brewery.endYear;
     },
@@ -346,6 +506,16 @@ export default {
           twitter: this.twitter,
           instagram: this.instagram,
           othersns: this.othersns,
+          hasVisit: this.hasVisit,
+          visit: this.visit,
+          hasTasting: this.hasTasting,
+          tasting: this.tasting,
+          hasCafe: this.hasCafe,
+          cafe: this.cafe,
+          hasShop: this.hasShop,
+          shop: this.shop,
+          hasOtherBrewing: this.hasOtherBrewing,
+          otherBrewing: this.otherBrewing,
           startYear: this.startYear,
           endYear: this.endYear,
         })
