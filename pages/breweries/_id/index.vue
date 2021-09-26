@@ -14,15 +14,15 @@
     <p v-if="brewery">{{ brewery.address }}</p>
     <p v-if="brewery">{{ brewery.latitude }}</p>
     <p v-if="brewery">{{ brewery.longitude }}</p>
-    <p v-if="brewery">{{ brewery.email }}</p>
+    <p><a v-if="brewery" v-bind:href="'mailto:' + brewery.email" target="_blank">{{ brewery.email }}</a></p>
     <p v-if="brewery">{{ brewery.tel }}</p>
     <p v-if="brewery">{{ brewery.fax }}</p>
-    <p v-if="brewery">{{ brewery.url }}</p>
-    <p v-if="brewery">{{ brewery.ecurl }}</p>
-    <p v-if="brewery">{{ brewery.facebook }}</p>
-    <p v-if="brewery">{{ brewery.twitter }}</p>
-    <p v-if="brewery">{{ brewery.instagram }}</p>
-    <p v-if="brewery">{{ brewery.othersns }}</p>
+    <p><a v-if="brewery" v-bind:href="brewery.url">{{ brewery.url }}</a></p>
+    <p><a v-if="brewery" v-bind:href="brewery.ecurl">{{ brewery.ecurl }}</a></p>
+    <p><a v-if="brewery" v-bind:href="brewery.facebook">{{ brewery.facebook }}</a></p>
+    <p><a v-if="brewery" v-bind:href="brewery.twitter">{{ brewery.twitter }}</a></p>
+    <p><a v-if="brewery" v-bind:href="brewery.instagram">{{ brewery.instagram }}</a></p>
+    <p><a v-if="brewery" v-bind:href="brewery.othersns">{{ brewery.othersns }}</a></p>
     <p v-if="brewery">{{ brewery.visit }}</p>
     <p v-if="brewery">{{ brewery.tasting }}</p>
     <p v-if="brewery">{{ brewery.cafe }}</p>
