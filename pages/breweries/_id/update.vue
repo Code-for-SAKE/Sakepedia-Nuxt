@@ -237,10 +237,10 @@
             <label for="">見学</label>
             <div class="form-check">
               <input
+                id="hasVisit"
                 v-model="hasVisit"
                 type="checkbox"
                 class="form-check-input"
-                id="hasVisit"
               />
               <label for="hasVisit" class="form-check=label">あり</label>
             </div>
@@ -252,23 +252,21 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.visit }"
               />
-              <div class="form-control-sm">
-                参加方法など
-              </div>
+              <div class="form-control-sm">参加方法など</div>
               <div v-if="errors && errors.visit" class="invalid-feedback">
                 {{ errors.visit.msg }}
               </div>
-          </div>
+            </div>
           </div>
 
           <div class="form-group">
             <label for="">試飲</label>
             <div class="form-check">
               <input
+                id="hasTasting"
                 v-model="hasTasting"
                 type="checkbox"
                 class="form-check-input"
-                id="hasTasting"
               />
               <label for="hasTasting" class="form-check=label">あり</label>
             </div>
@@ -280,9 +278,7 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.tasting }"
               />
-              <div class="form-control-sm">
-                営業時間や定休日など
-              </div>
+              <div class="form-control-sm">営業時間や定休日など</div>
               <div v-if="errors && errors.tasting" class="invalid-feedback">
                 {{ errors.tasting.msg }}
               </div>
@@ -293,10 +289,10 @@
             <label for="">併設カフェ</label>
             <div class="form-check">
               <input
+                id="hasCafe"
                 v-model="hasCafe"
                 type="checkbox"
                 class="form-check-input"
-                id="hasCafe"
               />
               <label for="hasCafe" class="form-check=label">あり</label>
             </div>
@@ -308,9 +304,7 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.cafe }"
               />
-              <div class="form-control-sm">
-                営業時間や定休日など
-              </div>
+              <div class="form-control-sm">営業時間や定休日など</div>
               <div v-if="errors && errors.cafe" class="invalid-feedback">
                 {{ errors.cafe.msg }}
               </div>
@@ -321,10 +315,10 @@
             <label for="">併設ショップ</label>
             <div class="form-check">
               <input
+                id="hasShop"
                 v-model="hasShop"
                 type="checkbox"
                 class="form-check-input"
-                id="hasShop"
               />
               <label for="hasShop" class="form-check=label">あり</label>
             </div>
@@ -336,9 +330,7 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.shop }"
               />
-              <div class="form-control-sm">
-                営業時間や定休日など
-              </div>
+              <div class="form-control-sm">営業時間や定休日など</div>
               <div v-if="errors && errors.shop" class="invalid-feedback">
                 {{ errors.shop.msg }}
               </div>
@@ -349,10 +341,10 @@
             <label for="">日本酒以外の醸造・蒸留</label>
             <div class="form-check">
               <input
+                id="hasOtherBrewing"
                 v-model="hasOtherBrewing"
                 type="checkbox"
                 class="form-check-input"
-                id="hasOtherBrewing"
               />
               <label for="hasOtherBrewing" class="form-check=label">あり</label>
             </div>
@@ -364,12 +356,13 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.otherBrewing }"
               />
-              <div v-if="errors && errors.otherBrewing" class="invalid-feedback">
+              <div
+                v-if="errors && errors.otherBrewing"
+                class="invalid-feedback"
+              >
                 {{ errors.visit.otherBrewing }}
               </div>
-              <div v-else class="form-control-sm">
-                種類など
-              </div>
+              <div v-else class="form-control-sm">種類など</div>
             </div>
           </div>
 
@@ -489,7 +482,7 @@ export default {
       this.cafe = this.brewery.cafe;
       this.hasShop = !!this.brewery.shop;
       this.shop = this.brewery.shop;
-      this.hasOtherBrewing  = !!this.brewery.otherBrewing ;
+      this.hasOtherBrewing = !!this.brewery.otherBrewing;
       this.otherBrewing = this.brewery.otherBrewing;
       this.startYear = this.brewery.startYear;
       this.endYear = this.brewery.endYear;
