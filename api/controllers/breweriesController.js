@@ -2,7 +2,7 @@ const Brewery = require('../models/Brewery');
 const validator = require('express-validator');
 const paginate = require('express-paginate');
 const japanese = require('../../utils/japanese');
-const geocoder = require('nuxt-simple-geocoding-ja');
+const { normalize } = require('@geolonia/normalize-japanese-addresses');
 
 // Get all
 module.exports.all = function (req, res, next) {
@@ -178,20 +178,21 @@ module.exports.create = [
       req.body.address != null &&
       (req.body.latitude === null || req.body.longitude === null)
     ) {
-      geocoder(
-        brewery.address,
-        (latlng) => {
-          brewery.latitude = latlng.lat;
-          brewery.longitude = latlng.lng;
-          brewery.location = [latlng.lng, latlng.lat];
-          brewery.createIndex({ location: '2dsphere' });
-          saveBrewery(brewery, res);
-        },
-        (err) => {
-          console.log('err:' + err);
-          saveBrewery(brewery, res);
-        }
-      );
+      try {
+        normalize(brewery.address)
+          .then((result) => {
+            brewery.latitude = result.lat;
+            brewery.longitude = result.lng;
+            brewery.location = [result.lng, result.lat];
+            brewery.createIndex({ location: '2dsphere' });
+            saveBrewery(brewery, res);
+          })
+          .catch((e) => {
+            saveBrewery(brewery, res);
+          });
+      } catch (e) {
+        saveBrewery(brewery, res);
+      }
     } else {
       saveBrewery(brewery, res);
     }
@@ -317,19 +318,21 @@ module.exports.update = [
         req.body.address != null &&
         (req.body.latitude === null || req.body.longitude === null)
       ) {
-        geocoder(
-          brewery.address,
-          (latlng) => {
-            console.log(latlng);
-            brewery.latitude = latlng.lat;
-            brewery.longitude = latlng.lng;
-            saveBrewery(brewery, res);
-          },
-          (err) => {
-            console.log('err:' + err);
-            saveBrewery(brewery, res);
-          }
-        );
+        try {
+          normalize(brewery.address)
+            .then((result) => {
+              brewery.latitude = result.lat;
+              brewery.longitude = result.lng;
+              brewery.location = [result.lng, result.lat];
+              brewery.createIndex({ location: '2dsphere' });
+              saveBrewery(brewery, res);
+            })
+            .catch((e) => {
+              saveBrewery(brewery, res);
+            });
+        } catch (e) {
+          saveBrewery(brewery, res);
+        }
       } else {
         saveBrewery(brewery, res);
       }
