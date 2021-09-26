@@ -78,6 +78,14 @@
               class="form-control"
               :class="{ 'is-invalid': errors && errors.address }"
             />
+            <small
+              >緯度経度は住所から自動的に登録されます。
+              <a href="https://geolonia.com/">Geolonia</a>の<a
+                href="https://github.com/geolonia/normalize-japanese-addresses"
+                >住所正規化ライブラリ</a
+              >を利用しています。<br />
+              正確な緯度経度がわかる場合は入力してください。
+            </small>
             <div v-if="errors && errors.address" class="invalid-feedback">
               {{ errors.address.msg }}
             </div>
@@ -230,10 +238,10 @@
             <label for="">見学</label>
             <div class="form-check">
               <input
+                id="hasVisit"
                 v-model="hasVisit"
                 type="checkbox"
                 class="form-check-input"
-                id="hasVisit"
               />
               <label for="hasVisit" class="form-check=label">あり</label>
             </div>
@@ -245,23 +253,21 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.visit }"
               />
-              <div class="form-control-sm">
-                参加方法など
-              </div>
+              <div class="form-control-sm">参加方法など</div>
               <div v-if="errors && errors.visit" class="invalid-feedback">
                 {{ errors.visit.msg }}
               </div>
-          </div>
+            </div>
           </div>
 
           <div class="form-group">
             <label for="">試飲</label>
             <div class="form-check">
               <input
+                id="hasTasting"
                 v-model="hasTasting"
                 type="checkbox"
                 class="form-check-input"
-                id="hasTasting"
               />
               <label for="hasTasting" class="form-check=label">あり</label>
             </div>
@@ -273,9 +279,7 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.tasting }"
               />
-              <div class="form-control-sm">
-                営業時間や定休日など
-              </div>
+              <div class="form-control-sm">営業時間や定休日など</div>
               <div v-if="errors && errors.tasting" class="invalid-feedback">
                 {{ errors.tasting.msg }}
               </div>
@@ -286,10 +290,10 @@
             <label for="">併設カフェ</label>
             <div class="form-check">
               <input
+                id="hasCafe"
                 v-model="hasCafe"
                 type="checkbox"
                 class="form-check-input"
-                id="hasCafe"
               />
               <label for="hasCafe" class="form-check=label">あり</label>
             </div>
@@ -301,9 +305,7 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.cafe }"
               />
-              <div class="form-control-sm">
-                営業時間や定休日など
-              </div>
+              <div class="form-control-sm">営業時間や定休日など</div>
               <div v-if="errors && errors.cafe" class="invalid-feedback">
                 {{ errors.cafe.msg }}
               </div>
@@ -314,10 +316,10 @@
             <label for="">併設ショップ</label>
             <div class="form-check">
               <input
+                id="hasShop"
                 v-model="hasShop"
                 type="checkbox"
                 class="form-check-input"
-                id="hasShop"
               />
               <label for="hasShop" class="form-check=label">あり</label>
             </div>
@@ -329,9 +331,7 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.shop }"
               />
-              <div class="form-control-sm">
-                営業時間や定休日など
-              </div>
+              <div class="form-control-sm">営業時間や定休日など</div>
               <div v-if="errors && errors.shop" class="invalid-feedback">
                 {{ errors.shop.msg }}
               </div>
@@ -342,10 +342,10 @@
             <label for="">日本酒以外の醸造・蒸留</label>
             <div class="form-check">
               <input
+                id="hasOtherBrewing"
                 v-model="hasOtherBrewing"
                 type="checkbox"
                 class="form-check-input"
-                id="hasOtherBrewing"
               />
               <label for="hasOtherBrewing" class="form-check=label">あり</label>
             </div>
@@ -357,12 +357,13 @@
                 class="form-control"
                 :class="{ 'is-invalid': errors && errors.otherBrewing }"
               />
-              <div v-if="errors && errors.otherBrewing" class="invalid-feedback">
+              <div
+                v-if="errors && errors.otherBrewing"
+                class="invalid-feedback"
+              >
                 {{ errors.visit.otherBrewing }}
               </div>
-              <div v-else class="form-control-sm">
-                種類など
-              </div>
+              <div v-else class="form-control-sm">種類など</div>
             </div>
           </div>
 
