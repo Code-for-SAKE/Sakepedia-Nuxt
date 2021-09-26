@@ -103,7 +103,7 @@ export default {
             });
             this.$router.push({
               name: 'brands-id',
-              params: { updated: 'yes', id: this.$route.params.id },
+              params: { id: this.$route.params.id },
             });
           }
         })
