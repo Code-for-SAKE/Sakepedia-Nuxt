@@ -178,13 +178,20 @@ module.exports.create = [
       req.body.address != null &&
       (req.body.latitude === null || req.body.longitude === null)
     ) {
-      geocoder(brewery.address, (latlng) => {
-        brewery.latitude = latlng.lat;
-        brewery.longitude = latlng.lng;
-        brewery.location = [latlng.lng, latlng.lat];
-        brewery.createIndex({ location: '2dsphere' });
-        saveBrewery(brewery, res);
-      });
+      geocoder(
+        brewery.address,
+        (latlng) => {
+          brewery.latitude = latlng.lat;
+          brewery.longitude = latlng.lng;
+          brewery.location = [latlng.lng, latlng.lat];
+          brewery.createIndex({ location: '2dsphere' });
+          saveBrewery(brewery, res);
+        },
+        (err) => {
+          console.log('err:' + err);
+          saveBrewery(brewery, res);
+        }
+      );
     } else {
       saveBrewery(brewery, res);
     }
@@ -310,11 +317,19 @@ module.exports.update = [
         req.body.address != null &&
         (req.body.latitude === null || req.body.longitude === null)
       ) {
-        geocoder(brewery.address, (latlng) => {
-          brewery.latitude = latlng.lat;
-          brewery.longitude = latlng.lng;
-          saveBrewery(brewery, res);
-        });
+        geocoder(
+          brewery.address,
+          (latlng) => {
+            console.log(latlng);
+            brewery.latitude = latlng.lat;
+            brewery.longitude = latlng.lng;
+            saveBrewery(brewery, res);
+          },
+          (err) => {
+            console.log('err:' + err);
+            saveBrewery(brewery, res);
+          }
+        );
       } else {
         saveBrewery(brewery, res);
       }
