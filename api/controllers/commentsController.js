@@ -119,16 +119,14 @@ module.exports.create = [
 module.exports.update = [
   // validations rules
   validator.body('comment').custom((value, { req }) => {
-    console.log('update comments validator');
     return Comment.findOne({ _id: req.params.id }).then((comment) => {
-      if (comment.userId !== req.user._id) {
+      if (comment.userId.toString() != req.user._id.toString()) {
         return Promise.reject('Not your comment');
       }
     });
   }),
 
   function (req, res) {
-    console.log('update comments');
     // throw validation errors
     const errors = validator.validationResult(req);
     if (!errors.isEmpty()) {
@@ -147,7 +145,6 @@ module.exports.update = [
           message: 'No such record',
         });
       }
-      console.log('update comments2');
 
       // initialize record
       data.comment = req.body.comment ? req.body.comment : data.comment;
@@ -155,8 +152,6 @@ module.exports.update = [
       data.brand = req.body.brand ? req.body.brand : data.brand;
       data.brewery = req.body.brewery ? req.body.brewery : data.brewery;
       data.sake = req.body.sake ? req.body.sake : data.sake;
-
-      console.log(req.body);
 
       // save record
       data.save(function (err, data) {
