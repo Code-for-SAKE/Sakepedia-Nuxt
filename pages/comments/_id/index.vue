@@ -98,10 +98,11 @@ export default {
           .delete('/api/comments/' + this.$route.params.id)
           .then((response) => {
             if (response.data._id) {
-              this.$router.push({
-                name: 'comments',
-                params: { deleted: 'yes' },
+              this.$store.dispatch('flash/show', {
+                text: '削除しました',
+                mode: 'alert-info',
               });
+              this.$router.push({ name: 'comments' });
             }
           })
           .catch((error) => {

@@ -108,7 +108,11 @@ export default {
           .delete('/api/brands/' + this.$route.params.id)
           .then((response) => {
             if (response.data._id) {
-              this.$router.push({ name: 'brands', params: { deleted: 'yes' } });
+              this.$store.dispatch('flash/show', {
+                text: '削除しました',
+                mode: 'alert-info',
+              });
+              this.$router.push({ name: 'brands' });
             }
           })
           .catch((error) => {

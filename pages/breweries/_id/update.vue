@@ -524,6 +524,10 @@ export default {
           console.log(response);
 
           if (response.data._id) {
+            this.$store.dispatch('flash/show', {
+              text: '更新しました',
+              mode: 'alert-success',
+            });
             this.$router.push({
               name: 'breweries-id',
               params: { id: this.$route.params.id },

@@ -124,7 +124,7 @@ export default {
             });
             this.$router.push({
               name: 'comments-id',
-              params: { updated: 'yes', id: this.$route.params.id },
+              params: { id: this.$route.params.id },
             });
           }
         })

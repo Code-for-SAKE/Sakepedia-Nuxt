@@ -300,7 +300,14 @@ export default {
         })
         .then((response) => {
           if (response.data._id) {
-            this.$router.push({ name: 'bydatas', params: { created: 'yes' } });
+            this.$store.dispatch('flash/show', {
+              text: '追加しました',
+              mode: 'alert-success',
+            });
+            this.$router.push({
+              name: 'bydatas-id',
+              params: { id: response.data._id },
+            });
           }
         })
         .catch((error) => {
