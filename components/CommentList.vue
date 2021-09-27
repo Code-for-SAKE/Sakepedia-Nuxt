@@ -33,6 +33,10 @@ export default {
       type: String,
       default: '',
     },
+    userId: {
+      type: String,
+      default: '',
+    },
   },
   async asyncData(context) {
     const { list, currentPage, count } = await getList('comments', {}, context);
@@ -61,6 +65,7 @@ export default {
         sake: this.sake,
         brand: this.brand,
         brewery: this.brewery,
+        userId: this.userId,
         page: this.page,
         limit: this.limit,
       });

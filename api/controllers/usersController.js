@@ -1,4 +1,8 @@
 const User = require('../models/User');
+const Brewery = require('../models/Brewery');
+const Brand = require('../models/Brand');
+const Sake = require('../models/Sake');
+const Comment = require('../models/Comment');
 
 module.exports.create = function (type, identity, avatarUrl, username = null) {
   const user = new User({
@@ -35,4 +39,19 @@ module.exports.update = async function (req, res) {
 module.exports.show = async function (req, res) {
   const user = await User.findOne({ _id: req.params.id });
   return res.json({ name: user.name });
+};
+
+module.exports.contribute = async function (req, res) {
+  const brewery = await Brewery.count({ userId: req.params.id });
+  const brand = await Brand.count({ userId: req.params.id });
+  const sake = await Sake.count({ userId: req.params.id });
+  const comment = await Comment.count({ userId: req.params.id });
+  return res.json({
+    contribute: {
+      brewery: brewery,
+      brand: brand,
+      sake: sake,
+      comment: comment,
+    },
+  });
 };

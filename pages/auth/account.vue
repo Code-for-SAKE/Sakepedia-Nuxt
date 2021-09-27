@@ -8,12 +8,11 @@
       <div class="card">
         <div class="card-body">
           <h4 class="text-center">
-            <img :src="$store.state.user.avatarUrl" width="72" class="pr-2" />{{
-              $store.state.user.name
-            }}
+            <img :src="$store.state.user.avatarUrl" width="72" class="pr-2" />
+            <p>{{ $store.state.user.name }}</p>
           </h4>
           <div class="username form-group">
-            <label for="">名前</label>
+            <label for="name">新しい名前</label>
             <input
               id="name"
               v-model="name"
@@ -26,7 +25,7 @@
               {{ errorMessage }}
             </div>
           </div>
-          <b-button variant="light" @click="save">保存</b-button>
+          <b-button variant="light" @click="save">更新</b-button>
         </div>
         <div class="card-footer">
           <b-button to="/auth/logout" variant="danger">Logout</b-button>
