@@ -31,6 +31,7 @@ const sakes = require('./routes/sakes');
 const bydatas = require('./routes/bydatas');
 const comments = require('./routes/comments');
 const users = require('./routes/users');
+const analytics = require('./routes/analytics');
 
 //Authenticate
 app.use(auth);
@@ -44,6 +45,7 @@ app.use(sakes);
 app.use(bydatas);
 app.use(comments);
 app.use(users);
+app.use(analytics);
 
 // Export the server middleware
 module.exports = {
