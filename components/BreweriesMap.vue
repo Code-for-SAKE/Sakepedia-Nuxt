@@ -39,7 +39,7 @@ export default {
     return {
       center: [35.999887, 138.75],
       zoom: 4,
-      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
       cluster_options: {
         showCoverageOnHover: false,
         maxClusterRadius: 80,
