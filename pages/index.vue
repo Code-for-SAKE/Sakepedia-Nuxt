@@ -39,6 +39,61 @@
         </div>
       </div>
     </div>
+    <h2>登録状況</h2>
+    <div class="row">
+      <div class="col-sm-4 my-1">
+        <div class="card">
+          <div class="card-header">酒蔵数</div>
+          <div class="card-body">
+            <p id="summary-brewery" class="summary text-center">
+              {{ summary.brewery }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 my-1">
+        <div class="card">
+          <div class="card-header">銘柄数</div>
+          <div class="card-body text-center">
+            <p id="summary-brand" class="summary text-center">
+              {{ summary.brand }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 my-1">
+        <div class="card">
+          <div class="card-header">日本酒数</div>
+          <div class="card-body text-center">
+            <p id="summary-sake" class="summary text-center">
+              {{ summary.sake }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 my-1">
+        <div class="card">
+          <div class="card-header">ユーザー数</div>
+          <div class="card-body">
+            <p id="summary-user" class="summary text-center">
+              {{ summary.user }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 my-1">
+        <div class="card">
+          <div class="card-header">投稿数</div>
+          <div class="card-body text-center">
+            <p id="summary-comment" class="summary text-center">
+              {{ summary.comment }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -53,9 +108,14 @@ export default {
   data() {
     return {
       isVertical: false,
+      summary: {},
     };
   },
-  mounted() {
+  async mounted() {
+    const response = await this.$axios.get(`/api/analytics/summary`);
+    if (response) {
+      this.summary = response.data.summary;
+    }
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
   },
@@ -82,5 +142,8 @@ export default {
 }
 .map-tab {
   min-height: 4.5rem;
+}
+.summary {
+  font-size: 2rem;
 }
 </style>
