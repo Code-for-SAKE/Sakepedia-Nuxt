@@ -49,6 +49,9 @@
                 ></b-img>
               </template>
               <b-dropdown-item to="/auth/account">アカウント</b-dropdown-item>
+              <b-dropdown-item to="/user/contribute"
+                >あなたの貢献</b-dropdown-item
+              >
               <b-dropdown-item to="/auth/logout">ログアウト</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>

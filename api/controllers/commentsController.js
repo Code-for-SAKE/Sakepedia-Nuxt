@@ -12,7 +12,7 @@ module.exports.all = function (req, res, next) {
   var brewery = req.query.brewery;
   var brand = req.query.brand;
   var sake = req.query.sake;
-  var userId = req.query.user;
+  var userId = req.query.userId;
   var search = {};
 
   if (brewery) {
@@ -25,7 +25,7 @@ module.exports.all = function (req, res, next) {
     search.sake = sake;
   }
   if (userId) {
-    search.userId = user;
+    search.userId = userId;
   }
   if (keyword) {
     search.$or = [
