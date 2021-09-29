@@ -5,12 +5,24 @@ const Sake = require('../models/Sake');
 const Comment = require('../models/Comment');
 
 module.exports.create = function (type, identity, avatarUrl, username = null) {
-  const user = new User({
-    type: type,
-    identity: identity,
-    avatarUrl: avatarUrl,
-    gitUsername: username,
-  });
+  var user;
+  if (type == 'git') {
+    user = new User({
+      type: type,
+      identity: identity,
+      avatarUrl: avatarUrl,
+      gitUsername: username,
+      name: username,
+    });
+  } else if (type == 'google') {
+    user = new User({
+      type: type,
+      identity: identity,
+      avatarUrl: avatarUrl,
+      googleUsername: username,
+      name: username,
+    });
+  }
   user.save(function (err, user) {
     if (err) {
       return err;

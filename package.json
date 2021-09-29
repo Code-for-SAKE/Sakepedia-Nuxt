@@ -36,6 +36,7 @@
     "nuxt-leaflet": "^0.0.25",
     "passport": "^0.4.1",
     "passport-github": "^1.1.0",
+    "passport-google-oauth2": "^0.2.0",
     "popper.js": "^1.16.1",
     "sass-loader": "10.1.1",
     "semantic-ui-css": "^2.4.1",

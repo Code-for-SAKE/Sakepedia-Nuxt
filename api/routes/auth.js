@@ -1,5 +1,6 @@
 import passport from 'passport';
-import { Strategy } from 'passport-github';
+var GitHubStrategy = require('passport-github').Strategy;
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
 const User = require('../models/User');
 const usersController = require('../controllers/usersController');
 
@@ -12,30 +13,68 @@ const router = Router();
 router.use(passport.initialize());
 router.use(passport.session());
 
-passport.use(
-  new Strategy(
-    {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      const user = await User.findOne({ type: 'git', identity: profile.id });
-      if (user === null) {
-        usersController.create(
-          'git',
-          profile.id,
-          profile.photos[0].value,
-          profile.username
-        );
+if (
+  'GITHUB_CLIENT_ID' in process.env &&
+  'GITHUB_CLIENT_SECRET' in process.env
+) {
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        const user = await User.findOne({ type: 'git', identity: profile.id });
+        if (user === null) {
+          usersController.create(
+            'git',
+            profile.id,
+            profile.photos[0].value,
+            profile.username
+          );
+        }
+        const currentUser = await User.findOne({
+          type: 'git',
+          identity: profile.id,
+        });
+        return done(null, currentUser);
       }
-      const currentUser = await User.findOne({
-        type: 'git',
-        identity: profile.id,
-      });
-      return done(null, currentUser);
-    }
-  )
-);
+    )
+  );
+}
+if (
+  'GOOGLE_CLIENT_ID' in process.env &&
+  'GOOGLE_CLIENT_SECRET' in process.env
+) {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: '/auth/google/callback',
+      },
+      async (request, accessToken, refreshToken, profile, done) => {
+        const user = await User.findOne({
+          type: 'google',
+          identity: profile.id,
+        });
+        if (user === null) {
+          usersController.create(
+            'google',
+            profile.id,
+            profile.picture,
+            profile.displayName
+          );
+        }
+        const currentUser = await User.findOne({
+          type: 'google',
+          identity: profile.id,
+        });
+        return done(null, currentUser);
+      }
+    )
+  );
+}
 
 passport.serializeUser((currentUser, done) => {
   done(null, {
@@ -53,12 +92,32 @@ router.get('/session', (req, res) => {
 });
 
 router.get(
-  '/auth/login',
+  '/auth/github',
   passport.authenticate('github', { scope: ['user:email'] })
 );
-router.get('/auth/callback', passport.authenticate('github'), (req, res) => {
-  res.json({ user: req.user });
-});
+router.get(
+  '/auth/github/callback',
+  passport.authenticate('github'),
+  (req, res) => {
+    res.json({ user: req.user });
+  }
+);
+
+router.get(
+  '/auth/google',
+  passport.authenticate('google', {
+    scope: ['email', 'profile'],
+  })
+);
+
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google'),
+  (req, res) => {
+    res.json({ user: req.user });
+  }
+);
+
 router.get('/auth/logout', (req, res) => {
   req.logout();
   res.json({});

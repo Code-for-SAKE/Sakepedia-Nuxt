@@ -10,7 +10,7 @@ export default {
     };
   },
   async mounted() {
-    const res = await this.$axios.get('/api/auth/callback', {
+    const res = await this.$axios.get('/api/auth/github/callback', {
       params: this.$route.query,
     });
     const user = {
