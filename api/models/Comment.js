@@ -8,6 +8,7 @@ const Comment = new Schema({
   brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
   brewery: { type: Schema.Types.ObjectId, ref: 'Brewery' },
   sake: { type: Schema.Types.ObjectId, ref: 'Sake' },
+  mariages: { type: [String] },
   createdAt: { type: Date },
   modifiedAt: { type: Date },
   author: { type: String },

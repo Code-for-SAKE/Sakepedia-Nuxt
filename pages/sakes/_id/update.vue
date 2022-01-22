@@ -65,6 +65,14 @@
           </div>
 
           <div class="form-group">
+            <label for="">合うおつまみ</label>
+            <mariage-select v-model="sake.mariages" />
+            <div v-if="errors && errors.mariages" class="invalid-feedback">
+              {{ errors.mariages.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">説明</label>
             <textarea
               v-model="sake.escription"
@@ -104,11 +112,13 @@
 import BrandSelect from '@/components/BrandSelect.vue';
 import BrewerySelect from '@/components/BrewerySelect.vue';
 import TagSelect from '@/components/TagSelect.vue';
+import MariageSelect from '@/components/MariageSelect.vue';
 export default {
   components: {
     BrandSelect,
     BrewerySelect,
     TagSelect,
+    MariageSelect,
   },
   middleware: ['authenticated'],
 

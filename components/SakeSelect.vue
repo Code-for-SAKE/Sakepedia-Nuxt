@@ -25,11 +25,11 @@ export default {
   props: {
     id: {
       type: String,
-      default: '',
+      default: null,
     },
     name: {
       type: String,
-      default: '',
+      default: null,
     },
     optionValue: {
       type: String,
@@ -44,8 +44,8 @@ export default {
       default: '日本酒',
     },
     value: {
-      type: String,
-      default: '',
+      type: [Object, String],
+      default: () => {},
     },
   },
   data() {

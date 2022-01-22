@@ -32,6 +32,18 @@
           >
         </h3>
       </dd>
+      <dt>合うおつまみ</dt>
+      <dd>
+        <h3>
+          <nuxt-link
+            v-for="mariages in sake.mariages"
+            :key="mariages"
+            :to="'/sakes?type=' + mariages"
+            class="badge badge-pill badge-primary p-2 m-1"
+            >{{ mariages }}</nuxt-link
+          >
+        </h3>
+      </dd>
       <dt>説明</dt>
       <dd>{{ sake.description }}</dd>
       <dt>URL</dt>
