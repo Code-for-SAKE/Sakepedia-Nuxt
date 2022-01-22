@@ -25,11 +25,11 @@ export default {
   props: {
     id: {
       type: String,
-      default: '',
+      default: null,
     },
     name: {
       type: String,
-      default: '',
+      default: null,
     },
     optionValue: {
       type: String,

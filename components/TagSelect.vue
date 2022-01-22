@@ -12,11 +12,11 @@ export default {
   props: {
     id: {
       type: String,
-      default: '',
+      default: null,
     },
     name: {
       type: String,
-      default: '',
+      default: null,
     },
     optionList: {
       type: Array,
@@ -38,8 +38,8 @@ export default {
       },
     },
     value: {
-      type: String,
-      default: '',
+      type: Array,
+      default: null,
     },
   },
   computed: {

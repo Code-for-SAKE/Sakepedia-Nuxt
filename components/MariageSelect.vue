@@ -25,7 +25,7 @@ export default {
       },
     },
     value: {
-      type: String,
+      type: Array,
       default: null,
     },
   },
