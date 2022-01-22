@@ -8,8 +8,6 @@
       :src="comment.image"
       class="show_image"
     />
-    <p class="comment">{{ comment.comment }}</p>
-    <h6>By {{ author }}</h6>
     <dl>
       <dt>酒蔵</dt>
       <dd>
@@ -31,6 +29,22 @@
         <nuxt-link v-if="comment.sake" :to="'/sakes/' + comment.sake._id">
           {{ comment.sake.name }}
         </nuxt-link>
+      </dd>
+      <hr />
+      <p class="comment">{{ comment.comment }}</p>
+      <h6>By {{ author }}</h6>
+      <hr />
+      <dt>合うおつまみ</dt>
+      <dd>
+        <h5>
+          <nuxt-link
+            v-for="mariages in comment.mariages"
+            :key="mariages"
+            :to="'/sakes?type=' + mariages"
+            class="badge badge-pill badge-small badge-primary p-2 m-1"
+            >{{ mariages }}</nuxt-link
+          >
+        </h5>
       </dd>
     </dl>
 

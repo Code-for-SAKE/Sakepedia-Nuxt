@@ -7,30 +7,6 @@
       <div class="col-md-6">
         <form action="" method="post" @submit.prevent="submitForm()">
           <div class="form-group">
-            <label for="">コメント</label>
-            <flex-textarea
-              v-model="comment"
-              inner-class="form-control"
-              :class="{ 'is-invalid': errors && errors.comment }"
-            />
-            <div v-if="errors && errors.comment" class="invalid-feedback">
-              {{ errors.comment.msg }}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="">画像</label>
-            <image-uploader
-              v-model="image"
-              :params="{ limit: 100, unit: 'mb', allow: 'jpg,png' }"
-            />
-            <b-img v-show="image" class="show_image mt-3" :src="image" />
-            <div v-if="errors && errors.image" class="invalid-feedback">
-              {{ errors.image.msg }}
-            </div>
-          </div>
-
-          <div class="form-group">
             <label for="">酒蔵</label>
             <brewery-select
               ref="brewery_search"
@@ -66,6 +42,42 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label for="">コメント</label>
+            <flex-textarea
+              v-model="comment"
+              inner-class="form-control"
+              :class="{ 'is-invalid': errors && errors.comment }"
+            />
+            <div v-if="errors && errors.comment" class="invalid-feedback">
+              {{ errors.comment.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">画像</label>
+            <image-uploader
+              v-model="image"
+              :params="{ limit: 100, unit: 'mb', allow: 'jpg,png' }"
+            />
+            <b-img v-show="image" class="show_image mt-3" :src="image" />
+            <div v-if="errors && errors.image" class="invalid-feedback">
+              {{ errors.image.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">合うおつまみ</label>
+            <mariage-select
+              ref="mariage_search"
+              v-model="mariages"
+              :class="{ 'is-invalid': errors && errors.mariage }"
+            />
+            <div v-if="errors && errors.mariage" class="invalid-feedback">
+              {{ errors.mariage.msg }}
+            </div>
+          </div>
+
           <b-button variant="light" type="submit" class="mr-3">追加</b-button>
           <b-button to="/comments" class="mr-3">キャンセル</b-button>
         </form>
@@ -78,6 +90,7 @@
 import BrewerySelect from '@/components/BrewerySelect.vue';
 import BrandSelect from '@/components/BrandSelect.vue';
 import SakeSelect from '@/components/SakeSelect.vue';
+import MariageSelect from '@/components/MariageSelect.vue';
 import ImageUploader from '@/components/ImageUploader.vue';
 import FlexTextarea from '@/components/FlexTextarea.vue';
 export default {
@@ -85,6 +98,7 @@ export default {
     BrewerySelect,
     BrandSelect,
     SakeSelect,
+    MariageSelect,
     ImageUploader,
     FlexTextarea,
   },
@@ -127,6 +141,7 @@ export default {
       brand: null,
       brewery: null,
       sake: null,
+      mariages: null,
     };
   },
   methods: {
@@ -138,6 +153,7 @@ export default {
           brand: this.brand,
           brewery: this.brewery,
           sake: this.sake,
+          mariages: this.mariages,
         })
         .then((response) => {
           if (response.data._id) {
@@ -148,7 +164,8 @@ export default {
             this.$router.push({
               name: 'comments-id',
               params: { id: response.data._id },
-            });          }
+            });
+          }
         })
         .catch((error) => {
           console.log(error);

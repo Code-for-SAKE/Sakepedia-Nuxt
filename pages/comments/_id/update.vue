@@ -7,34 +7,6 @@
       <div class="col-md-6">
         <form action="" method="post" @submit.prevent="submitForm()">
           <div class="form-group">
-            <label for="">コメント</label>
-            <flex-textarea
-              v-model="comment.comment"
-              inner-class="form-control"
-              :class="{ 'is-invalid': errors && errors.comment }"
-            />
-            <div v-if="errors && errors.comment" class="invalid-feedback">
-              {{ errors.comment.msg }}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="">画像</label>
-            <image-uploader
-              v-model="comment.image"
-              :params="{ limit: 100, unit: 'mb', allow: 'jpg,png' }"
-            />
-            <b-img
-              v-show="comment.image"
-              class="show_image mt-3"
-              :src="comment.image"
-            />
-            <div v-if="errors && errors.image" class="invalid-feedback">
-              {{ errors.image.msg }}
-            </div>
-          </div>
-
-          <div class="form-group">
             <label for="">酒蔵</label>
             <brewery-select
               ref="brewery_search"
@@ -70,6 +42,46 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label for="">コメント</label>
+            <flex-textarea
+              v-model="comment.comment"
+              inner-class="form-control"
+              :class="{ 'is-invalid': errors && errors.comment }"
+            />
+            <div v-if="errors && errors.comment" class="invalid-feedback">
+              {{ errors.comment.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">画像</label>
+            <image-uploader
+              v-model="comment.image"
+              :params="{ limit: 100, unit: 'mb', allow: 'jpg,png' }"
+            />
+            <b-img
+              v-show="comment.image"
+              class="show_image mt-3"
+              :src="comment.image"
+            />
+            <div v-if="errors && errors.image" class="invalid-feedback">
+              {{ errors.image.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">合うおつまみ</label>
+            <mariage-select
+              ref="mariage_search"
+              v-model="comment.mariages"
+              :class="{ 'is-invalid': errors && errors.mariages }"
+            />
+            <div v-if="errors && errors.mariages" class="invalid-feedback">
+              {{ errors.mariages.msg }}
+            </div>
+          </div>
+
           <b-button variant="light" type="submit" class="mr-3">更新</b-button>
           <b-button :to="'/comments/' + $route.params.id" class="mr-3"
             >キャンセル</b-button
@@ -84,6 +96,7 @@
 import BrandSelect from '@/components/BrandSelect.vue';
 import BrewerySelect from '@/components/BrewerySelect.vue';
 import SakeSelect from '@/components/SakeSelect.vue';
+import MariageSelect from '@/components/MariageSelect.vue';
 import ImageUploader from '@/components/ImageUploader.vue';
 import FlexTextarea from '@/components/FlexTextarea.vue';
 export default {
@@ -91,6 +104,7 @@ export default {
     BrandSelect,
     BrewerySelect,
     SakeSelect,
+    MariageSelect,
     ImageUploader,
     FlexTextarea,
   },

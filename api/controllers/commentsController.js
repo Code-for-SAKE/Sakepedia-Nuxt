@@ -96,6 +96,7 @@ module.exports.create = [
       brand: req.body.brand,
       brewery: req.body.brewery,
       sake: req.body.sake,
+      mariages: req.body.mariages,
       userId: req.user._id,
     });
 
@@ -152,6 +153,7 @@ module.exports.update = [
       data.brand = req.body.brand ? req.body.brand : data.brand;
       data.brewery = req.body.brewery ? req.body.brewery : data.brewery;
       data.sake = req.body.sake ? req.body.sake : data.sake;
+      data.mariages = req.body.mariages ? req.body.mariages : data.mariages;
 
       // save record
       data.save(function (err, data) {
