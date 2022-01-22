@@ -8,6 +8,7 @@ const Sake = new Schema({
   brewery: { type: Schema.Types.ObjectId, ref: 'Brewery' },
   subname: { type: String },
   type: { type: [String] },
+  mariages: { type: [String] },
   description: { type: String },
   url: { type: String },
   createdAt: { type: Date },

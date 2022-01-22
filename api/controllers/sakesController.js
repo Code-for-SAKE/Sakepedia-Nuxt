@@ -126,6 +126,7 @@ module.exports.create = [
       brand: req.body.brand,
       brewery: req.body.brewery,
       type: req.body.type,
+      mariages: req.body.mariages,
       description: req.body.description,
       url: req.body.url,
       userId: req.user._id,
@@ -187,6 +188,7 @@ module.exports.update = [
       sake.brewery = req.body.brewery ? req.body.brewery : sake.brewery;
       sake.subname = req.body.subname ? req.body.subname : sake.subname;
       sake.type = req.body.type ? req.body.type : sake.type;
+      sake.mariages = req.body.mariages ? req.body.mariages : sake.mariages;
       sake.description = req.body.description
         ? req.body.description
         : sake.description;
