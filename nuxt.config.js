@@ -85,6 +85,12 @@ module.exports = {
   },
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3030',
+    enableGithub:
+      typeof process.env.GITHUB_CLIENT_ID != 'undefined' &&
+      typeof process.env.GITHUB_CLIENT_SECRET != 'undefined',
+    enableGoogle:
+      typeof process.env.GOOGLE_CLIENT_ID != 'undefined' &&
+      typeof process.env.GOOGLE_CLIENT_SECRET != 'undefined',
   },
   serverMiddleware: ['~/api/index.js'],
 };

@@ -7,31 +7,36 @@
       <div class="col-12">
         <p>
           情報の追加、更新、削除にはログインが必要です。<br />
-          SakepediaはGitHubのアカウントでログインすることができます。<br />
+          SakepediaはGitHubかGoogleのアカウントでログインすることができます。<br />
           ユーザー名のみSakepediaのデータベースに残りますが、ログイン情報は残りません。
         </p>
-        <div class=""></div>
-        <div class="mx-auto w-25">
-          <b-button class="btn-lg mr-3 mx-auto" href="/api/auth/login">
-            GitHubでログイン
-          </b-button>
-        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div v-show="enableGithub" class="col-12 text-center">
+        <github-sign-in-button />
+      </div>
+      <div v-show="enableGoogle" class="col-12 text-center">
+        <google-sign-in-button />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import GithubSignInButton from '@/components/GithubSignInButton.vue';
+import GoogleSignInButton from '@/components/GoogleSignInButton.vue';
+
 export default {
-  methods: {
-    githublogin() {
-      this.$axios
-        .get('/api/auth/login')
-        .then((response) => {})
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+  components: {
+    GithubSignInButton,
+    GoogleSignInButton,
+  },
+  data() {
+    return {
+      enableGithub: process.env.enableGithub,
+      enableGoogle: process.env.enableGoogle,
+    };
   },
 };
 </script>
