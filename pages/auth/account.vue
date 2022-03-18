@@ -31,6 +31,19 @@
           <b-button to="/auth/logout" variant="danger">Logout</b-button>
         </div>
       </div>
+      <div class="card my-3">
+        <div class="card-body">
+          <p>
+            登録APIなどで利用できるJWTを発行できます。<br />ボタンを押せばクリップボードにコピーにされます。
+          </p>
+          <b-button variant="primary" @click="getJwt">JWT取得</b-button
+          ><span v-if="jwtExpires" class="mx-3">{{ jwtExpires }}まで有効</span>
+          <p v-if="jwToken" class="jwt alert alert-dark m-3">{{ jwToken }}</p>
+          <p v-if="jwToken">
+            利用方法の例: curl -H "authorization: Bearer [JWT]" [URL]
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +55,8 @@ export default {
     return {
       name: '',
       errorMessage: '',
+      jwToken: '',
+      jwtExpires: '',
     };
   },
   methods: {
@@ -56,6 +71,21 @@ export default {
           } else {
             this.errorMessage = '';
             this.$store.commit('login', res.data.user);
+          }
+        });
+    },
+    async getJwt() {
+      await this.$axios
+        .get(`api/users/${this.$store.state.user._id}/jwt`)
+        .then((res) => {
+          if (res.data.error) {
+            this.jwToken = res.data.error;
+          } else {
+            this.jwToken = res.data.jwt;
+            this.jwtExpires = this.$moment(res.data.expiresIn).format(
+              'YYYY-MM-DD H:m:s'
+            );
+            this.$copyText(res.data.jwt);
           }
         });
     },

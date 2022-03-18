@@ -50,6 +50,7 @@ module.exports = {
     '@nuxtjs/axios',
     'semantic-ui-vue/nuxt',
     'nuxt-leaflet',
+    'nuxt-clipboard2',
   ],
 
   /*
