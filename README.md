@@ -41,6 +41,7 @@ GITHUB_CLIENT_ID=GitHub OAuth AppのClient ID
 GITHUB_CLIENT_SECRET=GitHub OAuth AppのClient Secret
 BASE_URL=動作させるURL(なければhttp://localhost:3030)
 MONGO_CONNECT=MONGODBの接続文字列
+JWT_SECRET＝JWTを生成するためのSecret
 
 # serve with hot reload at localhost:3030
 $ yarn dev
