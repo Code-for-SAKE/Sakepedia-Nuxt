@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 const User = require('../models/User');
 const Brewery = require('../models/Brewery');
 const Brand = require('../models/Brand');
@@ -39,6 +41,15 @@ module.exports.update = async function (req, res) {
 module.exports.show = async function (req, res) {
   const user = await User.findOne({ _id: req.params.id });
   return res.json({ name: user.name });
+};
+
+module.exports.jwt = async function (req, res) {
+  const jwtoken = jwt.sign({ sub: req.user._id }, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+  });
+  var dt = new Date();
+  dt.setHours(dt.getHours() + 1);
+  return res.json({ jwt: jwtoken, expiresIn: dt });
 };
 
 module.exports.contribute = async function (req, res) {
