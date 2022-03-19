@@ -44,7 +44,7 @@ module.exports.show = async function (req, res) {
 };
 
 module.exports.jwt = async function (req, res) {
-  const jwtoken = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, {
+  const jwtoken = jwt.sign({ sub: req.user._id }, process.env.JWT_SECRET, {
     expiresIn: '1h',
   });
   var dt = new Date();

@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
+const User = require('./models/User');
 
 const config = {};
 
 module.exports = config;
 
-module.exports.isAuthenticated = function (req, res, next) {
+module.exports.isAuthenticated = async function (req, res, next) {
   if (!req.user) {
     const authHeader = req.headers['authorization'];
     //HeaderにAuthorizationが定義されているか
@@ -16,6 +17,11 @@ module.exports.isAuthenticated = function (req, res, next) {
             authHeader.split(' ')[1],
             process.env.JWT_SECRET
           );
+          //ユーザー検索
+          const currentUser = await User.findOne({
+            _id: jwToken.sub,
+          });
+          req.user = currentUser;
         } catch (e) {
           console.log(e.message);
           return res.status(401).json({ error: e.message });
