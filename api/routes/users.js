@@ -6,8 +6,10 @@ const router = Router();
 // Initialize Controller
 const usersController = require('../controllers/usersController');
 
+
 // Update
-router.get('/users/:id/name', config.isAuthenticated, usersController.show);
+// issue148対応：getはログイン不要とする
+router.get('/users/:id/name', usersController.show);
 router.post('/users/:id/name', config.isAuthenticated, usersController.update);
 router.get('/users/:id/jwt', config.isAuthenticated, usersController.jwt);
 router.get(
