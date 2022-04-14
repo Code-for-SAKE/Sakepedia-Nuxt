@@ -5,29 +5,47 @@
       <b-button variant="success" to="/breweries/add">追加</b-button>
     </div>
     <hr />
-    <div class="col-md-8">
-      <div class="input-group mb-3">
-        <input
-          v-model="searchText"
-          type="text"
-          class="form-control"
-          @keypress.enter="
-            page = 1;
-            setHistories();
-            retrieves();
-          "
-        />
-        <div class="input-group-append">
-          <b-button
-            variant="secondary"
-            type="button"
-            @click="
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">都道府県</span>
+          </div>
+          <select v-model="prefecture" class="custom-select">
+            <option
+              v-for="(item, index) in prefectures"
+              :key="index"
+              :value="index"
+            >
+              {{ item }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="input-group mb-3">
+          <input
+            v-model="searchText"
+            type="text"
+            class="form-control"
+            @keypress.enter="
               page = 1;
               setHistories();
               retrieves();
             "
-            >検索</b-button
-          >
+          />
+          <div class="input-group-append">
+            <b-button
+              variant="secondary"
+              type="button"
+              @click="
+                page = 1;
+                setHistories();
+                retrieves();
+              "
+              >検索</b-button
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -63,6 +81,8 @@ export default {
   components: {},
   async asyncData(context) {
     const searchText = context.query.name != null ? context.query.name : '';
+    const prefecture =
+      context.query.prefecture != null ? context.query.prefecture : '';
     const limit = context.query.limit != null ? context.query.limit : 10;
     const page = context.query.page != null ? context.query.page : 1;
     const searchTypes = context.query.type != null ? context.query.type : '';
@@ -71,6 +91,7 @@ export default {
       'breweries',
       {
         searchName: searchText,
+        prefecture: prefecture,
         page: page,
         limit: limit,
         ...(typeQuery[0] === '' ? {} : { typeQuery: typeQuery }),
@@ -79,6 +100,7 @@ export default {
     );
     return {
       searchText: searchText,
+      prefecture: prefecture,
       searchTypes: searchTypes,
       breweries: list,
       page: currentPage,
@@ -92,6 +114,7 @@ export default {
       breweries: [],
       searchValue: null,
       searchText: '',
+      prefecture: '',
 
       page: 1,
       count: 0,
@@ -114,6 +137,7 @@ export default {
     async retrieves() {
       const { list, currentPage, count } = await getList('breweries', {
         searchName: this.searchText,
+        prefecture: this.prefecture,
         page: this.page,
         limit: this.limit,
       });
@@ -128,7 +152,7 @@ export default {
     },
     setHistories() {
       const url = window.location.href.replace(/\?.*$/, '');
-      const queries = `?name=${this.searchText}&type=${this.searchTypes}&page=${this.page}&limit=${this.limit}`;
+      const queries = `?name=${this.searchText}&prefecture=${this.prefecture}&type=${this.searchTypes}&page=${this.page}&limit=${this.limit}`;
       window.history.pushState(null, null, `${url}${queries}`);
     },
   },
