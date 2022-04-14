@@ -140,19 +140,20 @@ export default {
     const { data } = await context.$axios.get(
       '/api/breweries/' + context.route.params.id
     );
-    const author = data.author;
-    if (author) {
+    // issue148対応：userIdを優先
+    const userId = data.userId;
+    if (userId) {
+      const response = await context.$axios.get(`/api/users/${userId}/name`);
       return {
         brewery: data,
-        author: author,
+        author: response.data.name,
       };
     } else {
-      const userId = data.userId;
-      if (userId) {
-        const response = await context.$axios.get(`/api/users/${userId}/name`);
+      const author = data.author;
+      if (author) {
         return {
           brewery: data,
-          author: response.data.name,
+          author: author,
         };
       } else {
         return {
