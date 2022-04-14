@@ -7,14 +7,20 @@ const { normalize } = require('@geolonia/normalize-japanese-addresses');
 // Get all
 module.exports.all = function (req, res, next) {
   var keyword = req.query.keyword;
+  var prefecture = req.query.prefecture;
   var search = {};
   if (keyword) {
-    search = {
+    if (search.$and == undefined) search.$and = [];
+    search.$and.push({
       $or: [
         { name: new RegExp(keyword, 'i') },
         { kana: new RegExp(japanese.kanaToHira(keyword), 'i') },
       ],
-    };
+    });
+  }
+  if (prefecture && prefecture != 0) {
+    if (search.$and == undefined) search.$and = [];
+    search.$and.push({ prefecture: prefecture });
   }
   Brewery.paginate(
     search,
