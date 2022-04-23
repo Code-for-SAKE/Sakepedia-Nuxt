@@ -299,7 +299,7 @@ module.exports.update = [
         brewery.tasting = null;
       }
       if (req.body.hasCafe === true) {
-        brewery.cafe = req.body.tasting;
+        brewery.cafe = req.body.cafe;
       } else if (req.body.hasCafe === false) {
         brewery.cafe = null;
       }
