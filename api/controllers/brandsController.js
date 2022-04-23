@@ -86,14 +86,17 @@ module.exports.list = function (req, res, next) {
 module.exports.create = [
   // validations rules
   validator.body('name', '名前を入力してください').isLength({ min: 1 }),
-  validator.body('name').custom((value, { req }) => {
-    return Brand.findOne({ name: value, _id: { $ne: req.params.id } }).then(
-      (data) => {
-        if (data !== null) {
-          return Promise.reject('すでに存在します');
-        }
+  //酒蔵ID+銘柄名でユニークにする。
+  validator.body(['name']).custom((value, { req }) => {
+    return Brand.findOne({
+      name: value,
+      _id: { $ne: req.params.id },
+      brewery: req.body.brewery,
+    }).then((data) => {
+      if (data !== null) {
+        return Promise.reject('すでに存在します');
       }
-    );
+    });
   }),
   validator.body('brewery', '酒蔵を入力してください').isLength({ min: 1 }),
 
