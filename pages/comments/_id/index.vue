@@ -46,6 +46,8 @@
           >
         </h5>
       </dd>
+      <dt>作成日</dt>
+      <dd>{{ comment.createdAt | datetime }}</dd>
     </dl>
 
     <hr />

@@ -85,6 +85,8 @@
       <dd>
         <p v-if="brewery.endYear">{{ brewery.endYear }}年</p>
       </dd>
+      <dt>更新日</dt>
+      <dd>{{ brewery.updatedAt | datetime }}</dd>
     </dl>
 
     <div class="d-flex justify-content-between">
