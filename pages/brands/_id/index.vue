@@ -18,6 +18,8 @@
       <dd>{{ brand.logo }}</dd>
       <dt>こだわり</dt>
       <dd>{{ brand.description }}</dd>
+      <dt>更新日</dt>
+      <dd>{{ brewery.updatedAt | datetime }}</dd>
     </dl>
 
     <hr />

@@ -26,6 +26,8 @@
       <dd>{{ bydata.sakeRiceExceptForKojiMaking }}</dd>
       <dt>製造年月(日)</dt>
       <dd>{{ bydata.bottledDate | date }}</dd>
+      <dt>更新日</dt>
+      <dd>{{ bydata.updatedAt | datetime }}</dd>
     </dl>
 
     <hr />

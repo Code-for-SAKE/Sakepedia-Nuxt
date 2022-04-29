@@ -50,6 +50,8 @@
       <dd>
         <a v-if="sake.url" :href="sake.url">{{ sake.url }}</a>
       </dd>
+      <dt>更新日</dt>
+      <dd>{{ sake.updatedAt | datetime }}</dd>
     </dl>
 
     <hr />
