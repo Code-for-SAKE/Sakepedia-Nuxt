@@ -20,7 +20,7 @@ module.exports.all = function (req, res, next) {
       page: req.query.page,
       limit: req.query.limit,
       populate: refSake,
-      sort: { makedBY: -1, modifiedAt: -1 },
+      sort: { makedBY: -1, updatedAt: -1 },
     },
     async function (err, result) {
       if (err) {
@@ -119,8 +119,6 @@ module.exports.create = [
       riceForMakingKoji: req.body.riceForMakingKoji,
       sakeRiceExceptForKojiMaking: req.body.sakeRiceExceptForKojiMaking,
       bottledDate: req.body.bottledDate,
-      createdAt: new Date(),
-      modifiedAt: new Date(),
       userId: req.user._id,
     });
 
@@ -203,7 +201,6 @@ module.exports.update = [
       bydata.bottledDate = req.body.bottledDate
         ? req.body.bottledDate
         : bydata.bottledDate;
-      bydata.modifiedAt = new Date();
       bydata.userId = req.user._id;
 
       // save record
