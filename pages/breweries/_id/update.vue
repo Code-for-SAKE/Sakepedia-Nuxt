@@ -50,6 +50,27 @@
           </div>
 
           <div class="form-group">
+            <label for="">住所</label>
+            <input
+              v-model="address"
+              type="text"
+              class="form-control"
+              :class="{ 'is-invalid': errors && errors.address }"
+            />
+            <small
+              >都道府県、緯度経度は住所から自動的に登録されます。
+              <a href="https://geolonia.com/">Geolonia</a>の<a
+                href="https://github.com/geolonia/normalize-japanese-addresses"
+                >住所正規化ライブラリ</a
+              >を利用しています。<br />
+              正確な緯度経度がわかる場合は入力してください。
+            </small>
+            <div v-if="errors && errors.address" class="invalid-feedback">
+              {{ errors.address.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">都道府県</label>
             <select
               v-model="prefecture"
@@ -66,27 +87,6 @@
             </select>
             <div v-if="errors && errors.prefecture" class="invalid-feedback">
               {{ errors.prefecture.msg }}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="">住所</label>
-            <input
-              v-model="address"
-              type="text"
-              class="form-control"
-              :class="{ 'is-invalid': errors && errors.address }"
-            />
-            <small
-              >緯度経度は住所から自動的に登録されます。
-              <a href="https://geolonia.com/">Geolonia</a>の<a
-                href="https://github.com/geolonia/normalize-japanese-addresses"
-                >住所正規化ライブラリ</a
-              >を利用しています。<br />
-              正確な緯度経度がわかる場合は入力してください。
-            </small>
-            <div v-if="errors && errors.address" class="invalid-feedback">
-              {{ errors.address.msg }}
             </div>
           </div>
 
