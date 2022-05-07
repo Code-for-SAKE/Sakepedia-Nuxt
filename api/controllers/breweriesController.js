@@ -2,6 +2,7 @@ const Brewery = require('../models/Brewery');
 const validator = require('express-validator');
 const paginate = require('express-paginate');
 const japanese = require('../../utils/japanese');
+const prefectures = require('../../utils/prefectures');
 const { normalize } = require('@geolonia/normalize-japanese-addresses');
 
 // Get all
@@ -187,10 +188,21 @@ module.exports.create = [
       try {
         normalize(brewery.address)
           .then((result) => {
-            brewery.latitude = result.lat;
-            brewery.longitude = result.lng;
-            brewery.location = [result.lng, result.lat];
-            brewery.createIndex({ location: '2dsphere' });
+            //都道府県入力
+            var prefId = prefectures.prefectures.indexOf(result.pref);
+            if (result.level > 1 && prefId != -1) {
+              brewery.prefecture = prefId;
+            }
+            //緯度経度入力
+            if (
+              result.level >= 3 &&
+              (req.body.latitude === null || req.body.longitude === null)
+            ) {
+              brewery.latitude = result.lat;
+              brewery.longitude = result.lng;
+              brewery.location = [result.lng, result.lat];
+              brewery.createIndex({ location: '2dsphere' });
+            }
             saveBrewery(brewery, res);
           })
           .catch((e) => {
@@ -320,17 +332,25 @@ module.exports.update = [
       brewery.userId = req.user._id;
 
       // update geocode from address when geocode is null
-      if (
-        req.body.address != null &&
-        (req.body.latitude === null || req.body.longitude === null)
-      ) {
+      if (req.body.address != null) {
         try {
           normalize(brewery.address)
             .then((result) => {
-              brewery.latitude = result.lat;
-              brewery.longitude = result.lng;
-              brewery.location = [result.lng, result.lat];
-              brewery.createIndex({ location: '2dsphere' });
+              //都道府県入力
+              var prefId = prefectures.prefectures.indexOf(result.pref);
+              if (result.level > 1 && prefId != -1) {
+                brewery.prefecture = prefId;
+              }
+              //緯度経度入力
+              if (
+                result.level >= 3 &&
+                (req.body.latitude === null || req.body.longitude === null)
+              ) {
+                brewery.latitude = result.lat;
+                brewery.longitude = result.lng;
+                brewery.location = [result.lng, result.lat];
+                brewery.createIndex({ location: '2dsphere' });
+              }
               saveBrewery(brewery, res);
             })
             .catch((e) => {
