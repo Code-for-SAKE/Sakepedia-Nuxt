@@ -75,7 +75,7 @@
           <div class="form-group">
             <label for="">説明</label>
             <textarea
-              v-model="sake.escription"
+              v-model="sake.description"
               type="text"
               class="form-control"
               :class="{ 'is-invalid': errors && errors.description }"
