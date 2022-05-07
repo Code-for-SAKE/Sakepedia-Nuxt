@@ -4,7 +4,11 @@
 
     <hr />
 
-    <h2>{{ bydata.sake ? bydata.sake.name : '' }}</h2>
+    <h2>
+      <nuxt-link v-if="bydata.sake" :to="'/sakes/' + bydata.sake._id">
+        {{ bydata.sake.name }}
+      </nuxt-link>
+    </h2>
     <h4>{{ bydata.makedBY }}年</h4>
     <h6>By {{ author }}</h6>
     <dl>
