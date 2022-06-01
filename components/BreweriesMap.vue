@@ -13,7 +13,11 @@
             :key="index"
             :lat-lng="point"
           >
-            <l-popup :content="`${point.name}`"></l-popup>
+            <l-popup>
+              <nuxt-link :to="'/breweries/' + point._id">
+                {{ point.name }}
+              </nuxt-link>
+            </l-popup>
           </l-marker>
         </v-marker-cluster>
         <l-control position="bottomleft">
