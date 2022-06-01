@@ -22,6 +22,7 @@
           class="form-control"
           @keypress.enter="
             page = 1;
+            setHistories();
             retrieves();
           "
         />
@@ -31,6 +32,7 @@
             type="button"
             @click="
               page = 1;
+              setHistories();
               retrieves();
             "
             >検索</b-button
@@ -66,8 +68,29 @@ export default {
     ImageList,
   },
   async asyncData(context) {
-    const { list, currentPage, count } = await getList('comments', {}, context);
+    const keyword = context.query.keyword != null ? context.query.keyword : '';
+    const brewery = context.query.brewery != null ? context.query.brewery : '';
+    const brand = context.query.brand != null ? context.query.brand : '';
+    const sake = context.query.sake != null ? context.query.sake : '';
+    const limit = context.query.limit != null ? context.query.limit : 10;
+    const page = context.query.page != null ? context.query.page : 1;
+    const { list, currentPage, count } = await getList(
+      'comments',
+      {
+        keyword: keyword,
+        brewery: brewery,
+        brand: brand,
+        sake: sake,
+        page: page,
+        limit: limit,
+      },
+      context
+    );
     return {
+      keyword: keyword,
+      brewery: brewery,
+      brand: brand,
+      sake: sake,
       comments: list,
       page: currentPage,
       count: count,
@@ -86,7 +109,19 @@ export default {
     };
   },
   mounted() {
-    this.retrieves();
+    window.addEventListener('popstate', () => {
+      this.keyword =
+        this.$route.query.keyword != null ? this.$route.query.keyword : '';
+      this.brewery =
+        this.$route.query.brewery != null ? this.$route.query.brewery : '';
+      this.brand =
+        this.$route.query.brand != null ? this.$route.query.brand : '';
+      this.sake = this.$route.query.sake != null ? this.$route.query.sake : '';
+      this.limit =
+        this.$route.query.limit != null ? this.$route.query.limit : 10;
+      this.page = this.$route.query.page != null ? this.$route.query.page : 1;
+      this.retrieves();
+    });
   },
   methods: {
     async retrieves() {
@@ -104,7 +139,13 @@ export default {
     },
     handlePageChange(value) {
       this.page = value;
+      this.setHistories();
       this.retrieves();
+    },
+    setHistories() {
+      const url = window.location.href.replace(/\?.*$/, '');
+      const queries = `?keyword=${this.keyword}&page=${this.page}&limit=${this.limit}&brewery=${this.brewery}&brand=${this.brand}&sake=${this.sake}`;
+      window.history.pushState(null, null, `${url}${queries}`);
     },
   },
 };
