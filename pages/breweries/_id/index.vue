@@ -20,6 +20,13 @@
         <p v-if="brewery">{{ brewery.address }}</p>
         <p v-if="brewery">{{ brewery.latitude }}</p>
         <p v-if="brewery">{{ brewery.longitude }}</p>
+        <div
+          v-if="brewery && brewery.latitude && brewery.longitude"
+          class="map-wrap col-12 col-lg-6 m-3"
+        >
+          <brewery-map :brewery="brewery" />
+        </div>
+        <p v-else>位置情報がありません</p>
       </dd>
       <dt>Eメール</dt>
       <dd>
@@ -132,11 +139,14 @@
 const Prefectures = require('@/utils/prefectures');
 import BrandList from '@/components/BrandList.vue';
 import CommentList from '@/components/CommentList.vue';
+import BreweryMap from '@/components/BreweryMap.vue';
+import BreweriesMap from '../../../components/BreweriesMap.vue';
 
 export default {
   components: {
     BrandList,
     CommentList,
+    BreweryMap,
   },
   async asyncData(context) {
     const { data } = await context.$axios.get(
@@ -196,3 +206,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+.map-wrap {
+  height: 45vh;
+  width: 100%;
+  text-align: center;
+}
+</style>
