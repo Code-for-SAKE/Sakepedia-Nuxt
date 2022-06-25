@@ -267,17 +267,6 @@ module.exports.update = [
         });
       }
 
-      // console.log(
-      //   'req.body.fax',
-      //   req.body.fax !== undefined ? req.body.fax : 'req.body.fax undefined'
-      // );
-      // console.log(
-      //   'req.body.abcde',
-      //   req.body.abcde !== undefined
-      //     ? req.body.abcde
-      //     : 'req.body.abcde undefined'
-      // );
-
       // initialize record
       brewery.breweryId = req.body.breweryId
         ? req.body.breweryId
