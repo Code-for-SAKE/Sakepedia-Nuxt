@@ -186,13 +186,15 @@ module.exports.update = [
       sake.name = req.body.name ? req.body.name : sake.name;
       sake.brand = req.body.brand ? req.body.brand : sake.brand;
       sake.brewery = req.body.brewery ? req.body.brewery : sake.brewery;
-      sake.subname = req.body.subname ? req.body.subname : sake.subname;
+      sake.subname =
+        req.body.subname !== undefined ? req.body.subname : sake.subname;
       sake.type = req.body.type ? req.body.type : sake.type;
       sake.mariages = req.body.mariages ? req.body.mariages : sake.mariages;
-      sake.description = req.body.description
-        ? req.body.description
-        : sake.description;
-      sake.url = req.body.url ? req.body.url : sake.url;
+      sake.description =
+        req.body.description !== undefined
+          ? req.body.description
+          : sake.description;
+      sake.url = req.body.url !== undefined ? req.body.url : sake.url;
       sake.userId = req.user._id;
 
       // save record

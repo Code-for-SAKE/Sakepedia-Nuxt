@@ -2,7 +2,6 @@
   <div>
     <h1>銘柄 更新</h1>
     <hr />
-
     <div class="row">
       <div class="col-md-6">
         <form action="" method="post" @submit.prevent="submitForm()">

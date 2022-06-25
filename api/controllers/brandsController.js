@@ -169,11 +169,12 @@ module.exports.update = [
 
       // initialize record
       data.name = req.body.name ? req.body.name : data.name;
-      data.logo = req.body.logo ? req.body.logo : data.logo;
+      data.logo = req.body.logo !== undefined ? req.body.logo : data.logo;
       data.brewery = req.body.brewery ? req.body.brewery : data.brewery;
-      data.description = req.body.description
-        ? req.body.description
-        : data.description;
+      data.description =
+        req.body.description !== undefined
+          ? req.body.description
+          : data.description;
       data.userId = req.user._id;
 
       // save record
