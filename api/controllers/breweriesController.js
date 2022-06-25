@@ -267,6 +267,17 @@ module.exports.update = [
         });
       }
 
+      // console.log(
+      //   'req.body.fax',
+      //   req.body.fax !== undefined ? req.body.fax : 'req.body.fax undefined'
+      // );
+      // console.log(
+      //   'req.body.abcde',
+      //   req.body.abcde !== undefined
+      //     ? req.body.abcde
+      //     : 'req.body.abcde undefined'
+      // );
+
       // initialize record
       brewery.breweryId = req.body.breweryId
         ? req.body.breweryId
@@ -279,27 +290,29 @@ module.exports.update = [
         ? req.body.prefecture
         : brewery.prefecture;
       brewery.address = req.body.address ? req.body.address : brewery.address;
-      brewery.latitude = req.body.latitude
-        ? req.body.latitude
-        : brewery.latitude;
-      brewery.longitude = req.body.longitude
-        ? req.body.longitude
-        : brewery.longitude;
-      brewery.email = req.body.email ? req.body.email : brewery.email;
-      brewery.tel = req.body.tel ? req.body.tel : brewery.tel;
-      brewery.fax = req.body.fax ? req.body.fax : brewery.fax;
-      brewery.url = req.body.url ? req.body.url : brewery.url;
-      brewery.ecurl = req.body.ecurl ? req.body.ecurl : brewery.ecurl;
-      brewery.facebook = req.body.facebook
-        ? req.body.facebook
-        : brewery.facebook;
-      brewery.twitter = req.body.twitter ? req.body.twitter : brewery.twitter;
-      brewery.instagram = req.body.instagram
-        ? req.body.instagram
-        : brewery.instagram;
-      brewery.othersns = req.body.othersns
-        ? req.body.othersns
-        : brewery.othersns;
+      brewery.latitude =
+        req.body.latitude !== undefined ? req.body.latitude : brewery.latitude;
+      brewery.longitude =
+        req.body.longitude !== undefined
+          ? req.body.longitude
+          : brewery.longitude;
+      brewery.email =
+        req.body.email !== undefined ? req.body.email : brewery.email;
+      brewery.tel = req.body.tel !== undefined ? req.body.tel : brewery.tel;
+      brewery.fax = req.body.fax !== undefined ? req.body.fax : brewery.fax;
+      brewery.url = req.body.url !== undefined ? req.body.url : brewery.url;
+      brewery.ecurl =
+        req.body.ecurl !== undefined ? req.body.ecurl : brewery.ecurl;
+      brewery.facebook =
+        req.body.facebook !== undefined ? req.body.facebook : brewery.facebook;
+      brewery.twitter =
+        req.body.twitter !== undefined ? req.body.twitter : brewery.twitter;
+      brewery.instagram =
+        req.body.instagram !== undefined
+          ? req.body.instagram
+          : brewery.instagram;
+      brewery.othersns =
+        req.body.othersns !== undefined ? req.body.othersns : brewery.othersns;
       if (req.body.hasVisit === true) {
         brewery.visit = req.body.visit;
       } else if (req.body.hasVisit === false) {
@@ -325,10 +338,12 @@ module.exports.update = [
       } else if (req.body.hasOtherBrewing === false) {
         brewery.otherBrewing = null;
       }
-      brewery.startYear = req.body.startYear
-        ? req.body.startYear
-        : brewery.startYear;
-      brewery.endYear = req.body.endYear ? req.body.endYear : brewery.endYear;
+      brewery.startYear =
+        req.body.startYear !== undefined
+          ? req.body.startYear
+          : brewery.startYear;
+      brewery.endYear =
+        req.body.endYear !== undefined ? req.body.endYear : brewery.endYear;
       brewery.userId = req.user._id;
 
       // update geocode from address when geocode is null
