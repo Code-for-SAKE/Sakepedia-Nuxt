@@ -44,22 +44,45 @@ export default {
       default: '酒蔵',
     },
     value: {
-      type: [Object, String],
-      default: () => {},
+      // type: [Object, String],
+      // default: () => {},
+      type: String,
+      default: '',
     },
   },
   data() {
     return {
       searchedBreweries: [],
-      innerValue: this.value,
+      // innerValue: this.value, //computedに変更
       innerName: this.name,
     };
   },
+  // computedとすることにより、propsで受け取る、値を変えることが可能になる
+  computed: {
+    innerValue: {
+      get() {
+        if (this.value == null) {
+          return '';
+        } else {
+          if (typeof this.value === 'object') {
+            return this.value._id;
+          } else {
+            return this.value;
+          }
+        }
+      },
+      set(newVal) {
+        console.log('innerValue set', newVal);
+        this.$emit('input', newVal); // ここでinput は必要
+      },
+    },
+  },
   mounted() {
     //初期値の設定
-    if (this.value) {
+    if (this.innerValue != '') {
       this.$axios
-        .get('/api/breweries/' + this.value[this.optionValue])
+        // .get('/api/breweries/' + this.value[this.optionValue])
+        .get('/api/breweries/' + this.innerValue)
         .then((response) => {
           this.searchedBreweries = [response.data];
           this.innerName = response.data[this.optionText];
@@ -71,28 +94,39 @@ export default {
     }
   },
   methods: {
-    onInput(item) {
-      if (item) {
-        console.log('onInput item', item);
+    // https://github.com/moreta/vue-search-select/blob/master/src/lib/ModelListSelect.vue から移植
+    onInput(option) {
+      console.log('onInput', option);
+      if (option === undefined) {
+        return this.$emit('input', '');
+      }
+      if (Object.keys(option).length === 0 && option.constructor === Object) {
+        this.$emit('input', option);
+      } else if (typeof option === 'object') {
+        const item = this.searchedBreweries.find((e) => {
+          return e[this.optionValue] === option.value;
+        });
         this.$emit('input', item);
       } else {
-        console.log('onInput value', this.value);
-        this.$emit('input', this.value);
+        this.$emit('input', option);
       }
     },
     searchBreweries(searchText) {
-      if (searchText) {
-        console.log('searchBreweries searchText', searchText);
-        this.$emit('input', { name: searchText });
+      if (searchText != '') {
+        //   console.log('searchBreweries searchText', searchText);
         this.$axios
-          .get('/api/list/breweries', { params: { keyword: searchText } })
+          .get('/api/breweries', { params: { keyword: searchText } })
           .then((response) => {
-            this.searchedBreweries = response.data;
+            this.searchedBreweries = response.data.breweries;
           });
       } else {
-        this.innerValue = '';
         console.log('searchBreweries value', this.innerValue);
-        this.$emit('input', this.innerValue);
+        //   this.$emit('input', this.innerValue);
+        this.$axios
+          .get('/api/breweries/' + this.innerValue)
+          .then((response) => {
+            this.searchedBreweries = [response.data];
+          });
       }
     },
   },
