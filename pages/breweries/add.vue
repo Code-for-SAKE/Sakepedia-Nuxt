@@ -24,7 +24,7 @@
           </div>
 
           <div class="form-group">
-            <label for="">名前</label>
+            <label for="">名前 <small>*必須</small></label>
             <input
               v-model="name"
               type="text"
@@ -38,7 +38,7 @@
           </div>
 
           <div class="form-group">
-            <label for="">ふりがな</label>
+            <label for="">ふりがな <small>*必須</small></label>
             <input
               v-model="kana"
               type="text"
