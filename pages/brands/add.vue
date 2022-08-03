@@ -7,7 +7,7 @@
       <div class="col-md-6">
         <form action="" method="post" @submit.prevent="submitForm()">
           <div class="form-group">
-            <label for="">名前</label>
+            <label for="">名前 <small>*必須</small></label>
             <input
               v-model="name"
               type="text"
@@ -20,7 +20,7 @@
           </div>
 
           <div class="form-group">
-            <label for="">酒蔵</label>
+            <label for="">酒蔵 <small>*必須</small></label>
             <brewery-select
               v-model="brewery"
               :class="{ 'is-invalid': errors && errors.brewery }"
