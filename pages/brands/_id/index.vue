@@ -5,6 +5,8 @@
     <hr />
 
     <h2>{{ brand.name }}</h2>
+    <h6 v-if="brand.kana">{{ brand.kana }}</h6>
+    
     <h6>By {{ author }}</h6>
 
     <dl>

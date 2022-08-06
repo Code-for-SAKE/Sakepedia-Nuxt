@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const Sake = new Schema(
   {
     name: { type: String, required: true, index: { unique: true } },
+    kana: { type: String },
     brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
     brewery: { type: Schema.Types.ObjectId, ref: 'Brewery' },
     subname: { type: String },

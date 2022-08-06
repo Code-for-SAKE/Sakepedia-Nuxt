@@ -20,6 +20,19 @@
           </div>
 
           <div class="form-group">
+            <label for="">ふりがな</label>
+            <input
+              v-model="sake.kana"
+              type="text"
+              class="form-control"
+              :class="{ 'is-invalid': errors && errors.kana }"
+            />
+            <div v-if="errors && errors.kana" class="invalid-feedback">
+              {{ errors.kana.msg }}
+            </div>
+          </div>
+
+          <div class="form-group">
             <label for="">酒蔵</label>
             <brewery-select
               ref="brewery_search"

@@ -6,6 +6,8 @@
 
     <h2>{{ sake.name }}</h2>
     <h4>{{ sake.subname }}</h4>
+    <h6 v-if="sake.kana">{{ sake.kana }}</h6>
+    
     <h6>By {{ author }}</h6>
     <dl>
       <dt>酒蔵</dt>
