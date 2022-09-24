@@ -16,6 +16,7 @@ module.exports.create = async function (
     type: type,
     identity: identity,
     avatarUrl: avatarUrl,
+    name: username,
     gitUsername: username,
   });
   const saved = await user.save();
