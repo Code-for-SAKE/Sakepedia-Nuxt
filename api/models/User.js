@@ -22,6 +22,9 @@ const User = new Schema(
     gitUsername: {
       type: String,
     },
+    message: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
