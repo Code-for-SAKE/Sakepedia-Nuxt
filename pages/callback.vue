@@ -16,6 +16,7 @@ export default {
     const user = {
       _id: res.data.user._id,
       name: res.data.user.name,
+      message: res.data.user.message,
       avatarUrl: res.data.user.avatarUrl,
     };
     this.$store.commit('login', user);

@@ -10,6 +10,7 @@
           <h4 class="text-center">
             <img :src="$store.state.user.avatarUrl" width="72" class="pr-2" />
             <p>{{ $store.state.user.name }}</p>
+            <p>{{ $store.state.user.message }}</p>
           </h4>
           <div class="username form-group">
             <label for="name">新しい名前</label>
