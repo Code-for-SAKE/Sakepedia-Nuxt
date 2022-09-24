@@ -6,19 +6,21 @@ const Brand = require('../models/Brand');
 const Sake = require('../models/Sake');
 const Comment = require('../models/Comment');
 
-module.exports.create = function (type, identity, avatarUrl, username = null) {
+module.exports.create = async function (
+  type,
+  identity,
+  avatarUrl,
+  username = null
+) {
   const user = new User({
     type: type,
     identity: identity,
     avatarUrl: avatarUrl,
+    name: username,
     gitUsername: username,
   });
-  user.save(function (err, user) {
-    if (err) {
-      return err;
-    }
-    return user;
-  });
+  const saved = await user.save();
+  return saved;
 };
 
 module.exports.update = async function (req, res) {
