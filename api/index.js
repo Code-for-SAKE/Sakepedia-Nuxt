@@ -2,9 +2,13 @@ import express from 'express';
 import session from 'express-session';
 
 const db = require('./db');
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger_output.json');
 
 // Create express instnace
 const app = express();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Init body-parser options (inbuilt with express)
 app.use(express.json({ limit: '50mb' }));
