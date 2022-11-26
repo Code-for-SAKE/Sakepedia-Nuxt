@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Sakepedia API Doc",
-    "description": "Sakepediaで提供しているAPI",
+    "description": "<a href=\"https://sakepedia.code4sake.org/\">Sakepedia</a>で提供しているAPI",
     "version": "1.0.0"
   },
   "host": "sakepedia.code4sake.org/api",

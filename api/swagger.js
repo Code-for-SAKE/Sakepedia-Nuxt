@@ -3,7 +3,8 @@ const swaggerAutogen = require('swagger-autogen')();
 const doc = {
   info: {
     title: 'Sakepedia API Doc',
-    description: 'Sakepediaで提供しているAPI',
+    description:
+      '<a href="https://sakepedia.code4sake.org/">Sakepedia</a>で提供しているAPI',
   },
   host: 'sakepedia.code4sake.org/api',
   schemes: ['http'],
