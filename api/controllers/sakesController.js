@@ -18,7 +18,7 @@ module.exports.all = function (req, res, next) {
   if (keyword) {
     search.$or = [
       { name: new RegExp(keyword, 'i') },
-      { kana: new RegExp(japanese.hiraToKana(keyword), 'i') },
+      { kana: new RegExp(japanese.kanaToHira(keyword), 'i') },
     ];
   }
   if (typeQuery) {
@@ -123,6 +123,7 @@ module.exports.create = [
     // initialize record
     var sake = new Sake({
       name: req.body.name,
+      kana: japanese.kanaToHira(req.body.kana),
       brand: req.body.brand,
       brewery: req.body.brewery,
       type: req.body.type,
@@ -184,6 +185,9 @@ module.exports.update = [
 
       // initialize record
       sake.name = req.body.name ? req.body.name : sake.name;
+      sake.kana = req.body.kana
+        ? japanese.kanaToHira(req.body.kana)
+        : sake.kana;
       sake.brand = req.body.brand ? req.body.brand : sake.brand;
       sake.brewery = req.body.brewery ? req.body.brewery : sake.brewery;
       sake.subname =

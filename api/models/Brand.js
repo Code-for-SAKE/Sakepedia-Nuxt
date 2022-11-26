@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const Brand = new Schema(
   {
     name: { type: String, required: true },
+    kana: { type: String },
     brewery: { type: Schema.Types.ObjectId, ref: 'Brewery', required: true },
     logo: { type: String },
     description: { type: String },
