@@ -44,47 +44,47 @@
       <dd>
         <p><a v-if="brewery" v-bind:href="brewery.url">{{ brewery.url }}</a></p>
       </dd>
-      <dt>購入URL</dt>
+      <dt v-if="brewery.ecurl">購入URL</dt>
       <dd>
-        <p><a v-if="brewery" v-bind:href="brewery.ecurl">{{ brewery.ecurl }}</a></p>
+        <p><a v-if="brewery.ecurl" v-bind:href="brewery.ecurl">{{ brewery.ecurl }}</a></p>
       </dd>
-      <dt>Facebook</dt>
+      <dt v-if="brewery.facebook">Facebook</dt>
       <dd>
-        <p><a v-if="brewery" v-bind:href="brewery.facebook">{{ brewery.facebook }}</a></p>
+        <p><a v-if="brewery.facebook" v-bind:href="brewery.facebook">{{ brewery.facebook }}</a></p>
       </dd>
-      <dt>Twitter</dt>
+      <dt v-if="brewery.twitter">Twitter</dt>
       <dd>
-        <p><a v-if="brewery" v-bind:href="brewery.twitter">{{ brewery.twitter }}</a></p>
+        <p><a v-if="brewery.twitter" v-bind:href="brewery.twitter">{{ brewery.twitter }}</a></p>
       </dd>
-      <dt>Instagram</dt>
+      <dt v-if="brewery.instagram">Instagram</dt>
       <dd>
-        <p><a v-if="brewery" v-bind:href="brewery.instagram">{{ brewery.instagram }}</a></p>
+        <p><a v-if="brewery.instagram" v-bind:href="brewery.instagram">{{ brewery.instagram }}</a></p>
       </dd>
-      <dt>その他SNS</dt>
+      <dt v-if="brewery.othersns">その他SNS</dt>
       <dd>
-        <p><a v-if="brewery" v-bind:href="brewery.othersns">{{ brewery.othersns }}</a></p>
+        <p><a v-if="brewery.othersns" v-bind:href="brewery.othersns">{{ brewery.othersns }}</a></p>
       </dd>
-      <dt>見学</dt>
+      <dt v-if="brewery.visit">見学</dt>
       <dd>
-        <p v-if="brewery">{{ brewery.visit }}</p>
+        <p v-if="brewery.visit">{{ brewery.visit }}</p>
       </dd>
-      <dt>試飲</dt>
+      <dt v-if="brewery.tasting">試飲</dt>
       <dd>
-        <p v-if="brewery">{{ brewery.tasting }}</p>
+        <p v-if="brewery.tasting">{{ brewery.tasting }}</p>
       </dd>
-      <dt>併設カフェ</dt>
+      <dt v-if="brewery.cafe">併設カフェ</dt>
       <dd>
-        <p v-if="brewery">{{ brewery.cafe }}</p>
+        <p v-if="brewery.cafe">{{ brewery.cafe }}</p>
       </dd>
-      <dt>併設ショップ</dt>
+      <dt v-if="brewery.shop">併設ショップ</dt>
       <dd>
-        <p v-if="brewery">{{ brewery.shop }}</p>
+        <p v-if="brewery.shop">{{ brewery.shop }}</p>
       </dd>
-      <dt>日本酒以外の醸造・蒸留</dt>
+      <dt v-if="brewery.otherBrewing">日本酒以外の醸造・蒸留</dt>
       <dd>
-        <p v-if="brewery">{{ brewery.otherBrewing }}</p>
+        <p v-if="brewery.otherBrewing">{{ brewery.otherBrewing }}</p>
       </dd>
-      <dt>創業年</dt>
+      <dt v-if="brewery.startYear">創業年</dt>
       <dd>
         <p v-if="brewery.startYear">{{ brewery.startYear }}年</p>
       </dd>
