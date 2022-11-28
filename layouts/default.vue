@@ -82,7 +82,9 @@
             >Github</a
           ></span
         >
-        <span class="p-3"><a class="text-white">API仕様(未着手)</a></span>
+        <span class="p-3"
+          ><a class="text-white" href="/api/api-docs/">API仕様</a></span
+        >
         <nuxt-link class="p-3 text-white" to="/about"
           >Sakepediaについて</nuxt-link
         >

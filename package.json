@@ -11,7 +11,8 @@
     "generate": "nuxt generate",
     "test:jest": "jest --config jest.config.js",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
-    "lintfix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore ."
+    "lintfix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
+    "swagger-autogen": "node api/swagger.js"
   },
   "dependencies": {
     "@geolonia/normalize-japanese-addresses": "^2.3.0",
@@ -41,6 +42,9 @@
     "sass-loader": "10.1.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-vue": "^0.11.0",
+    "swagger-autogen": "^2.22.0",
+    "swagger-jsdoc": "^6.2.3",
+    "swagger-ui-express": "^4.5.0",
     "vue": "^2.6.12",
     "vue-search-select": "^2.9.3",
     "vue-select": "^3.11.2",
