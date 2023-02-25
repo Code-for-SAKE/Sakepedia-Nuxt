@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-pagination
-      v-if="sakes.length > 2"
       v-model="page"
       :total-rows="count * limit"
       :per-page="limit"
@@ -55,6 +54,7 @@ export default {
   methods: {
     async retrieves() {
       const { list, currentPage, count } = await getList('sakes', {
+        brand: this.search.brand,
         page: this.page,
         limit: this.limit,
       });
