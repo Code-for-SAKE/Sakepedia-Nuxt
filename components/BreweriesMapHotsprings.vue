@@ -13,7 +13,11 @@
             :key="index"
             :lat-lng="location"
           >
-            <l-popup :content="`${location.name}`"></l-popup>
+            <l-popup>
+              <nuxt-link :to="'/breweries/' + location._id">
+                {{ location.name }}
+              </nuxt-link>
+            </l-popup>
             <l-icon
               :icon-size="[20, 20]"
               :icon-anchor="[12, 18]"
@@ -133,6 +137,7 @@ export default {
           if (breweries.length > 0) {
             breweries.map((brewery) => {
               locations.push({
+                _id: brewery._id,
                 name: brewery.name,
                 lat: brewery.latitude,
                 lng: brewery.longitude,
