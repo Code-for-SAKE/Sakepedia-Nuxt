@@ -5,9 +5,10 @@
     "description": "<a href=\"https://sakepedia.code4sake.org/\">Sakepedia</a>で提供しているAPI",
     "version": "1.0.0"
   },
-  "host": "sakepedia.code4sake.org/api",
+  "host": "localhost:3030/api",
   "basePath": "/",
   "schemes": [
+    "https",
     "http"
   ],
   "paths": {
