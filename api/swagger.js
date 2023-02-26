@@ -6,8 +6,7 @@ const doc = {
     description:
       '<a href="https://sakepedia.code4sake.org/">Sakepedia</a>で提供しているAPI',
   },
-  // host: 'sakepedia.code4sake.org/api',
-  host: 'localhost:3030/api',
+  host: 'sakepedia.code4sake.org/api',
   schemes: ['https', 'http'],
 };
 
