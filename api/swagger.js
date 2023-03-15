@@ -7,7 +7,7 @@ const doc = {
       '<a href="https://sakepedia.code4sake.org/">Sakepedia</a>で提供しているAPI',
   },
   host: 'sakepedia.code4sake.org/api',
-  schemes: ['http'],
+  schemes: ['https', 'http'],
 };
 
 const outputFile = './swagger_output.json';
