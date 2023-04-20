@@ -22,7 +22,7 @@ router.get('/locations/breweries', breweriesController.getLocations);
 // Get Locations of Breweries Surrounding Input Positions
 router.post(
   '/locations/breweries',
-  breweriesController.getLocationsSurroundingIpnutPositions
+  breweriesController.getLocationsSurroundingInputPositions
 );
 
 // Create

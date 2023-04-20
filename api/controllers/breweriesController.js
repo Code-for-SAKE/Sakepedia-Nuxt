@@ -100,7 +100,7 @@ module.exports.getLocations = function (req, res, next) {
 };
 
 // Get Locations of Breweries Surrounding Input Positions
-module.exports.getLocationsSurroundingIpnutPositions = function (
+module.exports.getLocationsSurroundingInputPositions = function (
   req,
   res,
   next
