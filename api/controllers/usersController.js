@@ -55,10 +55,14 @@ module.exports.jwt = async function (req, res) {
 };
 
 module.exports.contribute = async function (req, res) {
-  const brewery = await Brewery.count({ userId: req.params.id });
-  const brand = await Brand.count({ userId: req.params.id });
-  const sake = await Sake.count({ userId: req.params.id });
-  const comment = await Comment.count({ userId: req.params.id });
+  const brewery = await Brewery.estimatedDocumentCount({
+    userId: req.params.id,
+  });
+  const brand = await Brand.estimatedDocumentCount({ userId: req.params.id });
+  const sake = await Sake.estimatedDocumentCount({ userId: req.params.id });
+  const comment = await Comment.estimatedDocumentCount({
+    userId: req.params.id,
+  });
   return res.json({
     contribute: {
       brewery: brewery,
