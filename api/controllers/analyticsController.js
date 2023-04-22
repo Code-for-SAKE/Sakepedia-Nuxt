@@ -5,11 +5,11 @@ const User = require('../models/User');
 const Comment = require('../models/Comment');
 
 module.exports.summary = async function (req, res) {
-  const brewery = await Brewery.count();
-  const brand = await Brand.count();
-  const sake = await Sake.count();
-  const user = await User.count();
-  const comment = await Comment.count();
+  const brewery = await Brewery.estimatedDocumentCount();
+  const brand = await Brand.estimatedDocumentCount();
+  const sake = await Sake.estimatedDocumentCount();
+  const user = await User.estimatedDocumentCount();
+  const comment = await Comment.estimatedDocumentCount();
   return res.json({
     summary: {
       brewery: brewery,
