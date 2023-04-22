@@ -918,6 +918,16 @@
             "name": "limit",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "sortField",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {

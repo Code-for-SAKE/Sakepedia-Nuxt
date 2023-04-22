@@ -13,6 +13,8 @@ module.exports.all = function (req, res, next) {
   var brand = req.query.brand;
   var sake = req.query.sake;
   var userId = req.query.userId;
+  var sortField = req.query.sortField;
+  var sortOrder = req.query.sortOrder;
   var search = {};
 
   if (brewery) {
@@ -34,9 +36,10 @@ module.exports.all = function (req, res, next) {
       { comment: new RegExp(japanese.kanaToHira(keyword), 'i') },
     ];
   }
+  
   Comment.paginate(
     search,
-    { page: req.query.page, limit: req.query.limit },
+    { page: req.query.page, limit: req.query.limit, sort: {[sortField]: sortOrder} },
     function (err, result) {
       if (err) {
         return res.status(500).json({

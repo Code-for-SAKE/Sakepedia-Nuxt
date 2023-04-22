@@ -74,6 +74,8 @@ export default {
     const sake = context.query.sake != null ? context.query.sake : '';
     const limit = context.query.limit != null ? context.query.limit : 10;
     const page = context.query.page != null ? context.query.page : 1;
+    const sortField = context.query.sortField != null ? context.query.sortField : 'createdAt';
+    const sortOrder = context.query.sortOrder != null ? context.query.sortOrder : 'desc';
     const { list, currentPage, count } = await getList(
       'comments',
       {
@@ -83,6 +85,8 @@ export default {
         sake: sake,
         page: page,
         limit: limit,
+        sortField: sortField,
+        sortOrder: sortOrder,
       },
       context
     );
@@ -94,6 +98,8 @@ export default {
       comments: list,
       page: currentPage,
       count: count,
+      sortField: sortField,
+      sortOrder: sortOrder,
     };
   },
   data() {
@@ -106,6 +112,8 @@ export default {
       page: 1,
       count: 0,
       limit: 10,
+      sortField: 'createdAt',
+      sortOrder: 'desc',
     };
   },
   mounted() {
@@ -120,6 +128,8 @@ export default {
       this.limit =
         this.$route.query.limit != null ? this.$route.query.limit : 10;
       this.page = this.$route.query.page != null ? this.$route.query.page : 1;
+      this.sortField = this.$route.query.sortField != null ? this.$route.query.sortField : 'createdAt';
+      this.sortOrder = this.$route.query.sortOrder != null ? this.$route.query.sortOrder : 'desc';
       this.retrieves();
     });
   },
@@ -132,6 +142,8 @@ export default {
         brewery: this.brewery,
         page: this.page,
         limit: this.limit,
+        sortField: this.sortField,
+        sortOrder: this.sortOrder,
       });
       this.comments = list;
       this.page = currentPage;
@@ -144,7 +156,7 @@ export default {
     },
     setHistories() {
       const url = window.location.href.replace(/\?.*$/, '');
-      const queries = `?keyword=${this.keyword}&page=${this.page}&limit=${this.limit}&brewery=${this.brewery}&brand=${this.brand}&sake=${this.sake}`;
+      const queries = `?sortField=${this.sortField}&sortOrder=${this.sortOrder}&keyword=${this.keyword}&page=${this.page}&limit=${this.limit}&brewery=${this.brewery}&brand=${this.brand}&sake=${this.sake}`;
       window.history.pushState(null, null, `${url}${queries}`);
     },
   },
