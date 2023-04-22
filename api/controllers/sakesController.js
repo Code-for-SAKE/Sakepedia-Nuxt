@@ -123,7 +123,7 @@ module.exports.create = [
     // initialize record
     var sake = new Sake({
       name: req.body.name,
-      kana: japanese.kanaToHira(req.body.kana),
+      kana: req.body.kana ? japanese.kanaToHira(req.body.kana) : '',
       brand: req.body.brand,
       brewery: req.body.brewery,
       type: req.body.type,
