@@ -110,7 +110,7 @@ module.exports.create = [
     // initialize record
     var brand = new Brand({
       name: req.body.name,
-      kana: japanese.kanaToHira(req.body.kana),
+      kana: req.body.kana ? japanese.kanaToHira(req.body.kana) : '',
       description: req.body.description,
       logo: req.body.logo,
       brewery: req.body.brewery,
