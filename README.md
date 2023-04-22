@@ -16,7 +16,7 @@ Sakepediaは日本酒のオープンデータを作るためのプラットフ�
 - node v14.16.1
 - yarn v1.22.5
 - mongodb v4.2.8
-- pm2 v4.5.6
+- pm2 v4.5.6(for server)
 
 ### GitHub OAuth App(ローカル開発用)
 
@@ -30,6 +30,23 @@ Sakepediaは日本酒のオープンデータを作るためのプラットフ�
 ## Build Setup
 
 ``` bash
+# node version manage(if you need)
+$ brew install n
+$ n 14.16
+
+# yarn(if you need)
+$ npm install -g yarn
+
+# mongodb(if you need)
+$ brew tap mongodb/brew
+$ brew install mongodb-community
+$ brew services start mongodb-community
+$ mongo
+> use Sakepedia
+switched to db Sakepedia
+> exit
+bye
+
 # install dependencies
 $ yarn install
 
@@ -40,7 +57,7 @@ $ vi config/.env.development
 GITHUB_CLIENT_ID=GitHub OAuth AppのClient ID
 GITHUB_CLIENT_SECRET=GitHub OAuth AppのClient Secret
 BASE_URL=動作させるURL(なければhttp://localhost:3030)
-MONGO_CONNECT=MONGODBの接続文字列
+MONGO_CONNECT=MONGODBの接続文字列(例 mongodb://localhost/Sakepedia)
 JWT_SECRET＝JWTを生成するためのSecret
 
 # serve with hot reload at localhost:3030
