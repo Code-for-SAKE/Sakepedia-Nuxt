@@ -18,6 +18,11 @@ Sakepediaは日本酒のオープンデータを作るためのプラットフ�
 - mongodb v4.2.8
 - pm2 v4.5.6(for server)
 
+### Apple Silicon Mac を使う場合  
+
+node-sass v4.14.1は Apple Silicon Mac で使えるようにするには、Nodeのバージョンを^14.16.0にし、node-sassのビルドにPython2系も必要になる。
+macOS Monterey 12.3のアップデートでPython2.7がMacOSから削除されたので anyenv 等を使ってインストールする。
+
 ### GitHub OAuth App(ローカル開発用)
 
 - https://github.com/settings/developers
