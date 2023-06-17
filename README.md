@@ -10,6 +10,11 @@ Sakepediaは日本酒のオープンデータを作るためのプラットフ�
 - Bootstrap-Vue(一部Semantic UI)
 - GitHub OAuth App
 
+## ブランチについて
+
+Sakepediaについて、masterをプロテクトして、開発はdevelopで進めることにします。
+プルリクエストはdevelopに向けてお願いします。:祈る:
+
 ## Need
 
 ### Install
